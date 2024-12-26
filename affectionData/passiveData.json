@@ -1,0 +1,67 @@
+{
+    "BASIC":{
+        "Normal": {
+            "Name": "Untyped",
+            "Type": "Normal",
+            "Levels": {
+                "1": "Every 10 auto attacks your next attack will deal a random damage type to the enemy.",
+                "5": "Every 5 auto attacks your next attack will deal a random damage type to the enemy and deals 2x damage.",
+                "10": "Every 5 auto attacks your next attack will deal a random damage type to the enemy and deals 2.5x damage."
+            }
+        },
+        "Water": {
+            "Name": "Swift Swim",
+            "Type": "Water",
+            "Levels": {
+                "1": "Cause it to rain for 3 seconds, during this rain your speed is doubled.",
+                "5": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
+                "10": "Cause it to rain for 9 seconds, during this rain your speed is doubled."
+            }
+        },
+        "Fire": {
+            "Name": "Fire Passive",
+            "Type": "Fire",
+            "Levels": {
+                "1": "NA",
+                "5": "NA",
+                "10": "NA"
+            }
+        }
+    },
+    
+    "HOLO" : {
+        "Water": {
+            "Name": "Swift Swim",
+            "Type": "Water",
+            "Levels": {
+                "1": "Cause it to rain for 3 seconds, during this rain your speed is doubled.",
+                "5": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
+                "10": "Cause it to rain for 9 seconds, during this rain your speed is doubled."
+            }
+        }
+    },
+
+    "FRAME" : {
+        "Water": {
+            "Name": "Swift Swim+",
+            "Type": "Water",
+            "Levels": {
+                "1": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
+                "5": "Cause it to rain for 9 seconds, during this rain your speed is doubled.",
+                "10": "Cause it to rain for 12 seconds, during this rain your speed is doubled."
+            }
+        }
+    },
+
+    "HOLOFRAME" : {
+        "Ludicolo": {
+            "Name": "Rain Dish",
+            "Type": "Water",
+            "Levels": {
+                "1": "Cause it to rain for 3 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
+                "5": "Cause it to rain for 6 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
+                "10": "Cause it to rain for 9 seconds, during this rain regain 1/16 of maximum HP after each auto attack."
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "cursed-pokegatcha-bot",
+  "version": "1.0.0",
+  "description": "A bot for MediBotEve's Discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
+    "canvas": "^2.11.2",
+    "cron": "^3.1.7",
+    "discord.js": "^14.11.0",
+    "emoji-regex": "^10.2.1",
+    "sequelize": "^6.32.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.44.0"
+  }
+}

@@ -1,0 +1,300 @@
+{
+    "BASIC": {
+        "1": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 1
+            },
+            "Money": "10"
+        },
+        "2": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 2
+            },
+            "Money": "20"
+        },
+        "3": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 3
+            },
+            "Money": "30"
+        },
+        "4": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 4
+            },
+            "Money": "40"
+        },
+        "5": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 5
+            },
+            "Money": "50"
+        },
+        "6": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 2
+            },
+            "Money": "60"
+        },
+        "7": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 4
+            },
+            "Money": "70"
+        }
+        ,"8": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 6
+            },
+            "Money": "80"
+        },
+        "9": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 8
+            },
+            "Money": "90"
+        },
+        "10": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 10
+            },
+            "Money": "100"
+        }
+    },
+    "HOLO": {
+        "1": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 2
+            },
+            "Money": "20"
+        },
+        "2": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 4
+            },
+            "Money": "40"
+        },
+        "3": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 6
+            },
+            "Money": "60"
+        },
+        "4": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 8
+            },
+            "Money": "80"
+        },
+        "5": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 10
+            },
+            "Money": "100"
+        },
+        "6": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 3
+            },
+            "Money": "120"
+        },
+        "7": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 6
+            },
+            "Money": "140"
+        }
+        ,"8": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 9
+            },
+            "Money": "160"
+        },
+        "9": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 12
+            },
+            "Money": "180"
+        },
+        "10": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 15
+            },
+            "Money": "200"
+        }
+    },
+    "FRAME": {
+        "1": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 3
+            },
+            "Money": "30"
+        },
+        "2": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 6
+            },
+            "Money": "60"
+        },
+        "3": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 9
+            },
+            "Money": "90"
+        },
+        "4": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 12
+            },
+            "Money": "120"
+        },
+        "5": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 15
+            },
+            "Money": "150"
+        },
+        "6": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 4
+            },
+            "Money": "180"
+        },
+        "7": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 8
+            },
+            "Money": "210"
+        }
+        ,"8": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 12
+            },
+            "Money": "240"
+        },
+        "9": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 16
+            },
+            "Money": "270"
+        },
+        "10": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 20
+            },
+            "Money": "300"
+        }
+    },
+    "HOLOFRAME": {
+        "1": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 4
+            },
+            "HoloResource": 1,
+            "Money": "40"
+        },
+        "2": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 8
+            },
+            "HoloResource": 1,
+            "Money": "80"
+        },
+        "3": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 12
+            },
+            "HoloResource": 1,
+            "Money": "120"
+        },
+        "4": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 16
+            },
+            "HoloResource": 1,
+            "Money": "160"
+        },
+        "5": {
+            "Resource": {
+                "Type": "SHARD",
+                "Amount": 20
+            },
+            "HoloResource": 1,
+            "Money": "200"
+        },
+        "6": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 5
+            },
+            "HoloResource": 2,
+            "Money": "240"
+        },
+        "7": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 10
+            },
+            "HoloResource": 2,
+            "Money": "280"
+        }
+        ,"8": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 15
+            },
+            "HoloResource": 2,
+            "Money": "320"
+        },
+        "9": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 20
+            },
+            "HoloResource": 2,
+            "Money": "360"
+        },
+        "10": {
+            "Resource": {
+                "Type": "GEM",
+                "Amount": 25
+            },
+            "HoloResource": 5,
+            "Money": "400"
+        }
+    }
+}

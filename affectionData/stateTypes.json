@@ -1,0 +1,374 @@
+{
+    "Pidgey": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    },
+    "Ludicolo": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    },
+    "*Ludicolo*": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    },
+    "[Ludicolo]": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    },
+    "{Ludicolo}": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    },
+    "Heatmore": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "70",
+            "Defence" : "85",
+            "Speed" : "70"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "77",
+            "Defence" : "92",
+            "Speed" : "77"
+        },
+        "3": {
+            "HP" : "120",
+            "Attack" : "85",
+            "Defence" : "100",
+            "Speed" : "85"
+        },
+        "4": {
+            "HP" : "140",
+            "Attack" : "92",
+            "Defence" : "107",
+            "Speed" : "92"
+        },
+        "5": {
+            "HP" : "160",
+            "Attack" : "100",
+            "Defence" : "115",
+            "Speed" : "100"
+        },
+        "6": {
+            "HP" : "200",
+            "Attack" : "118",
+            "Defence" : "137",
+            "Speed" : "118"
+        },
+        "7": {
+            "HP" : "220",
+            "Attack" : "126",
+            "Defence" : "159",
+            "Speed" : "126"
+        },
+        "8": {
+            "HP" : "260",
+            "Attack" : "155",
+            "Defence" : "181",
+            "Speed" : "155"
+        },
+        "9": {
+            "HP" : "280",
+            "Attack" : "173",
+            "Defence" : "203",
+            "Speed" : "173"
+        },
+        "10": {
+            "HP" : "320",
+            "Attack" : "196",
+            "Defence" : "226",
+            "Speed" : "196"
+        }
+    }
+}

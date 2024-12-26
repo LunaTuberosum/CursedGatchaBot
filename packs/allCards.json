@@ -1,0 +1,64 @@
+{
+    
+    "Pidgey" : {
+        "Name" : "Pidgey",
+        "Type": "Normal",
+        "CardID" : "001",
+        "DrawDate" : "1/29/2022",
+        "Poke#" : "0016",
+        "Rarity" : "Common",
+        "CardType" : "BASIC",
+        "Series": "Series 1"
+    },
+    "Ludicolo" : {
+        "Name" : "Ludicolo",
+        "Type": "Water",
+        "CardID" : "007",
+        "DrawDate" : "2/09/2022",
+        "Poke#" : "0272",
+        "Rarity" : "Rare",
+        "CardType" : "BASIC",
+        "Series": "Series 1"
+    },
+    "*Ludicolo*" : {
+        "Name" : "Ludicolo",
+        "Type": "Water",
+        "CardID" : "007",
+        "DrawDate" : "2/09/2022",
+        "Poke#" : "0272",
+        "Rarity" : "Rare",
+        "CardType" : "HOLO",
+        "Series": "Series 1"
+    },
+    
+    "[Ludicolo]" : {
+        "Name" : "Ludicolo",
+        "Type": "Water",
+        "CardID" : "007",
+        "DrawDate" : "2/09/2022",
+        "Poke#" : "0272",
+        "Rarity" : "Rare",
+        "CardType" : "FRAME",
+        "Series": "Series 1"
+    },
+    "{Ludicolo}" : {
+        "Name" : "Ludicolo",
+        "Type": "Water",
+        "CardID" : "007",
+        "DrawDate" : "2/09/2022",
+        "Poke#" : "0272",
+        "Rarity" : "Rare",
+        "CardType" : "HOLOFRAME",
+        "Series": "Series 1"
+    },
+    "Heatmore" : {
+        "Name" : "Heatmore",
+        "Type": "Fire",
+        "CardID" : "010",
+        "DrawDate" : "2/11/2022",
+        "Poke#" : "0631",
+        "Rarity" : "Uncommon",
+        "CardType" : "BASIC",
+        "Series": "Series 1"
+    }
+}
