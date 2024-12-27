@@ -31,6 +31,7 @@ module.exports = {
         itemName = (itemName.trim()).toUpperCase();
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
+        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); return; }
         const userItems = await user.getItems();
         const itemData = await ItemShop.findOne({ where: { name: itemName } });
 

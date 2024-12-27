@@ -174,6 +174,7 @@ module.exports = {
         let pokemonData1 = {};
         let pokemonData2 = {};
         let user = await Users.findOne({ where: { user_id: message.author.id } });
+        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); return; }
         let now = Date.now();
 
         pullChannel = await ServerInfo.findOne({ where: { server_id: message.guild.id, pull_channel: message.channel.id }});

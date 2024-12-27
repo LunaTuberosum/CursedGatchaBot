@@ -70,6 +70,8 @@ module.exports = {
         const splitMessage = message.content.split(" ");
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
+        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); return; }
+
         const userCards = await user.getCards();
 
         if (userCards.length == 0) {

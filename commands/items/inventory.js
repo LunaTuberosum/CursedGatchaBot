@@ -79,10 +79,8 @@ module.exports = {
     async execute(message) {
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) {
-            message.channel.send({ embeds: [makeInvEmbedEmpty(message.author)] });
-            return;
-        }
+        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); return; }
+
         const userItems = await user.getItems();
 
         if (userItems.length == 0) {
