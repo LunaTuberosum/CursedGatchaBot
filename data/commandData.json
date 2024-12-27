@@ -1,0 +1,128 @@
+{
+    "set": {
+        "Command": "`c!set`",
+        "Usage": "`c!set` *`pull/raid`",
+        "Description": "Set the active channel for pulling cards or raiding. Only one active channel for each setting is allowed."
+    },
+    "register": {
+        "Command": "`c!register`",
+        "Description": "Registers the user to the game. Allowing them to pull cards and interact with the bot."
+    },
+    "pull": {
+        "Command": "`c!pull`, `c!p`",
+        "Description": "Pulls two random cards to the current channel. Anyone can grab these cards."
+    },
+    "release": {
+        "Command": "`c!release`, `c!r`",
+        "Usage": "`c!release` *`card code`",
+        "Description": "Release card to gain money and crystals. Sending without paramaters will use your most recently obtained card."
+    },
+    "affection": {
+        "Command": "`c!affection`, `c!a`",
+        "Usage": "`c!affection` `card code`",
+        "Description": "View current affection with that card. Allows you to level up the cards affection and view level up bonuses."
+    },
+    "deck": {
+        "Command": "`c!deck`, `c!d`",
+        "Description": "View all cards in your possession."
+    },
+    "inventory": {
+        "Command": "`c!inventory`, `c!i`, `c!inv`",
+        "Description": "View all items in your possession."
+    },
+    "tag": {
+        "Command": "`c!tag`",
+        "Usage": "`c!tag` `tag name` `card codes`",
+        "Description": "Add a tag to a card you own. You can tag multiple cards at once. A card can only have one tag at a time."
+    },
+    "tagcreate": {
+        "Command": "`c!tagCreate`, `c!tc`",
+        "Usage": "`c!tagCreate` `tag name` `emoji`",
+        "Description": "Create a new tag and its emoji. A tag's name can not have any spaces in it."
+    },
+    "tagdelete": {
+        "Command": "`c!tagDelete`, `c!td`",
+        "Usage": "`c!tagDelete` `tag name`",
+        "Description": "Delete tag."
+    },
+    "tagemoji": {
+        "Command": "`c!tagEmoji`, `c!te`",
+        "Usage": "`c!tagEmoji` `tag name` `emoji`",
+        "Description": "Change a tag's emoji."
+    },
+    "tagrename": {
+        "Command": "`c!tagRename`, `c!trn`",
+        "Usage": "`c!tagRename` `tag name` `new tag name`",
+        "Description": "Change a tag's name. A tag's can not have any spaces in it."
+    },
+    "tags": {
+        "Command": "`c!tags`",
+        "Description": "View all tags and the amount of cards with each tag."
+    },
+    "untag": {
+        "Command": "`c!unTag`, `c!ut`",
+        "Usage": "`c!unTag` `card codes`",
+        "Description": "Remove a tag to a card you own. You can remove card's tags at once."
+    },
+    "use": {
+        "Command": "`c!use`, `c!u`",
+        "Usage": "`c!use` `item name`",
+        "Description": "Uses the item."
+    },
+    "cooldown": {
+        "Command": "`c!cooldown`, `c!cd`",
+        "Description": "Shows how long you have left on your pull and grab cooldowns."
+    },
+    "cardinfo": {
+        "Command": "`c!cardInfo`, `c!ci`",
+        "Usage": "`c!cardInfo` *`card code`",
+        "Description": "Shows details about a certial card. Sending without paramaters will use your most recently obtained card."
+    },
+    "serverinfo": {
+        "Command": "`c!serverInfo`, `c!si`",
+        "Description": "Shows information related to the current server. Shows which channels are used for pulling and raiding and shows any ongoing events."
+    },
+    "wishlist": {
+        "Command": "`c!wishlist`, `c!w`",
+        "Description": "Shows all cards that are in your wishlist."
+    },
+    "wishlistadd": {
+        "Command": "`c!wishlistAdd`, `c!wa`",
+        "Usage": "`c!wishlistAdd` `card name`",
+        "Description": "Wishlists the stated card. To wishlist a SPECIAL card, add the following chareter at the start of the card name: \"*\" for the HOLO version, \"[\" for the special FRAMED version, and \"{\" for the HOLO FRAMED version."
+    },
+    "unwishlist": {
+        "Command": "`c!unWishlist`, `c!uw`",
+        "Usage": "`c!unWishlist` `card name`",
+        "Description": "Unwishlists the stated card. To unwishlist a SPECIAL card, add the following chareter at the start of the card name: \"*\" for the HOLO version, \"[\" for the special FRAMED version, and \"{\" for the HOLO FRAMED version."
+    },
+    "wishlistwatch": {
+        "Command": "`c!wishlistWatch`, `c!ww`",
+        "Description": "Watches the current channel for cards in your wishlist and pings you when they are about to be pulled. This command can only be used in a pull channel."
+    },
+    "pokeshop": {
+        "Command": "`c!pokeShop`, `c!ps`, `c!s`, `c!shop`",
+        "Description": "Shows the Poke Shop."
+    },
+    "buy": {
+        "Command": "`c!buy`, `c!b`",
+        "Usage": "`c!buy` `item name` *x`amount`",
+        "Description": "Buys the item from the store. If an amount is specified it must start with a \"x\" to count. If an amount is not specified it buys one."
+    },
+    "trade": {
+        "Command": "`c!trade`, `c!t`",
+        "Usage": "`c!trade` `other user` `your card` `their card`",
+        "Description": "Trades two cards between two users. The other user must be refrenced using a mention."
+    },
+    "multitrade": {
+        "Command": "`c!multiTrade`, `c!mt`",
+        "Usage": "`c!multiTrade` `other user`",
+        "Description": "Trades any amount of cards or items between two users. The other user must be refrenced using a mention."
+    },
+    "help": {
+        "Command": "`c!help`, `c!h`",
+        "Usage": "`c!help` *`command`",
+        "Description": "View this list of commands. Specify a command for detailed information."
+    }
+    
+}

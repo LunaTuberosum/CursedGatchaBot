@@ -1,5 +1,5 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, CardDatabase, Wishlists } = require("../../dbObjects.js");
+const { Users, CardDatabase, Wishlists, UserCards } = require("../../dbObjects.js");
 const { raritySymbol, formatName } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 
@@ -68,36 +68,29 @@ module.exports = {
         if (splitMessage.length > 1) {
             if (splitMessage[1].length == 6) {
                 
-                try {
-                    const user = await Users.findOne({ where: { user_id: message.author.id } });
-                    const userCards = await user.getCards();
+                const card = await UserCards.findOne({ where: { item_id: splitMessage[1] } });
+                
+                if (!card) {return}
 
-                    
-                    for (const card of userCards) {
-                        if (card.item_id == splitMessage[1]) {
-                            pokemonData = card.item
-                            const canvas = Canvas.createCanvas(720, 1290);
-                            const context = canvas.getContext('2d');
+                let owner = message.client.users.fetch(card.user_id);
+                owner.then( async function(r) {
+                    pokemonData = await CardDatabase.findOne({ where: { id: card.item_info }});
+                    const canvas = Canvas.createCanvas(720, 1290);
+                    const context = canvas.getContext('2d');
 
-                            const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}.png`);
-                            const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
+                    const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}.png`);
+                    const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
 
-                            context.drawImage(img1, 0, 0, img1.width, img1.height);
-                            context.drawImage(img2, 0, 0, img1.width, img1.height);
+                    context.drawImage(img1, 0, 0, img1.width, img1.height);
+                    context.drawImage(img2, 0, 0, img1.width, img1.height);
 
-                            attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
-                            imageEmbed = makeCardImageEmbed(pokemonData, splitMessage[1], message.author);
-                            statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { user_id: message.author.id, card_id: pokemonData.card_id } })).length);
-                            response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
-                            break;
-                        }
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    message.channel.send({ content: `${message.author} you do not own that card.` });
-                    return;
-                }
+                    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+                    imageEmbed = makeCardImageEmbed(pokemonData, splitMessage[1], r);
+                    statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { card_id: pokemonData.card_id } })).length);
+                    response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
+ 
+                } )
+
             }
             else {
                 message.channel.send({ content: `${message.author} please enter a valid card code.` });

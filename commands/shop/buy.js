@@ -83,8 +83,8 @@ module.exports = {
         let itemName = "";
         let quantity = "";
         for (const sub of splitMessage) {
-            if (!isNaN(sub)) {
-                quantity = parseInt(sub);
+            if (sub.toLowerCase()[0]== "x" && !isNaN(sub.toLowerCase().split("x")[1])) {
+                quantity = parseInt(sub.toLowerCase().split("x")[1]);
                 break;
             }
             else if (sub.toLowerCase() == "cbuy" || sub.toLowerCase() == "cb") continue;

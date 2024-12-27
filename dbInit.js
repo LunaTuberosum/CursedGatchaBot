@@ -81,11 +81,11 @@ sequelize.sync({ force }).then(async () => {
 		ItemShop.upsert({ name: 'STEEL GEM', emoji: ":large_orange_diamond:", itemCost: "POKEDOLLAR", cost: 0, description: "A crystalized gem of Steek energy." }),
 		ItemShop.upsert({ name: 'FAIRY GEM', emoji: ":large_orange_diamond:", itemCost: "POKEDOLLAR", cost: 0, description: "A crystalized gem of Fairy energy." }),
 
-		ItemShop.upsert({ name: 'DRAW 3', emoji: ":small_blue_diamond:", itemCost: "POKEDOLLAR", cost: 300, description: "An item that lets you draw 3 cards instead of 2." }),
-		ItemShop.upsert({ name: 'DRAW 5', emoji: ":large_blue_diamond:", itemCost: "POKEDOLLAR", cost: 500, description: "An item that lets you draw 5 card instead of 2." }),
+		ItemShop.upsert({ name: 'DRAW 3', emoji: ":small_blue_diamond:", itemCost: "POKEDOLLAR", cost: 300, description: "An item that draws 3 cards for you." }),
+		ItemShop.upsert({ name: 'DRAW 5', emoji: ":large_blue_diamond:", itemCost: "POKEDOLLAR", cost: 500, description: "An item that draws 5 cards for you." }),
 		ItemShop.upsert({ name: 'EXTRA GRAB', emoji: ":small_red_triangle:", itemCost: "POKEDOLLAR", cost: 250, description: "An item that lets you try again to get a raid card or grab another card on a pull." }),
 		ItemShop.upsert({ name: 'RAIDING PASS', emoji: ":receipt:", itemCost: "POKEDOLLAR", cost: 800, description: "A pass that lets you start raiding." }),
-		ItemShop.upsert({ name: 'FULL RESTORE', emoji: ":test_tube:", itemCost: "POKEDOLLAR", cost: 1000, description: "An item that lets you fully heal your card after a raid." }),
+		ItemShop.upsert({ name: 'FULL RESTORE', emoji: ":test_tube:", itemCost: "POKEDOLLAR", cost: 1000, description: "An item that lets you fully heal your card during a raid." }),
 		ItemShop.upsert({ name: 'RAID LURE', emoji: ":wind_chime:", itemCost: "POKEDOLLAR", cost: 1500, description: "An item that will summon a raid." }),
 
 		ItemShop.upsert({ name: 'SPECIAL ITEM', emoji: ":trident:", itemCost: "POKEDOLLAR", cost: 0, description: "Special." }),

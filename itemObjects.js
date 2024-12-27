@@ -10,7 +10,6 @@ function createItemList() {
     itemList.set("DRAW 5", useDraw5);
     itemList.set("EXTRA GRAB", useExtraGrab);
     itemList.set("RAIDING PASS", useRaidingPass);
-    itemList.set("FULL RESTORE", useFullRestore);
     itemList.set("RAID LURE", useRaidLure);
 }
 
@@ -21,6 +20,24 @@ function findItem(collection, itemName) {
         }
     }
     return null;
+}
+
+function makeButton() {
+
+    const cancelButton = new ButtonBuilder()
+        .setCustomId("cancel")
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji("✖");
+
+    const confirmButton = new ButtonBuilder()
+        .setCustomId("confirm")
+        .setStyle(ButtonStyle.Success)
+        .setEmoji("✔")
+
+    const row = new ActionRowBuilder()
+        .addComponents(cancelButton, confirmButton);
+
+    return row;
 }
 
 async function useDraw3(message) {
@@ -43,10 +60,6 @@ async function useRaidingPass(message) {
     return 0;
 }
 
-async function useFullRestore(message) {
-    await message.channel.send({ content: `${message.author}, not yet implemted.` })
-    return 0;
-}
 
 function makeRaidLureEmbed(message) {
 
@@ -76,24 +89,6 @@ function makeRaidLureConfirmEmbed(message) {
         .setDescription(`${message.author}, get ready. \n\`\`\`RAID LURE used. RAID will beign soon.\`\`\``)
 
     return raidLureEmbed;
-}
-
-function makeButton() {
-
-    const cancelButton = new ButtonBuilder()
-        .setCustomId("cancel")
-        .setStyle(ButtonStyle.Danger)
-        .setEmoji("✖");
-
-    const confirmButton = new ButtonBuilder()
-        .setCustomId("confirm")
-        .setStyle(ButtonStyle.Success)
-        .setEmoji("✔")
-
-    const row = new ActionRowBuilder()
-        .addComponents(cancelButton, confirmButton);
-
-    return row;
 }
 
 async function useRaidLure(message) {

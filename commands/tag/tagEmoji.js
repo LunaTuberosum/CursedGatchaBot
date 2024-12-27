@@ -10,11 +10,11 @@ module.exports = {
         const splitMessage = message.content.split(" ");
 
         if (splitMessage.length != 3) {
-            message.channel.send(`${message.author}, you must specify both the orinal name and the new emoji.`);
+            message.channel.send(`${message.author}, you must specify both the original name and the new emoji.`);
             return;
         }
         else if (splitMessage.length > 3) {
-            message.channel.send(`${message.author}, you must only specify both the orinal name and the new emoji.`);
+            message.channel.send(`${message.author}, you must only specify both the original name and the new emoji.`);
             return;
         }
 
