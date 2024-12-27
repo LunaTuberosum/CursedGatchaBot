@@ -296,32 +296,7 @@ module.exports = {
             }
             /// Debug
             else if (i.customId == "start") {
-                let memeberNotCount = 0;
-                for (memberIndex in party) {
-                    const member = party[memberIndex];
-                    const memeberCollector = partyCollectors[memberIndex];
-
-                    if (memeberCollector["message"]) {
-                        memeberCollector["message"].delete();
-                        memeberCollector["message"] = null;
-                    };
-                    memeberCollector["collector"] = null;
-
-                    if (!member["user"] || !member["card"]) {
-                        memeberNotCount += 1
-                        member["user"] = null
-                        member["card"] = null
-                        member["text"] = "- NA"
-                    };
-                };
-
-                if (memeberNotCount == 4) {
-                    await response.edit({ embeds: [makeFailEmebed()], components: [], files: [attachment] });
-                    return;
-                };
-                collector = null
-                await response.edit({ embeds: [makeStartEmbed(party, partyCount)], components: [], files: [attachment] });
-                await raidBattle.execute(response, party, partyCount, attachment);
+                collector.stop();
             };
         });
 
