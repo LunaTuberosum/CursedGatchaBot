@@ -7,6 +7,13 @@ function getLevelUpCost(card) {
     return levelUpCost[card.item.card_type][card.level + 1];
 }
 
+function getCurrentStats(card) {
+    if (card.level == 0) {
+        return { "HP": "20", "Attack": "0", "Defence": "0", "Speed": "0" };
+    }
+    return stateTypes[card.item.name][card.level];
+}
+
 function getNewStats(card) {
     return stateTypes[card.item.name][card.level + 1];
 }
@@ -27,7 +34,7 @@ function getSpecial(card) {
     return specialData[card.item.card_type][card.item.type]
 }
 
-module.exports = { getLevelUpCost, getNewStats, getPassive, getSpecial };
+module.exports = { getLevelUpCost, getCurrentStats, getNewStats, getPassive, getSpecial };
 
 // const { Collection } = require('discord.js');
 // const fs = require('node:fs');

@@ -312,63 +312,63 @@
     "Heatmore": {
         "1": {
             "HP" : "80",
-            "Attack" : "70",
-            "Defence" : "85",
-            "Speed" : "70"
+            "Attack" : "3",
+            "Defence" : "2",
+            "Speed" : "4"
         },
         "2": {
-            "HP" : "100",
-            "Attack" : "77",
-            "Defence" : "92",
-            "Speed" : "77"
+            "HP" : "90",
+            "Attack" : "5",
+            "Defence" : "2",
+            "Speed" : "5"
         },
         "3": {
-            "HP" : "120",
-            "Attack" : "85",
-            "Defence" : "100",
-            "Speed" : "85"
+            "HP" : "110",
+            "Attack" : "6",
+            "Defence" : "5",
+            "Speed" : "6"
         },
         "4": {
-            "HP" : "140",
-            "Attack" : "92",
-            "Defence" : "107",
-            "Speed" : "92"
+            "HP" : "120",
+            "Attack" : "8",
+            "Defence" : "5",
+            "Speed" : "7"
         },
         "5": {
-            "HP" : "160",
-            "Attack" : "100",
-            "Defence" : "115",
-            "Speed" : "100"
+            "HP" : "140",
+            "Attack" : "9",
+            "Defence" : "8",
+            "Speed" : "9"
         },
         "6": {
-            "HP" : "200",
-            "Attack" : "118",
-            "Defence" : "137",
-            "Speed" : "118"
+            "HP" : "150",
+            "Attack" : "11",
+            "Defence" : "8",
+            "Speed" : "10"
         },
         "7": {
-            "HP" : "220",
-            "Attack" : "126",
-            "Defence" : "159",
-            "Speed" : "126"
+            "HP" : "170",
+            "Attack" : "12",
+            "Defence" : "11",
+            "Speed" : "11"
         },
         "8": {
-            "HP" : "260",
-            "Attack" : "155",
-            "Defence" : "181",
-            "Speed" : "155"
+            "HP" : "180",
+            "Attack" : "14",
+            "Defence" : "11",
+            "Speed" : "12"
         },
         "9": {
-            "HP" : "280",
-            "Attack" : "173",
-            "Defence" : "203",
-            "Speed" : "173"
+            "HP" : "200",
+            "Attack" : "15",
+            "Defence" : "14",
+            "Speed" : "13"
         },
         "10": {
-            "HP" : "320",
-            "Attack" : "196",
-            "Defence" : "226",
-            "Speed" : "196"
+            "HP" : "210",
+            "Attack" : "17",
+            "Defence" : "14",
+            "Speed" : "15"
         }
     }
 }

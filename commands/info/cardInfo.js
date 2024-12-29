@@ -1,7 +1,6 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, CardDatabase, Wishlists, UserCards } = require("../../dbObjects.js");
-const { raritySymbol, formatName } = require("../../pullingObjects.js");
-const Canvas = require('@napi-rs/canvas');
+const { raritySymbol, makePokeImage, formatName } = require("../../pullingObjects.js");
 
 function makeCardImageEmbed(pokemonData, cardCode, user) {
     const cardImageEmbed = new EmbedBuilder()
@@ -75,16 +74,8 @@ module.exports = {
                 let owner = message.client.users.fetch(card.user_id);
                 owner.then( async function(r) {
                     pokemonData = await CardDatabase.findOne({ where: { id: card.item_info }});
-                    const canvas = Canvas.createCanvas(720, 1290);
-                    const context = canvas.getContext('2d');
 
-                    const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}.png`);
-                    const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-                    context.drawImage(img1, 0, 0, img1.width, img1.height);
-                    context.drawImage(img2, 0, 0, img1.width, img1.height);
-
-                    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+                    attachment = new AttachmentBuilder(await makePokeImage(pokemonData, card), { name: 'poke-image.png' });
                     imageEmbed = makeCardImageEmbed(pokemonData, splitMessage[1], r);
                     statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { card_id: pokemonData.card_id } })).length);
                     response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
@@ -101,20 +92,12 @@ module.exports = {
             
             const user = await Users.findOne({ where: { user_id: message.author.id } });
 
-            userCards = await user.getCards();
-            lastItem = userCards[userCards.length - 1];
+            const userCards = await user.getCards();
+            const lastItem = userCards[userCards.length - 1];
 
             pokemonData = lastItem.item;
-            const canvas = Canvas.createCanvas(720, 1290);
-            const context = canvas.getContext('2d');
 
-            const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}.png`);
-            const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-            context.drawImage(img1, 0, 0, img1.width, img1.height);
-            context.drawImage(img2, 0, 0, img1.width, img1.height);
-
-            attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+            attachment = new AttachmentBuilder(await makePokeImage(pokemonData, lastItem), { name: 'poke-image.png' });
             imageEmbed = makeCardImageEmbed(pokemonData, lastItem.item_id, message.author);
             statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { user_id: message.author.id, card_id: pokemonData.card_id } })).length);
             response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });

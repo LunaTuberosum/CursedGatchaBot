@@ -41,7 +41,7 @@ function makeRaidButton() {
 function makeHealthBar(maxHealth, curHealth) {
     const green = "🟩";
     const red = "🟥";
-    let curHealthSquares = Math.floor(curHealth / 20); 
+    let curHealthSquares = Math.ceil(curHealth / 20); 
     
     let healthBar = "";
 

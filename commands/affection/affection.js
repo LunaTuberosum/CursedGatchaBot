@@ -1,16 +1,16 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, ItemShop } = require('../../dbObjects.js');
 const { formatName } = require("../../pullingObjects.js");
-const { getLevelUpCost, getNewStats, getPassive, getSpecial } = require("../../affectionObjects.js")
+const { getLevelUpCost, getCurrentStats, getNewStats, getPassive, getSpecial } = require("../../affectionObjects.js")
 const Canvas = require('@napi-rs/canvas');
 
-function makeAffectionEmbed(cardCode, card, costData, statChanges, levelUnlocks) {
+function makeAffectionEmbed(cardCode, card, cardHP, costData, statChanges, levelUnlocks) {
 
     const affectionEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle(`Affection - ${cardCode}`)
         .setThumbnail(`attachment://poke-image.png`)
-        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:**\`${card.level}\` \n**Attack:**\`${card.attack}\` \n**Defence:**\`${card.defence}\` \n**Speed:**\`${card.speed}\` \n\n\`LV. ${ card.level == 10 ? 'MAX' : `${card.level} -> LV. ${card.level + 1}`}\` \n\`\`\`diff\nMaterials: \n${costData} \n\nStats: \n${statChanges}\`\`\` \n\n\`Level Unlocks:\` \n\`\`\`ansi\n${levelUnlocks["1"]} \n\n${levelUnlocks["5"]} \n\n${levelUnlocks["10"]}\`\`\``)
+        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:**\`${card.level}\` \n**HP:**\`${makeHealthBar(cardHP, cardHP)} ${cardHP} / ${cardHP}\` \n**Attack:**\`${card.attack}\` \n**Defence:**\`${card.defence}\` \n**Speed:**\`${card.speed}\` \n\n\`LV. ${ card.level == 10 ? 'MAX' : `${card.level} -> LV. ${card.level + 1}`}\` \n\`\`\`diff\nMaterials: \n${costData} \n\nStats: \n${statChanges}\`\`\` \n\n\`Level Unlocks:\` \n\`\`\`ansi\n${levelUnlocks["1"]} \n\n${levelUnlocks["5"]} \n\n${levelUnlocks["10"]}\`\`\``)
         .setFooter({ text: `Learn info about specials and passives with info button below`})
 
     return affectionEmbed;
@@ -38,6 +38,7 @@ function affectionEmbedBuilder(splitMessage, card) {
     let costData
 
     const newStats = getNewStats(card);
+    const currStats = getCurrentStats(card);
     let statChanges;
 
     if (card.level == 10) {
@@ -45,7 +46,7 @@ function affectionEmbedBuilder(splitMessage, card) {
         costData = `- NONE`;
     }
     else {
-        statChanges = `+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
+        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
         costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
     };
 
@@ -57,7 +58,7 @@ function affectionEmbedBuilder(splitMessage, card) {
         "10": `[0;${card.level == 10 ? 37 : 30}m${card.level >= 10 ? " " : "🔒"} Lv. 10: ${specialData["Name"]} ★ \n${card.level >= 10 ? " " : "🔒"} Lv. 10: ${passiveData["Name"]} ★★ `
     };
 
-    return new makeAffectionEmbed(splitMessage[1], card, costData, statChanges, levelUnlocks);
+    return new makeAffectionEmbed(splitMessage[1], card, currStats["HP"], costData, statChanges, levelUnlocks);
 
 }
 
@@ -131,7 +132,7 @@ function makeLevelCancelEmbed(cardCode, card) {
         .setColor("#bd0f0f")
         .setTitle(`Affection - ${cardCode} [Cancel]`)
         .setThumbnail(`attachment://poke-image.png`)
-        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n\`Lv. 4\` \n\`\`\`diff\nLevel up has been canceled.\`\`\``)
+        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:** \`${card.level}\` \n\`\`\`diff\nLevel up has been canceled.\`\`\``)
 
     return levelEmbed;
 }
@@ -142,7 +143,7 @@ function makeLevelFailEmbed(cardCode, card) {
         .setColor("#bd0f0f")
         .setTitle(`Affection - ${cardCode} [Cancel]`)
         .setThumbnail(`attachment://poke-image.png`)
-        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n\`Lv. 4\` \n\`\`\`diff\nYou can not afford to level up.\`\`\``)
+        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:** \`${card.level}\` \n\`\`\`diff\nYou can not afford to level up.\`\`\``)
 
     return levelEmbed;
 }
@@ -170,11 +171,13 @@ function levelEmbedBuilder(splitMessage, card) {
     let costData;
 
     const newStats = getNewStats(card);
+    const currStats = getCurrentStats(card);
+    
     let statChanges;
 
     if (card.level < 10) {
         costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
-        statChanges = `+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
+        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
     };
 
     const passiveData = getPassive(card);
@@ -186,9 +189,10 @@ function levelEmbedBuilder(splitMessage, card) {
 
 function levelConfirmEmbedBuilder(splitMessage, card) {
     const newStats = getNewStats(card);
+    const currStats = getCurrentStats(card);
     let statChanges;
 
-    if (card.level < 10) statChanges = `+ ${card.attack} -> ${newStats["Attack"]} Attack \n+ ${card.defence} -> ${newStats["Defence"]} Defence \n+ ${card.speed} -> ${newStats["Speed"]} Speed`
+    if (card.level < 10) statChanges = `+ ${currStats["HP"]} -> ${newStats["HP"]} HP \n+ ${card.attack} -> ${newStats["Attack"]} Attack \n+ ${card.defence} -> ${newStats["Defence"]} Defence \n+ ${card.speed} -> ${newStats["Speed"]} Speed`
 
     const passiveData = getPassive(card);
     const specialData = getSpecial(card);
@@ -206,6 +210,25 @@ function findItem(collection, itemName) {
     return null;
 }
 
+function makeHealthBar(maxHealth, curHealth) {
+    const green = "🟩";
+    const red = "🟥";
+    let curHealthSquares = Math.ceil(curHealth / 20); 
+    
+    let healthBar = "";
+
+    for (let health = 1; health <= (maxHealth / 20); health++) {
+        if (health <= curHealthSquares) {
+            healthBar += green;
+        }
+        else {
+            healthBar += red;
+        }
+    }
+
+    return healthBar;
+}
+
 module.exports = {
     name: "affection",
     shortName: ["a"],
@@ -218,6 +241,7 @@ module.exports = {
         let infoEmbed;
         let levelEmbed;
         let levelConfirmEmbed;
+        let levelFailEmbed;
         let levelCancelEmbed;
 
         let affectionButton;
@@ -230,64 +254,62 @@ module.exports = {
         let attachment;
         let response = await message.channel.send("...");
 
-        if (splitMessage.length > 1) {
-            if (splitMessage[1].length == 6) {
-                
-                try {
-                    const user = await Users.findOne({ where: { user_id: message.author.id } });
-                    if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); return; }
-                    const userCards = await user.getCards();
-
-                    
-                    for (const card of userCards) {
-                        if (card.item_id == splitMessage[1]) {
-                            aCard = card
-                            
-                            const canvas = Canvas.createCanvas(720, 1290);
-                            const context = canvas.getContext('2d');
-
-                            const img1 = await Canvas.loadImage(`./pokeImages/${card.item.card_id}-${card.item.name}.png`);
-                            const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-                            context.drawImage(img1, 0, 0, img1.width, img1.height);
-                            context.drawImage(img2, 0, 0, img1.width, img1.height);
-
-                            attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
-
-                            newStats = getNewStats(card);
-                            affectionEmbed = affectionEmbedBuilder(splitMessage, card);
-                            affectionButton = makeButtonAffection();
-                            if (card.level == 10) affectionButton.components[0].setDisabled(true);
-
-                            infoEmbed = infoEmbedMaker(splitMessage, card);
-                            infoButton = makeButtonInfo();
-
-                            levelCost = getLevelUpCost(card);
-                            levelEmbed = new levelEmbedBuilder(splitMessage, card);
-                            levelConfirmEmbed = new levelConfirmEmbedBuilder(splitMessage, card);
-                            levelCancelEmbed = new makeLevelCancelEmbed(splitMessage[1], card);
-                            levelFailEmbed = new makeLevelFailEmbed(splitMessage[1], card);
-                            levelButton = makeButtonLevel();
-
-                            await response.edit({ content: "", embeds: [affectionEmbed], components: [affectionButton], files: [attachment] });
-                            break;
-                        }
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    message.channel.send({ content: `${message.author} you do not own that card.` });
-                    return;
-                }
-            }
-            else {
-                message.channel.send({ content: `${message.author} please enter a valid card code.` });
-                return;
-            }
-            
-        }
-        else {
+        if (splitMessage.length <= 1) {
             message.channel.send({ content: `${message.author} please enter a valid card code.` });
+            return;
+        }
+        if (splitMessage[1].length != 6) {
+            message.channel.send({ content: `${message.author} please enter a valid card code.` });
+            return;
+        }
+            
+        try {
+            const user = await Users.findOne({ where: { user_id: message.author.id } });
+            if (!user) { 
+                await message.channel.send(`${message.author}, you are not registered. Please register using \`c!register\`.`); 
+                return; 
+            }
+            const userCards = await user.getCards();
+
+            
+            for (const card of userCards) {
+                if (card.item_id == splitMessage[1]) {
+                    aCard = card
+                    
+                    const canvas = Canvas.createCanvas(720, 1290);
+                    const context = canvas.getContext('2d');
+
+                    const img1 = await Canvas.loadImage(`./pokeImages/${card.item.card_id}-${card.item.name}.png`);
+                    const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
+
+                    context.drawImage(img1, 0, 0, img1.width, img1.height);
+                    context.drawImage(img2, 0, 0, img1.width, img1.height);
+
+                    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+
+                    newStats = getNewStats(card);
+                    affectionEmbed = affectionEmbedBuilder(splitMessage, card);
+                    affectionButton = makeButtonAffection();
+                    if (card.level == 10) affectionButton.components[0].setDisabled(true);
+
+                    infoEmbed = infoEmbedMaker(splitMessage, card);
+                    infoButton = makeButtonInfo();
+
+                    levelCost = getLevelUpCost(card);
+                    levelEmbed = new levelEmbedBuilder(splitMessage, card);
+                    levelConfirmEmbed = new levelConfirmEmbedBuilder(splitMessage, card);
+                    levelCancelEmbed = new makeLevelCancelEmbed(splitMessage[1], card);
+                    levelFailEmbed = new makeLevelFailEmbed(splitMessage[1], card);
+                    levelButton = makeButtonLevel();
+
+                    await response.edit({ content: "", embeds: [affectionEmbed], components: [affectionButton], files: [attachment] });
+                    break;
+                }
+            }
+        }
+        catch (e) {
+            console.error(e);
+            message.channel.send({ content: `${message.author} you do not own that card.` });
             return;
         }
 

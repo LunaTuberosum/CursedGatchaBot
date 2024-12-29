@@ -1,6 +1,7 @@
 const standedPack = require("./packs/standeredPack.json");
 const allCards = require("./packs/allCards.json");
 const { currency } = require("./dbObjects.js");
+const Canvas = require('@napi-rs/canvas');
 
 function getWhichStar() {
 
@@ -20,6 +21,31 @@ function getWhichStar() {
         const pokemon = pullRandomCard(standedPack["rare"]);
         return allCards[pokemon];
     }
+}
+
+async function makePokeImage(pokemonData, cardData) {
+    const canvas = Canvas.createCanvas(720, 1290);
+    const context = canvas.getContext('2d');
+
+    const bottom = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Bottom.png`);
+    const frame = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
+    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top.png`);
+
+    let  affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
+    
+    if (cardData.level >= 5 && cardData.level < 10) {
+        affection = await Canvas.loadImage(`./pokeImages/affection/level5.png`);
+    }
+    else if (cardData.level >= 10) {
+        affection = await Canvas.loadImage(`./pokeImages/affection/level10.png`);
+    }
+
+    context.drawImage(bottom, 0, 0, bottom.width, bottom.height);
+    context.drawImage(frame, 0, 0, bottom.width, bottom.height);
+    context.drawImage(top, 0, 0, bottom.width, bottom.height);
+    context.drawImage(affection, 0, 0, bottom.width, bottom.height);
+
+    return canvas.encode('png');
 }
 
 function pullRandomCard(starArray) {
@@ -69,4 +95,4 @@ function formatName(pokemonData) {
     else return `${pokemonData.card_id}-${pokemonData.name}`;
 }
 
-module.exports = { getWhichStar, addBalance, raritySymbol, formatName };
+module.exports = { getWhichStar, makePokeImage, addBalance, raritySymbol, formatName };

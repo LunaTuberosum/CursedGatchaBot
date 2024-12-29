@@ -50,8 +50,8 @@ module.exports = {
             try {
             	await command.execute(message);
             } catch (error) {
-            	console.error(`Error executing ${message.commandName}`);
-            	console.error(error);
+            	console.log(`Error executing ${message.commandName}`);
+            	console.log(error);
             }
         }
 	},
