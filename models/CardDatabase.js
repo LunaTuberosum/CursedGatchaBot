@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         card_type: {
 			type: DataTypes.STRING,
 		},
+        poke_type: {
+			type: DataTypes.STRING,
+		},
         series: {
 			type: DataTypes.STRING,
 		},

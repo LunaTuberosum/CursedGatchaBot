@@ -9,9 +9,16 @@ function getLevelUpCost(card) {
 
 function getCurrentStats(card) {
     if (card.level == 0) {
-        return { "HP": "20", "Attack": "0", "Defence": "0", "Speed": "0" };
+        return { "HP": "20", "Attack": "0", "Defense": "0", "Speed": "0" };
     }
     return stateTypes[card.item.name][card.level];
+}
+
+function getCurrentStatsSeperate(pokemonData, card) {
+    if (card.level == 0) {
+        return { "HP": "20", "Attack": "0", "Defense": "0", "Speed": "0" };
+    }
+    return stateTypes[pokemonData.name][card.level];
 }
 
 function getNewStats(card) {
@@ -19,22 +26,23 @@ function getNewStats(card) {
 }
 
 function getPassive(card) {
+
     if (card.item.card_type == "HOLOFRAME") {
-        return passiveData[card.item.card_type][card.item.name]
+        return passiveData[card.item.series][card.item.card_type][card.item.name]
     }
 
-    return passiveData[card.item.card_type][card.item.type]
+    return passiveData[card.item.series][card.item.card_type][card.item.type]
 }
 
 function getSpecial(card) {
     if (card.item.card_type == "HOLOFRAME") {
-        return specialData[card.item.card_type][card.item.name]
+        return specialData[card.item.series][card.item.card_type][card.item.name]
     }
     
-    return specialData[card.item.card_type][card.item.type]
+    return specialData[card.item.series][card.item.card_type][card.item.type]
 }
 
-module.exports = { getLevelUpCost, getCurrentStats, getNewStats, getPassive, getSpecial };
+module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial };
 
 // const { Collection } = require('discord.js');
 // const fs = require('node:fs');

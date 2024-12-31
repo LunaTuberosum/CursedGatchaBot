@@ -92,6 +92,7 @@ function makeRaidLureConfirmEmbed(message) {
 }
 
 async function useRaidLure(message) {
+    return;
     const server = await ServerInfo.findOne({ where: { server_id: message.guild.id, raid_channel: message.channel.id } });
     
     if (!server) {

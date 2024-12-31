@@ -1,6 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder  } = require("discord.js");
-const { CardDatabase, Users, ItemShop } = require('../../dbObjects.js');
-const { getWhichStar, raritySymbol } = require("../../pullingObjects.js");
+const { CardDatabase, Users, ItemShop, UserCards } = require('../../dbObjects.js');
+const { getWhichStar, raritySymbol, makePokeImage } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 
 var pokemonData = {};
@@ -31,7 +31,7 @@ module.exports = {
         
     async execute(message) {
 
-        pokemonData = getWhichStar();
+        pokemonData = getWhichStar("random");
 
         const card = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] } });
 
@@ -67,7 +67,8 @@ module.exports = {
  
         const userCode = await user.user_code
 
-        await user.addCard(userCode + "0000", card);
+        const cardData = await user.addCard(userCode + "0000", card);
+        
         user.last_code = userCode + "0000";
         user.save();
         card.times_pulled++;
@@ -75,16 +76,7 @@ module.exports = {
         card.save();
         user.addItem(await ItemShop.findOne({ where: { name: "POKEDOLLAR" } }), 100);
 
-        const canvas = Canvas.createCanvas(720, 1290);
-        const context = canvas.getContext('2d');
-
-        const img1 = await Canvas.loadImage(`./pokeImages/${card.card_id}-${card.name}.png`);
-        const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-        context.drawImage(img1, 0, 0, img1.width, img1.height);
-        context.drawImage(img2, 0, 0, img1.width, img1.height);
-
-        attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+        attachment = new AttachmentBuilder(await makePokeImage(card, cardData), { name: 'poke-image.png' });
 
         const imageEmbed = makeImageEmbed(userCode + "0000");
         const infoEmbed = makeEmbed();

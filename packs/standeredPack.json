@@ -1,14 +1,34 @@
 {
-    "common" : [
-        "Pidgey"
-    ],
+    "common" : {
+        "EVE1": 
+        {    
+            "Squirtle": {
+                "100" : "BASIC",
+                "10" : "HOLO"
+            }
+        }
+    },
 
-    "uncommon" : [
-        "Heatmore"
-    ],
+    "uncommon" : {
+        "EVE1": 
+        {   
+            "Wartortle": {
+                "100" : "BASIC",
+                "10" : "HOLO"
+            }
+        }
+    },
 
-    "rare" : [
-        "Ludicolo"
-    ]
+    "rare" : {
+        "EVE1": 
+        {   
+            "Blastoise": {
+                "100" : "BASIC",
+                "10" : "HOLO",
+                "5" : "FRAME",
+                "1" : "HOLOFRAME"
+            }
+        }
+    }
 
 }

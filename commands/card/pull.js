@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
 const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop } = require('../../dbObjects.js');
-const { getWhichStar, addBalance, rarityStars } = require("../../pullingObjects.js");
+const { getWhichStar, formatName, makePokeImageContext } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -31,9 +31,7 @@ function findItem(collection, itemName) {
     return null;
 }
 
-async function addCard(code, user, pokemonData) {
-    const pokeItem = await CardDatabase.findOne({ where: {card_id: pokemonData["CardID"] || "001" } });
-
+async function addCard(code, user, pokeItem) {
     await user.addCard(code, pokeItem);
 }
 
@@ -88,15 +86,15 @@ async function checkGrabCard(message, response, pokemonData, i) {
         user.grab_cooldown = now + 600_000;
         user.save();
 
-        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001" } });
+        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", card_type: pokemonData["CardType"] } });
         pokeItem.times_pulled++;
         pokeItem.in_circulation++;
         pokeItem.save();
 
         cardCode = await createCardID(user);
-        addCard(cardCode, user, pokemonData);
+        addCard(cardCode, user, pokeItem);
 
-        await message.channel.send({ content: `${i.user} took the **${pokemonData["Name"]}** card \`${cardCode}\`.` });
+        await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
         await i.deferUpdate();
         await checkGrabs(response, message);
 
@@ -127,19 +125,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
 async function pullMechanics(message, pokemonData1, pokemonData2) {
     
-    const canvas = Canvas.createCanvas(2520, 1490);
-    const context = canvas.getContext('2d');
-
-    const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData1["CardID"]}-${pokemonData1["Name"]}.png`);
-    const img2 = await Canvas.loadImage(`./pokeImages/${pokemonData2["CardID"]}-${pokemonData2["Name"]}.png`);
-    const frame = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-    context.drawImage(img1, 0, 100, img2.width, img1.height);
-    context.drawImage(frame, 0, 100, img2.width, img1.height);
-    context.drawImage(img2, 900, 100, img2.width, img2.height);
-    context.drawImage(frame, 900, 100, img2.width, img2.height);
-
-    let attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-images.png' });
+    let attachment = new AttachmentBuilder(await makePokeImageContext(pokemonData1, pokemonData2), { name: 'poke-images.png' });
 
     const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 
@@ -185,8 +171,8 @@ module.exports = {
                 user.pull_cooldown = now + (20 * 60_000);
                 user.save();
 
-                pokemonData1 = getWhichStar();
-                pokemonData2 = getWhichStar();
+                pokemonData1 = getWhichStar("random");
+                pokemonData2 = getWhichStar("random");
 
                 usersWishArray = [];
 

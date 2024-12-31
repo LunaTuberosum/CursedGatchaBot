@@ -10,7 +10,7 @@
     },
     "pull": {
         "Command": "`c!pull`, `c!p`",
-        "Description": "Pulls two random cards to the current channel. Anyone can grab these cards."
+        "Description": "Draws two random cards to the current channel. Anyone can grab these cards."
     },
     "release": {
         "Command": "`c!release`, `c!r`",

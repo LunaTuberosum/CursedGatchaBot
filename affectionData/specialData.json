@@ -1,57 +1,72 @@
 {
-    "BASIC": {
-        "Normal": {
-            "Name": "Quick Attack",
-            "Type": "Normal",
-            "Levels": {
-                "5": "You will do a quick attack that is 2x power attack.",
-                "10": "You will do a quick attack that is 2.5x attack enemy. After using this ability your speed will increase by 2x."
+    "EVE1": {
+        "BASIC": {
+            "Normal": {
+                "Name": "Quick Attack",
+                "Type": "Normal",
+                "Levels": {
+                    "5": "You will do a quick attack that is 2x power attack.",
+                    "10": "You will do a quick attack that is 2.5x attack enemy. After using this ability your speed will increase by 2x."
+                }
+            },
+            "Water": {
+                "Name": "Water Gun",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is 20 power attack.",
+                    "10": "Shoot a stream of water that is 40 power attack."
+                }
+            },
+            "Fire": {
+                "Name": "Fire Special",
+                "Type": "Fire",
+                "Levels": {
+                    "5": "NA",
+                    "10": "NA"
+                }
             }
         },
-        "Water": {
-            "Name": "Water Gun",
-            "Type": "Water",
-            "Levels": {
-                "5": "Shoot a stream of water that is 20 power attack.",
-                "10": "Shoot a stream of water that is 40 power attack."
+        "HOLO" : {
+            "Water": {
+                "Name": "Water Gun",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is 20 power attack.",
+                    "10": "Shoot a stream of water that is 40 power attack."
+                }
             }
         },
-        "Fire": {
-            "Name": "Fire Special",
-            "Type": "Fire",
-            "Levels": {
-                "5": "NA",
-                "10": "NA"
+        "FRAME" : {
+            "Water": {
+                "Name": "Water Gun+",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is 30 power attack.",
+                    "10": "Shoot a stream of water that is 60 power attack"
+                }
+            }
+        },
+        "HOLOFRAME" : {
+            "Blastoise": {
+                "Name": "Hydro Pump",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shot a strong stream of water that is 55 power attack.",
+                    "10": "Shot a strong stream of water that is 110 power attack."
+                }
             }
         }
     },
-    "HOLO" : {
-        "Water": {
-            "Name": "Water Gun",
-            "Type": "Water",
-            "Levels": {
-                "5": "Shoot a stream of water that is 20 power attack.",
-                "10": "Shoot a stream of water that is 40 power attack."
-            }
-        }
-    },
-    "FRAME" : {
-        "Water": {
-            "Name": "Water Gun+",
-            "Type": "Water",
-            "Levels": {
-                "5": "Shoot a stream of water that is 30 power attack.",
-                "10": "Shoot a stream of water that is 60 power attack"
-            }
-        }
-    },
-    "HOLOFRAME" : {
-        "Ludicolo": {
-            "Name": "Hydro Pump",
-            "Type": "Water",
-            "Levels": {
-                "5": "Shot a strong stream of water that is 55 power attack.",
-                "10": "Shot a strong stream of water that is 110 power attack."
+    "CRAP": {
+        "BASIC":{
+            "Water": {
+                "Name": "Drawn from Memory",
+                "Type": "Colorless",
+                "Levels": {
+                    "1": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
+                    "5": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
+                    "10": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch."
+                }
             }
         }
     }

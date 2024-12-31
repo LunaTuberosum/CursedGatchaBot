@@ -1,6 +1,6 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, ItemShop } = require('../../dbObjects.js');
-const { formatName } = require("../../pullingObjects.js");
+const { formatName, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost, getCurrentStats, getNewStats, getPassive, getSpecial } = require("../../affectionObjects.js")
 const Canvas = require('@napi-rs/canvas');
 
@@ -10,7 +10,7 @@ function makeAffectionEmbed(cardCode, card, cardHP, costData, statChanges, level
         .setColor("#616161")
         .setTitle(`Affection - ${cardCode}`)
         .setThumbnail(`attachment://poke-image.png`)
-        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:**\`${card.level}\` \n**HP:**\`${makeHealthBar(cardHP, cardHP)} ${cardHP} / ${cardHP}\` \n**Attack:**\`${card.attack}\` \n**Defence:**\`${card.defence}\` \n**Speed:**\`${card.speed}\` \n\n\`LV. ${ card.level == 10 ? 'MAX' : `${card.level} -> LV. ${card.level + 1}`}\` \n\`\`\`diff\nMaterials: \n${costData} \n\nStats: \n${statChanges}\`\`\` \n\n\`Level Unlocks:\` \n\`\`\`ansi\n${levelUnlocks["1"]} \n\n${levelUnlocks["5"]} \n\n${levelUnlocks["10"]}\`\`\``)
+        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n**Level:**\`${card.level}\` \n**HP:**\`${makeHealthBar(cardHP, cardHP)} ${cardHP} / ${cardHP}\` \n**Attack:**\`${card.attack}\` \n**Defense:**\`${card.defence}\` \n**Speed:**\`${card.speed}\` \n\n\`LV. ${ card.level == 10 ? 'MAX' : `${card.level} -> LV. ${card.level + 1}`}\` \n\`\`\`diff\nMaterials: \n${costData} \n\nStats: \n${statChanges}\`\`\` \n\n\`Level Unlocks:\` \n\`\`\`ansi\n${levelUnlocks["1"]} \n\n${levelUnlocks["5"]} \n\n${levelUnlocks["10"]}\`\`\``)
         .setFooter({ text: `Learn info about specials and passives with info button below`})
 
     return affectionEmbed;
@@ -46,7 +46,7 @@ function affectionEmbedBuilder(splitMessage, card) {
         costData = `- NONE`;
     }
     else {
-        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
+        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
         costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
     };
 
@@ -177,7 +177,7 @@ function levelEmbedBuilder(splitMessage, card) {
 
     if (card.level < 10) {
         costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
-        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defence"] - card.defence} Defence \n+ ${newStats["Speed"] - card.speed} Speed`;
+        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
     };
 
     const passiveData = getPassive(card);
@@ -192,7 +192,7 @@ function levelConfirmEmbedBuilder(splitMessage, card) {
     const currStats = getCurrentStats(card);
     let statChanges;
 
-    if (card.level < 10) statChanges = `+ ${currStats["HP"]} -> ${newStats["HP"]} HP \n+ ${card.attack} -> ${newStats["Attack"]} Attack \n+ ${card.defence} -> ${newStats["Defence"]} Defence \n+ ${card.speed} -> ${newStats["Speed"]} Speed`
+    if (card.level < 10) statChanges = `+ ${currStats["HP"]} -> ${newStats["HP"]} HP \n+ ${card.attack} -> ${newStats["Attack"]} Attack \n+ ${card.defence} -> ${newStats["Defense"]} Defense \n+ ${card.speed} -> ${newStats["Speed"]} Speed`
 
     const passiveData = getPassive(card);
     const specialData = getSpecial(card);
@@ -275,17 +275,8 @@ module.exports = {
             for (const card of userCards) {
                 if (card.item_id == splitMessage[1]) {
                     aCard = card
-                    
-                    const canvas = Canvas.createCanvas(720, 1290);
-                    const context = canvas.getContext('2d');
 
-                    const img1 = await Canvas.loadImage(`./pokeImages/${card.item.card_id}-${card.item.name}.png`);
-                    const img2 = await Canvas.loadImage(`./pokeImages/frames/Normal-Frame.png`);
-
-                    context.drawImage(img1, 0, 0, img1.width, img1.height);
-                    context.drawImage(img2, 0, 0, img1.width, img1.height);
-
-                    attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-image.png' });
+                    attachment = new AttachmentBuilder(await makePokeImage(card.item, card), { name: 'poke-image.png' });
 
                     newStats = getNewStats(card);
                     affectionEmbed = affectionEmbedBuilder(splitMessage, card);
@@ -385,7 +376,7 @@ module.exports = {
 
                     aCard.level += 1;
                     aCard.attack = newStats["Attack"]
-                    aCard.defence = newStats["Defence"]
+                    aCard.defense = newStats["Defense"]
                     aCard.speed = newStats["Speed"]
                     aCard.save()
 

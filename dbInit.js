@@ -27,17 +27,20 @@ const imageFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.png
 sequelize.sync({ force }).then(async () => {
 	const database = [ ];
 
-	for (const card in allCards) {
-		database.push(CardDatabase.upsert({ 
-			name: allCards[card]["Name"],
-			type: allCards[card]["Type"],
-			card_id: allCards[card]["CardID"],
-			drawn_date: allCards[card]["DrawDate"],
-			poke_number: allCards[card]["Poke#"],
-			rarity: allCards[card]["Rarity"],
-			card_type: allCards[card]["CardType"],
-			series: allCards[card]["Series"]})
-		);
+	for (const series in allCards) {
+		
+		for (const card in allCards[series])
+			database.push(CardDatabase.upsert({ 
+				name: allCards[series][card]["Name"],
+				type: allCards[series][card]["Type"],
+				card_id: allCards[series][card]["CardID"],
+				drawn_date: allCards[series][card]["DrawDate"],
+				poke_number: allCards[series][card]["Poke#"],
+				rarity: allCards[series][card]["Rarity"],
+				card_type: allCards[series][card]["CardType"],
+				poke_type: allCards[series][card]["PokeType"],
+				series: allCards[series][card]["Series"]})
+			);
 	}
 
 	const shop = [
