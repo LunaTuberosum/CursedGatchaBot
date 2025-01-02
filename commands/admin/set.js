@@ -13,27 +13,17 @@ module.exports = {
                 return;
             }
 
-            if (!server) {
-                if (splitMessage[1].toLowerCase() == "pull") {
-                    await ServerInfo.create({ server_id: message.guild.id, pull_channel: message.channel.id })
-                }
-                else if (splitMessage[1].toLowerCase() == "raid") {
-                    await ServerInfo.create({ server_id: message.guild.id, raid_channel: message.channel.id })
-                }
+            if (!server) { await message.channal.send(`${message.author}, this server hasn't been set up. Please contact an admin`); return; }
 
 
+            if (splitMessage[1].toLowerCase() == "pull") {
+                server.pull_channel = message.channel.id
             }
-            else {
-
-                if (splitMessage[1].toLowerCase() == "pull") {
-                    server.pull_channel = message.channel.id
-                }
-                else if (splitMessage[1].toLowerCase() == "raid") {
-                    server.raid_channel = message.channel.id
-                }
-                server.save()
-
+            else if (splitMessage[1].toLowerCase() == "raid") {
+                server.raid_channel = message.channel.id
             }
+            server.save()
+
             
             const output = `${splitMessage[1][0].toUpperCase()}${splitMessage[1].substring(1)}`
             await message.channel.send(`${output} channel is set to ${message.channel}`);
