@@ -61,7 +61,7 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
     const hp = await Canvas.loadImage(`./pokeImages/health/${getCurrentStatsSeperate(pokemonData, cardData)["HP"]}.png`);
     const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top.png`);
 
-    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/moves.png`)
+    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
 
     let  affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
     
@@ -108,6 +108,8 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     let hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
     let top = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Top.png`);
 
+    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["CardType"]}/${pokemonData["Type"]}/Moves.png`);
+
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     
     if (pokemonData["PokeType"] == "BASIC") {
@@ -124,6 +126,7 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     context.drawImage(frame, x, y, bottom.width, bottom.height);
     context.drawImage(hp, x, y, bottom.width, bottom.height);
     context.drawImage(top, x, y, bottom.width, bottom.height);
+    context.drawImage(moves, x, y, bottom.width, bottom.height);
     context.drawImage(affection, x, y, bottom.width, bottom.height);
     
     if (pokemonData["CardType"] == "HOLO") {
@@ -172,7 +175,6 @@ function pullRandomCard(starArray) {
     }
 
     const pokeList = Object.keys(starArray)
-    console.log(pokeList);
     
     let cardName = 'None';
     let cardType = 'None';
