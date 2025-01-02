@@ -47,7 +47,7 @@ function affectionEmbedBuilder(splitMessage, card) {
     }
     else {
         statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
-        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
+        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} \n- ${levelCost["Money"]} POKEDOLLARS`
     };
 
     const passiveData = getPassive(card);
@@ -176,7 +176,7 @@ function levelEmbedBuilder(splitMessage, card) {
     let statChanges;
 
     if (card.level < 10) {
-        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} ${card.item.card_type == "HOLOFRAME" ? `\n- ${levelCost["HoloResource"]} SPECIAL ITEM` : ""} \n- ${levelCost["Money"]} POKEDOLLARS`
+        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} \n- ${levelCost["Money"]} POKEDOLLARS`
         statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
     };
 
@@ -340,24 +340,6 @@ module.exports = {
                     userItemData.amount -= (levelCost["Resource"]["Amount"]);
                     userItemData.save();
 
-                    if (aCard.item.card_type == "HOLOFRAME") {
-                        const specialCostData = await ItemShop.findOne({ where: { name: `SPECIAL ITEM` } });
-                        const specialItemData = findItem(userItems, specialCostData.name);
-                        
-                        if (!specialItemData) {
-                            await response.edit({ embeds: [levelFailEmbed], components: [] });
-                            return;
-                        }
-
-                        if (specialItemData.amount < levelCost["HoloResource"]) {
-                            await response.edit({ embeds: [levelFailEmbed], components: [] });
-                            return;
-                        }
-
-                        specialItemData.amount -= (levelCost["HoloResource"]);
-                        specialItemData.save();
-                    }
-
                     const costMoneyData = await ItemShop.findOne({ where: { name: `POKEDOLLAR` } });
                     const moneyItemData = findItem(userItems, costMoneyData.name);
                     
@@ -376,7 +358,7 @@ module.exports = {
 
                     aCard.level += 1;
                     aCard.attack = newStats["Attack"]
-                    aCard.defense = newStats["Defense"]
+                    aCard.defence = newStats["Defense"]
                     aCard.speed = newStats["Speed"]
                     aCard.save()
 

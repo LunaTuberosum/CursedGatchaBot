@@ -1,0 +1,122 @@
+{
+    "GRASS SHARD": {
+        "Name": "`GRASS SHARD`",
+        "Get": "`Releasing Grass type cards`",
+        "Description": "A shard of Grass energy. Can be used to level up your affection with your Grass type cards."        
+    },
+    "FIRE SHARD": {
+        "Name": "`FIRE SHARD`",
+        "Get": "`Releasing Fire type cards`",
+        "Description": "A shard of Fire energy. Can be used to level up your affection with your Fire type cards."        
+    },
+    "WATER SHARD": {
+        "Name": "`WATER SHARD`",
+        "Get": "`Releasing Water type cards`",
+        "Description": "A shard of Water energy. Can be used to level up your affection with your Water type cards."        
+    },
+    "LIGHTNING SHARD": {
+        "Name": "`LIGHTNING SHARD`",
+        "Get": "`Releasing Lightning type cards`",
+        "Description": "A shard of Lightning energy. Can be used to level up your affection with your Lightning type cards."        
+    },
+    "PSYCHIC SHARD": {
+        "Name": "`PSYCHIC SHARD`",
+        "Get": "`Releasing Psychic type cards`",
+        "Description": "A shard of Psychic energy. Can be used to level up your affection with your Psychic type cards."        
+    },
+    "FIGHTING SHARD": {
+        "Name": "`FIGHTING SHARD`",
+        "Get": "`Releasing Fighting type cards`",
+        "Description": "A shard of Fighting energy. Can be used to level up your affection with your Fighting type cards."        
+    },
+    "DARK SHARD": {
+        "Name": "`DARK SHARD`",
+        "Get": "`Releasing Dark type cards`",
+        "Description": "A shard of Dark energy. Can be used to level up your affection with your Dark type cards."        
+    },
+    "METAL SHARD": {
+        "Name": "`METAL SHARD`",
+        "Get": "`Releasing Metal type cards`",
+        "Description": "A shard of Metal energy. Can be used to level up your affection with your Metal type cards."        
+    },
+    "DRAGON SHARD": {
+        "Name": "`DRAGON SHARD`",
+        "Get": "`Releasing Grass type cards`",
+        "Description": "A shard of Dragon energy. Can be used to level up your affection with your Dragon type cards."        
+    },
+    "COLORLESS SHARD": {
+        "Name": "`COLORLESS SHARD`",
+        "Get": "`Releasing Colorless type cards`",
+        "Description": "A shard of Colorless energy. Can be used to level up your affection with your Colorless type cards."        
+    },
+
+
+
+    "GRASS GEM": {
+        "Name": "`GRASS GEM`",
+        "Get": "`Releasing Holograpic Grass type cards`, `Releasing Full Art Grass type cards`, `Trading 10 GRASS SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Grass energy. Can be used to level up your affection with your Grass type cards past level 5."        
+    },
+    "FIRE GEM": {
+        "Name": "`FIRE GEM`",
+        "Get": "`Releasing Holograpic Fire type cards`, `Releasing Full Art Fire type cards`, `Trading 10 FIRE SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Fire energy. Can be used to level up your affection with your Fire type cards past level 5."        
+    },
+    "WATER GEM": {
+        "Name": "`WATER GEM`",
+        "Get": "`Releasing Holograpic Water type cards`, `Releasing Full Art Water type cards`, `Trading 10 WATER SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Water energy. Can be used to level up your affection with your Water type cards past level 5."        
+    },
+    "LIGHTNING GEM": {
+        "Name": "`LIGHTNING GEM`",
+        "Get": "`Releasing Holograpic Lightning type cards`, `Releasing Full Art Lightning type cards`, `Trading 10 LIGHTNING SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Lightning energy. Can be used to level up your affection with your Lightning type cards past level 5."        
+    },
+    "PSYCHIC GEM": {
+        "Name": "`PSYCHIC GEM`",
+        "Get": "`Releasing Holograpic Psychic type cards`, `Releasing Full Art Psychic type cards`, `Trading 10 PSYCHIC SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Psychic energy. Can be used to level up your affection with your Psychic type cards past level 5."        
+    },
+    "FIGHTING GEM": {
+        "Name": "`FIGHTING GEM`",
+        "Get": "`Releasing Holograpic Fighting type cards`, `Releasing Full Art Fighting type cards`, `Trading 10 FIGHTING SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Fighting energy. Can be used to level up your affection with your Fighting type cards past level 5."        
+    },
+    "DARK GEM": {
+        "Name": "`DARK GEM`",
+        "Get": "`Releasing Holograpic Dark type cards`, `Releasing Full Art Dark type cards`, `Trading 10 DARK SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Dark energy. Can be used to level up your affection with your Dark type cards past level 5."        
+    },
+    "METAL GEM": {
+        "Name": "`METAL GEM`",
+        "Get": "`Releasing Holograpic Metal type cards`, `Releasing Full Art Metal type cards`, `Trading 10 METAL SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Metal energy. Can be used to level up your affection with your Metal type cards past level 5."        
+    },
+    "DRAGON GEM": {
+        "Name": "`DRAGON GEM`",
+        "Get": "`Releasing Holograpic Grass type cards`, `Releasing Full Art Grass type cards`, `Trading 10 DRAGON SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Dragon energy. Can be used to level up your affection with your Dragon type cards past level 5."        
+    },
+    "COLORLESS GEM": {
+        "Name": "`COLORLESS GEM`",
+        "Get": "`Releasing Holograpic Colorless type cards`, `Releasing Full Art Colorless type cards`, `Trading 10 COLORLESS SHARDS at the PokeShop`",
+        "Description": "A crystalized gem of Colorless energy. Can be used to level up your affection with your Colorless type cards past level 5."        
+    },
+
+
+    "SMALL PACK": {
+        "Name": "`SMALL PACK`",
+        "Get": "`Trading 300 POKEDOLLARS at the PokeShop`",
+        "Description" : "Draws 3 cards with at least one being a Uncommon or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
+    },
+    "BIG PACK": {
+        "Name": "`BIG PACK`",
+        "Get": "`Trading 500 POKEDOLLARS at the PokeShop`",
+        "Description" : "Draws 5 cards with at least one being a Rare or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
+    },
+    "GREAT BALL": {
+        "Name": "`GREAT BALL`",
+        "Get": "`Trading 250 POKEDOLLARS at the PokeShop`",
+        "Description": "Lets you try again to get a raid card or grab another card on a pull when your cool down is active."
+    }
+}
