@@ -2,6 +2,8 @@ const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentTyp
 const { Users, ItemShop } = require('../../dbObjects.js');
 
 function makeShopEmbed(shopArray, start, end, total) {
+    console.log(shopArray);
+    
 
     const invEmbed = new EmbedBuilder()
         .setColor("#616161")
@@ -43,20 +45,21 @@ function checkButtons(buttons, start, end, length) {
 }
 
 async function getArray(shopItems, start, end) {
+    
     let i = 1;
     shopArray = []
     for (const item of shopItems) {
+        
         if (item.cost == 0) continue;
         if (i > end) {
-            break;
+            return shopArray;
         }
         else if(i >= start) {
-            itemCostData = await ItemShop.findOne({ where: { name: item.itemCost } });
-            shopArray.push(`${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\`- ${item.cost} ${itemCostData.name}\`\`\``);
+            console.log(item.name); 
+            shopArray.push(`${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
         }
         i++;
     }
-
     return shopArray;
 }
 
@@ -82,7 +85,7 @@ module.exports = {
         let length = getLength(shopData);
         
         const buttons = makeButton()
-        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -95,17 +98,17 @@ module.exports = {
                         checkButtons(buttons, start, end, length);
 
                         shopArray = await getArray(shopData, start, end);
-                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
                         i.deferUpdate();
 
                     }
                     else if (i.customId == "right") {
-                        start = Math.min(start + 5, length - 5);
+                        start = Math.min(start + 5, length - 4);
                         end = Math.min(end + 5, length);
                         checkButtons(buttons, start, end, length);
 
                         shopArray = await getArray(shopData, start, end);
-                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
                         i.deferUpdate();
                     }
                 }

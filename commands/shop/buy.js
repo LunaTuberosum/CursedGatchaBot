@@ -87,7 +87,7 @@ module.exports = {
                 quantity = parseInt(sub.toLowerCase().split("x")[1]);
                 break;
             }
-            else if (sub.toLowerCase() == "cbuy" || sub.toLowerCase() == "cb") continue;
+            else if (sub.toLowerCase() == "gbuy" || sub.toLowerCase() == "gb") continue;
 
             itemName += ` ${sub}`;
         }

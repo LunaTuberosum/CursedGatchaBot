@@ -102,7 +102,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
     } else {
         const userItems = await user.getItems()
-        const extraGrabData = await ItemShop.findOne({ where: { name: `EXTRA GRAB` } });
+        const extraGrabData = await ItemShop.findOne({ where: { name: `GREAT BALL` } });
         const userItemData = findItem(userItems, extraGrabData.name);
 
         if (userItemData) {
@@ -112,7 +112,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
             user.grab_cooldown = 0;
             user.save();
 
-            await message.channel.send({ content: `You used 1 Extra grab to grab an extra card.`})
+            await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
             return await checkGrabCard(message, response, pokemonData, i);
         }
 

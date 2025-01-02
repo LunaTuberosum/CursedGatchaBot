@@ -28,7 +28,7 @@ function makeEmbed() {
 
 module.exports = {
     name: "register",
-    shortName: "reg",
+    shortName: ["reg"],
         
     async execute(message) {
 
