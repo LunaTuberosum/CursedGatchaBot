@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop } = require('../../dbObjects.js');
+const { Users, ItemShop, UserStats } = require('../../dbObjects.js');
 
 function makeBuyEmbed(itemData, quantity, userAt) {
 
@@ -104,6 +104,8 @@ module.exports = {
         const user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
+        const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
+
         const buttons = makeButton()
         const response = await message.channel.send({ embeds: [makeBuyEmbed(itemData, quantity, message.author)], components: [buttons] })
 
@@ -132,6 +134,11 @@ module.exports = {
                     user.addItem(itemData, quantity);
                     userItemData.amount -= (quantity * itemData.cost);
                     userItemData.save();
+
+                    if (userItemData.item.name == "POKEDOLLAR") {
+                        userStat.money_spent += quantity * itemData.cost;
+                        userStat.save();
+                    }
 
                     await response.edit({ embeds: [makeBuyEmbedConfirm(itemData, quantity, message.author)], components: [] });
                     return;

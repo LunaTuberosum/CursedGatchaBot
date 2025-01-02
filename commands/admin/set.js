@@ -8,13 +8,12 @@ module.exports = {
             const splitMessage = message.content.split(" ")
             const server = await ServerInfo.findOne({ where: { server_id: message.guild.id } });
 
+            if (!server) { await message.channel.send(`${message.author}, this server hasn't been set up. Please contact an admin`); return; }
+
             if (splitMessage.length != 2) {
                 await message.channel.send(`Please specify what type of channel you are setting.`);
                 return;
             }
-
-            if (!server) { await message.channal.send(`${message.author}, this server hasn't been set up. Please contact an admin`); return; }
-
 
             if (splitMessage[1].toLowerCase() == "pull") {
                 server.pull_channel = message.channel.id

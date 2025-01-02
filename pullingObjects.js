@@ -1,8 +1,10 @@
 const standedPack = require("./packs/standeredPack.json");
 const allCards = require("./packs/allCards.json");
-const { currency } = require("./dbObjects.js");
+const seriesTitleData = require("./data/seriesTitleData.json");
+const { currency, UserTitles, TitleDatabase } = require("./dbObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const { getCurrentStatsSeperate } = require("./affectionObjects.js");
+const { messageLink } = require("discord.js");
 
 function getSeries(series, starArray) {
     let seriesPack = {};
@@ -229,4 +231,45 @@ function formatName(pokemonData) {
     else return `${pokemonData.card_id}-${pokemonData.name}`;
 }
 
-module.exports = { getWhichStar, makePokeImage, makePokeImagePull, makePokeImageTrade, addBalance, raritySymbol, formatName };
+async function checkSeriesCollect(userCards, series, message) {
+    let seriesDict = {}
+
+    for (card of Object.keys(allCards[series])) {
+        if (card[0] == '*' || card[0] == '[' || card[0] == '{') continue;
+
+        seriesDict[card] = false;
+        
+    }
+
+    for (uCard of userCards) {
+        if (uCard.item.series == series) {
+            seriesDict[uCard.item.name] = true;
+        }
+        
+    }
+
+    let has = 0;
+
+    for ([card, have] of Object.entries(seriesDict)) {
+        if (have == true) {
+            has++;
+        }
+    }
+
+    if (has == Object.keys(seriesDict).length) {
+        
+        const titleData = await TitleDatabase.findOne({ where: { name: seriesTitleData[series] } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have collected all cards in the \`${series} Pack\`. You have gained the title: \`${titleData.name}\``)
+    }
+}
+
+module.exports = { getWhichStar, makePokeImage, makePokeImagePull, makePokeImageTrade, addBalance, raritySymbol, formatName, checkSeriesCollect };

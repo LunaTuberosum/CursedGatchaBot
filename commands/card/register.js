@@ -1,5 +1,5 @@
 const { EmbedBuilder, AttachmentBuilder  } = require("discord.js");
-const { CardDatabase, Users, ItemShop, UserCards } = require('../../dbObjects.js');
+const { CardDatabase, Users, ItemShop, UserCards, UserStats } = require('../../dbObjects.js');
 const { getWhichStar, raritySymbol, makePokeImage } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 
@@ -40,31 +40,36 @@ module.exports = {
 
         let user = await Users.findOne({ where: { user_id: target.id } });
 
-        if(user == null){
-            const lastUser = await Users.findOne({
-                order: [['createdAt', 'DESC']]
-            })
-
-            let newUserCode = "aa";
-
-            if(lastUser) {
-                const lastUserCodeNum1 = lastUser.user_code.charCodeAt(0);
-                const lastUserCodeNum2 = lastUser.user_code.charCodeAt(1);
-
-                if (lastUserCodeNum2 == 122) {
-                    newUserCode = `${String.fromCharCode(lastUserCodeNum1 + 1)}a`;
-                }
-                else {
-                    newUserCode = `${String.fromCharCode(lastUserCodeNum1)}${String.fromCharCode(lastUserCodeNum2 + 1)}`;
-                }
-            }
-
-	        const newUser = await Users.create({ user_id: target.id, user_code: newUserCode, balance: 100 });
-
-            user = await Users.findOne({ where: { user_id: target.id } });
-        } else {
-            return await message.channel.send(`${message.author} have already registered.`);
+        if (user) {
+            await message.channel.send(`${message.author} have already registered.`);
+            return;
         }
+        
+        const lastUser = await Users.findOne({
+            order: [['createdAt', 'DESC']]
+        })
+
+        let newUserCode = "aa";
+
+        if(lastUser) {
+            const lastUserCodeNum1 = lastUser.user_code.charCodeAt(0);
+            const lastUserCodeNum2 = lastUser.user_code.charCodeAt(1);
+
+            if (lastUserCodeNum2 == 122) {
+                newUserCode = `${String.fromCharCode(lastUserCodeNum1 + 1)}a`;
+            }
+            else {
+                newUserCode = `${String.fromCharCode(lastUserCodeNum1)}${String.fromCharCode(lastUserCodeNum2 + 1)}`;
+            }
+        }
+
+        const newUser = await Users.create({ user_id: target.id, user_code: newUserCode, balance: 100 });
+
+        const date = new Date();
+        const regDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+        const newUserData = await UserStats.create({ user_id: newUser.user_id, register_date: regDate });
+
+        user = await Users.findOne({ where: { user_id: target.id } });
  
         const userCode = await user.user_code
 

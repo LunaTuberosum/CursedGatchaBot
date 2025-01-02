@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
-const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop } = require('../../dbObjects.js');
-const { getWhichStar, formatName, makePokeImagePull } = require("../../pullingObjects.js");
+const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats } = require('../../dbObjects.js');
+const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -81,18 +81,25 @@ async function createCardID(user){
 
 async function checkGrabCard(message, response, pokemonData, i) {
     const user = await Users.findOne({ where: { user_id: i.user.id } });
+    if (!user) { return; }
+    const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
+
     const now = Date.now();
     if(user.grab_cooldown < now) {
         user.grab_cooldown = now + 600_000;
         user.save();
 
         const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", card_type: pokemonData["CardType"] } });
-        pokeItem.times_pulled++;
         pokeItem.in_circulation++;
         pokeItem.save();
 
+        userStat.card_grabbed++;
+        userStat.save();
+
         cardCode = await createCardID(user);
         addCard(cardCode, user, pokeItem);
+        
+        checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
         await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
         await i.deferUpdate();
@@ -109,11 +116,24 @@ async function checkGrabCard(message, response, pokemonData, i) {
             userItemData.amount -= 1;
             userItemData.save();
 
-            user.grab_cooldown = 0;
-            user.save();
+            const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", card_type: pokemonData["CardType"] } });
+            pokeItem.in_circulation++;
+            pokeItem.save();
+
+            userStat.card_grabbed++;
+            userStat.save();
+
+            cardCode = await createCardID(user);
+            addCard(cardCode, user, pokeItem);
+            
+            checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
+
+            await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
+            await i.deferUpdate();
+            await checkGrabs(response, message);
 
             await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
-            return await checkGrabCard(message, response, pokemonData, i);
+            return;
         }
 
         await message.channel.send({ content: `${i.user} you must wait \`${Math.round((user.grab_cooldown - now) / 60_000)} minutes\` before grabing a card.`})
@@ -161,6 +181,8 @@ module.exports = {
         let pokemonData2 = {};
         let user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
+
         let now = Date.now();
 
         pullChannel = await ServerInfo.findOne({ where: { server_id: message.guild.id, pull_channel: message.channel.id }});
@@ -168,11 +190,21 @@ module.exports = {
         if (pullChannel) {
             if (user.pull_cooldown < now) {
 
+                userStat.card_drawn += 2;
+                userStat.save();
+
                 user.pull_cooldown = now + (20 * 60_000);
                 user.save();
 
                 pokemonData1 = getWhichStar("random");
+                const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", card_type: pokemonData1["CardType"] } });
+                pokeItem1.times_pulled++;
+                pokeItem1.save();
+
                 pokemonData2 = getWhichStar("random");
+                const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", card_type: pokemonData2["CardType"] } });
+                pokeItem2.times_pulled++;
+                pokeItem2.save();
 
                 usersWishArray = [];
 

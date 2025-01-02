@@ -1,5 +1,5 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, UserCards, UserItems, ItemShop, CardDatabase } = require("../../dbObjects.js");
+const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
 const { addBalance } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
@@ -72,6 +72,8 @@ module.exports = {
         const user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
+        const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
+
         const userCards = await user.getCards();
 
         if (userCards.length == 0) {
@@ -134,6 +136,9 @@ module.exports = {
                     card = await CardDatabase.findOne({ where: { card_id: cardData.item.card_id } });
                     card.in_circulation--;
                     card.save();
+
+                    userStat.card_released++;
+                    userStat.save()
 
                     UserCards.destroy({ where: { item_id: cardData.item_id } });
 

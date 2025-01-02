@@ -12,17 +12,17 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
+const TitleDatabase = require('./models/TitleDatabase.js')(sequelize, Sequelize.DataTypes);
 require('./models/Users.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserCards.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
+require('./models/UserStats.js')(sequelize, Sequelize.DataTypes);
+require('./models/UserTitles.js')(sequelize, Sequelize.DataTypes);
 require('./models/ServerInfo.js')(sequelize, Sequelize.DataTypes);
 require('./models/Wishlists.js')(sequelize, Sequelize.DataTypes);
 require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes('--force') || process.argv.includes('-f');
-
-const folderPath = path.join(__dirname, 'pokeImages');
-const imageFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.png'));
 
 sequelize.sync({ force }).then(async () => {
 	const database = [ ];
@@ -79,7 +79,13 @@ sequelize.sync({ force }).then(async () => {
 
 	];
 
-	await Promise.all(database, shop);
+	const title = [
+		TitleDatabase.upsert({ name: 'Developer', description: 'Made the bot.' }),
+		TitleDatabase.upsert({ name: '"Artist"', description: 'Drew the cards herself.' }),
+		TitleDatabase.upsert({ name: 'Trash Collector', description: 'Has collected all cards in the EVE1 pack.' })
+	];
+
+	await Promise.all(database, shop, title);
 	console.log('Database synced');
 
 	sequelize.close();
