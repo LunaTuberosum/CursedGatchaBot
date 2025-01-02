@@ -292,13 +292,13 @@ module.exports = {
                 transferTradeItems(otherUser, userTradeData);
                 transferTradeItems(user, otherUserTradeData);
 
-                messageCollector.stop()
+                messageCollector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), userTrade, otherUserTrade)], components: [] });
                 i.deferUpdate();
             }
 
             else if (i.customId == 'cancel') {
-                messageCollector.stop()
+                messageCollector.stop();
                 i.deferUpdate();
             }
         });

@@ -1,13 +1,12 @@
 const { EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
-const { Users, UserCards, CardDatabase } = require("../../dbObjects");
+const { Users } = require("../../dbObjects");
 const allCards = require("../../packs/allCards.json");
-const { rarityStars } = require("../../pullingObjects.js");
-const Canvas = require('@napi-rs/canvas');
+const { raritySymbol, makePokeImageTrade } = require("../../pullingObjects.js");
 
-function makeEmbed(user, otherUser, cardInfo1, cardInfo2, pokemonData1, pokemonData2) {
+function makeEmbed(user, otherUser, cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser) {
     const tradeEmebed = new EmbedBuilder()
         .setTitle("Card Trade")
-        .setDescription(`${user}\n**${pokemonData1["CardID"]}-${pokemonData1["Name"]}** - ${rarityStars(pokemonData1["Rarity"])} - \`${cardInfo1.item_id}\` - \`${pokemonData1["Series"]}\` - \`#${pokemonData1["Poke#"]}\`\n\n ${otherUser}\n**${pokemonData2["CardID"]}-${pokemonData2["Name"]}** - ${rarityStars(pokemonData2["Rarity"])} - \`${cardInfo2.item_id}\` - \`${pokemonData2["Series"]}\` - \`#${pokemonData2["Poke#"]}\`\n`)
+        .setDescription(`${user}**${checkUser == 0 ? " ✅" : ""}\n${pokemonData1.card_id}-${pokemonData1.name}** - ${raritySymbol(pokemonData1.rarity)} - \`${cardInfo1.item_id}\` - \`${pokemonData1.series}\` - \`#${pokemonData1.poke_number}\`\n\n ${otherUser}**${checkUser == 1 ? " ✅" : ""}\n${pokemonData2.card_id}-${pokemonData2.name}** - ${raritySymbol(pokemonData2.rarity)} - \`${cardInfo2.item_id}\` - \`${pokemonData2.series}\` - \`#${pokemonData2.poke_number}\`\n`)
         .setImage(`attachment://poke-images.png`)
 
     return tradeEmebed;
@@ -17,7 +16,7 @@ function makeEmbedCancel(user, otherUser, cardInfo1, cardInfo2, pokemonData1, po
     const tradeEmebed = new EmbedBuilder()
         .setTitle("Card Trade")
         .setColor("#bd0f0f")
-        .setDescription(`${user}\n**${pokemonData1["CardID"]}-${pokemonData1["Name"]}** - ${rarityStars(pokemonData1["Rarity"])} - \`${cardInfo1.item_id}\` - \`${pokemonData1["Series"]}\` - \`#${pokemonData1["Poke#"]}\`\n\n${otherUser}\n**${pokemonData2["CardID"]}-${pokemonData2["Name"]}** - ${rarityStars(pokemonData2["Rarity"])} - \`${cardInfo2.item_id}\` - \`${pokemonData2["Series"]}\` - \`#${pokemonData2["Poke#"]}\`\n\n**Trade was canceled.**`)
+        .setDescription(`${user}**\n${pokemonData1.card_id}-${pokemonData1.name}** - ${raritySymbol(pokemonData1.rarity)} - \`${cardInfo1.item_id}\` - \`${pokemonData1.series}\` - \`#${pokemonData1.poke_number}\`\n\n ${otherUser}**\n${pokemonData2.card_id}-${pokemonData2.name}** - ${raritySymbol(pokemonData2.rarity)} - \`${cardInfo2.item_id}\` - \`${pokemonData2.series}\` - \`#${pokemonData2.poke_number}\`\n\n**Trade was canceled.**`)
         .setImage(`attachment://poke-images.png`)
 
     return tradeEmebed;
@@ -27,7 +26,7 @@ function makeEmbedConfirm(user, otherUser, cardInfo1, cardInfo2, pokemonData1, p
     const tradeEmebed = new EmbedBuilder()
         .setTitle("Card Trade")
         .setColor("#26bd0f")
-        .setDescription(`${user}\n**${pokemonData1["CardID"]}-${pokemonData1["Name"]}** - ${rarityStars(pokemonData1["Rarity"])} - \`${cardInfo1.item_id}\` - \`${pokemonData1["Series"]}\` - \`#${pokemonData1["Poke#"]}\`\n\n${otherUser}\n**${pokemonData2["CardID"]}-${pokemonData2["Name"]}** - ${rarityStars(pokemonData2["Rarity"])} - \`${cardInfo2.item_id}\` - \`${pokemonData2["Series"]}\` - \`#${pokemonData2["Poke#"]}\`\n\n**Trade was accepted.**`)
+        .setDescription(`${user}** ✅\n${pokemonData1.card_id}-${pokemonData1.name}** - ${raritySymbol(pokemonData1.rarity)} - \`${cardInfo1.item_id}\` - \`${pokemonData1.series}\` - \`#${pokemonData1.poke_number}\`\n\n ${otherUser}** ✅\n${pokemonData2.card_id}-${pokemonData2.name}** - ${raritySymbol(pokemonData2.rarity)} - \`${cardInfo2.item_id}\` - \`${pokemonData2.series}\` - \`#${pokemonData2.poke_number}\`\n\n**Trade was accepted.**`)
         .setImage(`attachment://poke-images.png`)
 
     return tradeEmebed;
@@ -119,70 +118,67 @@ module.exports = {
         }
 
         const userCards = await user.getCards();
-        const cardInfo1 = findCard(userCards, splitMessage[2]);
+        const cardInfo1 = await findCard(userCards, splitMessage[2]);
 
         if (!cardInfo1) {
             await message.channel.send(`${message.author}, that card can not be found in your collection.`);
             return;
         }
-
-        const pokemonData1 = allCards[cardInfo1.item.name];
+        
+        const pokemonData1 = cardInfo1.item;
         
         const otherUserCards = await otherUser.getCards();
-        const cardInfo2 = findCard(otherUserCards, splitMessage[3]);
-
+        const cardInfo2 = await findCard(otherUserCards, splitMessage[3]);
+        
         if (!cardInfo2) {
             await message.channel.send(`${message.author}, that card can not be found in ${splitMessage[1]} collection.`);
             return;
         }
+        
+        const pokemonData2 = cardInfo2.item;
+        
+        let attachment = new AttachmentBuilder(await makePokeImageTrade(pokemonData1, cardInfo1, pokemonData2, cardInfo2), { name: 'poke-images.png' });
+        let checkUser = -1;
+        
+        const response = await message.channel.send({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButton()] });
 
-        const pokemonData2 = allCards[cardInfo2.item.name];
+        const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 
-        const canvas = Canvas.createCanvas(1840, 1490);
-        const context = canvas.getContext('2d');
-
-        const img1 = await Canvas.loadImage(`./pokeImages/${pokemonData1["CardID"]}-${pokemonData1["Name"]}.png`);
-        const img2 = await Canvas.loadImage(`./pokeImages/${pokemonData2["CardID"]}-${pokemonData2["Name"]}.png`);  
-        const trade = await Canvas.loadImage(`./resources/trade.png`);  
-
-        context.drawImage(img1, 0, 100, img2.width, img1.height);
-        context.drawImage(trade, 720, 545, trade.width, trade.height);
-        context.drawImage(img2, 1120, 100, img2.width, img2.height);
-
-        let attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'poke-images.png' });
-
-        const response = await message.channel.send({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [makeButton()] });
-
-        const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 15_000 });
+        let otherConfirmUser;
 
         collector.on("collect", async i => {
-            if (i.user == message.mentions.users.first() || i.user == message.author) {
-                if(i.customId == "cancel") {
-                    await response.edit({ embeds: [makeEmbedCancel(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [] });
-                    i.deferUpdate();
-                }
-            }
-            if (i.user == message.mentions.users.first()) {
-                if (i.customId == "confirm") {
-                    await response.edit({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [makeButtonConfirm()] });
-                    i.deferUpdate();
-                }
-            }
-            else if (i.user == message.author) {
-                if (i.customId == "finalConfirm") {
+            if (i.user.id == user.user_id) { null }
+            else if (i.user.id == otherUser.user_id) { null }
+            else { i.deferUpdate(); return; }
 
-                    cardInfo2.user_id = user.user_id;
-                    cardInfo2.save();
-
-                    cardInfo1.user_id = otherUser.user_id;
-                    cardInfo1.save();
-
-                    await response.edit({ embeds: [makeEmbedConfirm(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [] });
-                    i.deferUpdate();
-                }
+            if(i.customId == "cancel") {
+                collector.stop();
+                i.deferUpdate();
             }
-        
+            if (i.customId == "confirm") {
+                if (i.user.id == user.user_id) { otherConfirmUser = otherUser; checkUser = 0; }
+                else if (i.user.id == otherUser.user_id) { otherConfirmUser = user; checkUser = 1; }
+
+                await response.edit({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButtonConfirm()] });
+                i.deferUpdate();
+
+            }
+            if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
+
+                cardInfo2.user_id = user.user_id;
+                cardInfo2.save();
+
+                cardInfo1.user_id = otherUser.user_id;
+                cardInfo1.save();
+
+                collector.stop();
+                await response.edit({ embeds: [makeEmbedConfirm(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [] });
+            }
         });
+
+        collector.on("end", async i => {
+            await response.edit({ embeds: [makeEmbedCancel(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [] });
+        })
 
 
     },

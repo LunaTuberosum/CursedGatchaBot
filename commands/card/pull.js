@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
 const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop } = require('../../dbObjects.js');
-const { getWhichStar, formatName, makePokeImageContext } = require("../../pullingObjects.js");
+const { getWhichStar, formatName, makePokeImagePull } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -125,7 +125,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
 async function pullMechanics(message, pokemonData1, pokemonData2) {
     
-    let attachment = new AttachmentBuilder(await makePokeImageContext(pokemonData1, pokemonData2), { name: 'poke-images.png' });
+    let attachment = new AttachmentBuilder(await makePokeImagePull(pokemonData1, pokemonData2), { name: 'poke-images.png' });
 
     const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 
