@@ -59,7 +59,7 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
     }
 
     const hp = await Canvas.loadImage(`./pokeImages/health/${getCurrentStatsSeperate(pokemonData, cardData)["HP"]}.png`);
-    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top.png`);
+    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top-${pokemonData.card_type}.png`);
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
 
@@ -106,7 +106,7 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     let bottom = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Bottom.png`);
     let frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/Normal-Frame.png`);
     let hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
-    let top = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Top.png`);
+    let top = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Top-${pokemonData["CardType"]}.png`);
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["CardType"]}/${pokemonData["Type"]}/Moves.png`);
 
