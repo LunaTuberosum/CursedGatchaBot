@@ -26,20 +26,11 @@ function getNewStats(card) {
 }
 
 function getPassive(card) {
-
-    if (card.item.card_type == "HOLOFRAME") {
-        return passiveData[card.item.series][card.item.card_type][card.item.name]
-    }
-
-    return passiveData[card.item.series][card.item.card_type][card.item.type]
+    return passiveData[card.item.series][card.item.poke_type][card.item.type]
 }
 
 function getSpecial(card) {
-    if (card.item.card_type == "HOLOFRAME") {
-        return specialData[card.item.series][card.item.card_type][card.item.name]
-    }
-    
-    return specialData[card.item.series][card.item.card_type][card.item.type]
+    return specialData[card.item.series][card.item.poke_type][card.item.type]
 }
 
 module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial };

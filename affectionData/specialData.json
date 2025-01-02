@@ -26,17 +26,7 @@
                 }
             }
         },
-        "HOLO" : {
-            "Water": {
-                "Name": "Water Gun",
-                "Type": "Water",
-                "Levels": {
-                    "5": "Shoot a stream of water that is 20 power attack.",
-                    "10": "Shoot a stream of water that is 40 power attack."
-                }
-            }
-        },
-        "FRAME" : {
+        "STAGE 1" : {
             "Water": {
                 "Name": "Water Gun+",
                 "Type": "Water",
@@ -46,26 +36,13 @@
                 }
             }
         },
-        "HOLOFRAME" : {
-            "Blastoise": {
+        "STAGE 2" : {
+            "Water": {
                 "Name": "Hydro Pump",
                 "Type": "Water",
                 "Levels": {
                     "5": "Shot a strong stream of water that is 55 power attack.",
                     "10": "Shot a strong stream of water that is 110 power attack."
-                }
-            }
-        }
-    },
-    "CRAP": {
-        "BASIC":{
-            "Water": {
-                "Name": "Drawn from Memory",
-                "Type": "Colorless",
-                "Levels": {
-                    "1": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
-                    "5": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
-                    "10": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch."
                 }
             }
         }

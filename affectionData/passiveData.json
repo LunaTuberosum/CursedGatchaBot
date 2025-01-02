@@ -29,20 +29,8 @@
                 }
             }
         },
-    
-        "HOLO" : {
-            "Water": {
-                "Name": "Swift Swim",
-                "Type": "Water",
-                "Levels": {
-                    "1": "Cause it to rain for 3 seconds, during this rain your speed is doubled.",
-                    "5": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
-                    "10": "Cause it to rain for 9 seconds, during this rain your speed is doubled."
-                }
-            }
-        },
 
-        "FRAME" : {
+        "STAGE 1" : {
             "Water": {
                 "Name": "Swift Swim+",
                 "Type": "Water",
@@ -54,27 +42,14 @@
             }
         },
 
-        "HOLOFRAME" : {
-            "Blastoise": {
+        "STAGE 2" : {
+            "Water": {
                 "Name": "Rain Dance",
                 "Type": "Water",
                 "Levels": {
                     "1": "Cause it to rain for 3 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
                     "5": "Cause it to rain for 6 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
                     "10": "Cause it to rain for 9 seconds, during this rain regain 1/16 of maximum HP after each auto attack."
-                }
-            }
-        }
-    },
-    "CRAP": {
-        "BASIC":{
-            "Water": {
-                "Name": "Drawn from Memory",
-                "Type": "Colorless",
-                "Levels": {
-                    "1": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
-                    "5": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch.",
-                    "10": "Once per turn you can remember that this card was drawn by medibotEVE live on Twitch."
                 }
             }
         }
