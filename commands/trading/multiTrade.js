@@ -6,6 +6,7 @@ const { formatName, raritySymbol } = require("../../pullingObjects.js");
 function makeEmbed(user, otherUser, userTrade, otherUserTrade, checkUser) {
     
     const tradeEmebed = new EmbedBuilder()
+        .setColor("#616161")
         .setTitle(`Multiple Trade [${user.username} <--> ${otherUser.username}]`)
         .setDescription(`**${user}\'s items:**${checkUser == 0 ? " ✅" : ""}\n\`\`\`diff\n${userTrade.length ? userTrade.join("\n") : "- No items seleceted..."}\`\`\`\n**${otherUser}\'s items:**${checkUser == 1  ? " ✅" : ""}\n\`\`\`diff\n${otherUserTrade.length ? otherUserTrade.join("\n") : "- No items seleceted..."}\`\`\`\nTo add a \`Card\`, type its card code. **EX:** aa0000\nTo remove a \`Card\`, type its card code again. **EX:** aa0000\n\nTo add an \`Item\`, type its name followed it its amount.**EX:** Draw 5 x2\nTo remove an \`Item\`, type its name and its amount as 0. **EX:** Draw 5 x0\n*The \"x\" in front of the amount is required*\n\nTo add multiple cards or items at a time, sperate each thing using commas. \n**EX:** aa0000, aa0001, Draw 5 x2`)
     return tradeEmebed;
@@ -167,15 +168,11 @@ module.exports = {
         }
 
         const otherUser = await Users.findOne({ where : { user_id: message.mentions.users.first().id } });
+        if (!otherUser) { await message.channel.send({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` }); return; }
         const otherUserTrade = []
         const otherUserTradeData = {
             "Cards": [], // card
             "Items": []  // [item, amount]
-        }
-
-        if (!otherUser) {
-            await message.channel.send({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` });
-            return;
         }
         
         if (user.user_id == otherUser.user_id) {

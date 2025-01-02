@@ -6,7 +6,7 @@ const { raritySymbol, makePokeImageTrade } = require("../../pullingObjects.js");
 function makeEmbed(user, otherUser, cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser) {
     const tradeEmebed = new EmbedBuilder()
         .setTitle("Card Trade")
-        .setDescription(`${user}**${checkUser == 0 ? " ✅" : ""}\n${pokemonData1.card_id}-${pokemonData1.name}** - ${raritySymbol(pokemonData1.rarity)} - \`${cardInfo1.item_id}\` - \`${pokemonData1.series}\` - \`#${pokemonData1.poke_number}\`\n\n ${otherUser}**${checkUser == 1 ? " ✅" : ""}\n${pokemonData2.card_id}-${pokemonData2.name}** - ${raritySymbol(pokemonData2.rarity)} - \`${cardInfo2.item_id}\` - \`${pokemonData2.series}\` - \`#${pokemonData2.poke_number}\`\n`)
+        .setDescription(`${user}**${checkUser == 0 ? " ✅" : ""}\n${pokemonData1.card_id}-${pokemonData1.name}** - ${raritySymbol(pokemonData1.rarity)} - \`${cardInfo1.item_id}\` - \`${pokemonData1.series}\`\n\n ${otherUser}**${checkUser == 1 ? " ✅" : ""}\n${pokemonData2.card_id}-${pokemonData2.name}** - ${raritySymbol(pokemonData2.rarity)} - \`${cardInfo2.item_id}\` - \`${pokemonData2.series}\`\n`)
         .setImage(`attachment://poke-images.png`)
 
     return tradeEmebed;
