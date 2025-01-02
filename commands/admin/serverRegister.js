@@ -8,7 +8,7 @@ module.exports = {
         if (message.member.permissionsIn(message.channel).has("ADMINISTRATOR")) {
             const server = await ServerInfo.findOne({ where: { server_id: message.guild.id } });
 
-            if (server) { await message.channel.send(`${message.author}, this server is already registered.`) };
+            if (server) { await message.channel.send(`${message.author}, this server is already registered.`); return; }
             
             await ServerInfo.create({ server_id: message.guild.id });
 

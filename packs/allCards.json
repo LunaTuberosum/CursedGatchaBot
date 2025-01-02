@@ -23,6 +23,28 @@
             "PokeType": "BASIC",
             "Series": "EVE1"
         },
+        "[Squirtle]" : {
+            "Name" : "Squirtle",
+            "Type": "Water",
+            "CardID" : "001",
+            "DrawDate" : "1/03/2023",
+            "Poke#" : "0007",
+            "Rarity" : "Common",
+            "CardType" : "FRAME",
+            "PokeType": "BASIC",
+            "Series": "EVE1"
+        },
+        "{Squirtle}" : {
+            "Name" : "Squirtle",
+            "Type": "Water",
+            "CardID" : "001",
+            "DrawDate" : "1/03/2023",
+            "Poke#" : "0007",
+            "Rarity" : "Common",
+            "CardType" : "HOLOFRAME",
+            "PokeType": "BASIC",
+            "Series": "EVE1"
+        },
         "Wartortle" : {
             "Name" : "Wartortle",
             "Type": "Water",
@@ -88,19 +110,6 @@
             "CardType" : "HOLOFRAME",
             "PokeType": "STAGE 2",
             "Series": "EVE1"
-        }
-    },
-    "CRAP": {
-        "Squirtle" : {
-            "Name" : "Squirtle",
-            "Type": "Water",
-            "CardID" : "001",
-            "DrawDate" : "1/03/2023",
-            "Poke#" : "0007",
-            "Rarity" : "Common",
-            "CardType" : "BASIC",
-            "PokeType": "BASIC",
-            "Series": "CRAP"
         }
     }
 }
