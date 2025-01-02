@@ -6,7 +6,7 @@ function makeShopEmbed(shopArray, start, end, total) {
     const invEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle(`POKESHOP`)
-        .setDescription(`Use \`c!buy item name #\` to buy\n\n${shopArray.join("\n")}`)
+        .setDescription(`Use \`g!buy item name #\` to buy\n\n${shopArray.join("\n")}`)
         .setFooter({ text: `Showing items ${start}-${end} of ${total}`})
 
     return invEmbed;

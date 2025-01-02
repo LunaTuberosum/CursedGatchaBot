@@ -12,7 +12,7 @@ function makeRaidEmbed(message, party, partyCount, time) {
         .setTitle(`Raid - Normal *001-Pidgey* [Preparing ${time}m...]`)
         .setThumbnail(`attachment://poke-image.png`)
         .setDescription(`Recommended Friendship Level: **XX** \n\n**Party (${partyCount}/4)** \n\`\`\`diff\n${party["1"]["text"]} \n${party["2"]["text"]} \n${party["3"]["text"]} \n${party["4"]["text"]} \`\`\` \n\nClick on the \`Join\` bellow to select your card and join.`)
-        .setFooter( { text: `Requires Raiding Pass to Praticpate. Get one using 'c!buy RAIDING PASS 1' for 800 POKEDOLLARS.` })
+        .setFooter( { text: `Requires Raiding Pass to Praticpate. Get one using 'g!buy RAIDING PASS x1' for 800 POKEDOLLARS.` })
 
     return raidEmbed;
 }

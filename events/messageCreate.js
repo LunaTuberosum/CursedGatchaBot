@@ -4,16 +4,16 @@ module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
 
-        if (message.content != "" && message.content[0].toLowerCase() == "c"){
+        if (message.content != "" && message.content[0].toLowerCase() == "g"){
 
             messageCommand = message.content.split(" ")[0];
 
             let command = message.client.commands.get(messageCommand.toLowerCase().slice(1))
-            if (messageCommand.slice(0, 2) == "c!") { command = message.client.commands.get(messageCommand.toLowerCase().slice(2)) }
+            if (messageCommand.slice(0, 2) == "g!") { command = message.client.commands.get(messageCommand.toLowerCase().slice(2)) }
 
             if (!command) {
                 command = message.client.commandsShort.get(messageCommand.toLowerCase().slice(1))
-                if (messageCommand.slice(0, 2) == "c!") { command = message.client.commandsShort.get(messageCommand.toLowerCase().slice(2)) }
+                if (messageCommand.slice(0, 2) == "g!") { command = message.client.commandsShort.get(messageCommand.toLowerCase().slice(2)) }
 
                 if (!command) {
                     console.error(`No command matching ${message.content} was found.`);

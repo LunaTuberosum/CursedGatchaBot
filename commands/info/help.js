@@ -4,7 +4,7 @@ const commandData = require("../../data/commandData.json");
 function makeHelpEmbed() {
     const helpEmbed = new EmbedBuilder()
         .setTitle("Cursed Bot Commands")
-        .setDescription(`Type \`c!help\` followed by a command name to see more details about that command.`)
+        .setDescription(`Type \`g!help\` followed by a command name to see more details about that command.`)
         .addFields(
             { name: "**⚙️ Setup**", value: "\`set\`, \`register\`", inline: true },
             { name: "**⚜️ Basic**", value: "\`pull\`, \`release\`, \`affection\`", inline: true },
