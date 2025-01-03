@@ -5,7 +5,7 @@ const { raritySymbol, makePokeImage, formatName } = require("../../pullingObject
 function makeCardImageEmbed(pokemonData, cardCode, user) {
     const cardImageEmbed = new EmbedBuilder()
         .setColor("#616161")
-        .setImage(`attachment://${pokemonData.card_id}-${pokemonData.name}.png`)
+        .setImage(`attachment://poke-image.png`)
         .setTitle("Card Info")
         .setDescription(`Owned by ${user}\n\n**${formatName(pokemonData)}** - \`${cardCode}\` - \`${pokemonData.rarity}\` - \`${pokemonData.series}\` - \`#${pokemonData.poke_number}\``)
         .setFooter( { text: `Drawn on: ${pokemonData.drawn_date}` })
@@ -17,7 +17,7 @@ function makeCardStatEmbed(pokemonData, wishlistInfo) {
 
     const cardStatEmbed = new EmbedBuilder()
         .setColor("#616161")
-        .setThumbnail(`attachment://${pokemonData.card_id}-${pokemonData.name}.png`)
+        .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Card Info")
         .setDescription(` **Pokemon** - ${formatName(pokemonData)}\n**Series** - ${pokemonData.series}\n**Rarity** - ${pokemonData.rarity} [${raritySymbol(pokemonData.rarity)}]\n**Card Type** - ${pokemonData.card_type}\n**Wishlisted** - ${wishlistInfo}\n\n**Time Pulled** - ${pokemonData.times_pulled}\n**Cards in Circulation** - ${pokemonData.in_circulation}\n\n**Poke #** - ${pokemonData.poke_number}\n**Day Drawn** - ${pokemonData.drawn_date}\n**Type** - ${pokemonData.type}`)
 

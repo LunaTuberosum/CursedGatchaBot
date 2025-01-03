@@ -39,7 +39,8 @@ sequelize.sync({ force }).then(async () => {
 				rarity: allCards[series][card]["Rarity"],
 				card_type: allCards[series][card]["CardType"],
 				poke_type: allCards[series][card]["PokeType"],
-				series: allCards[series][card]["Series"]})
+				series: allCards[series][card]["Series"],
+				obtain: allCards[series][card]["Obtain"]})
 			);
 	}
 

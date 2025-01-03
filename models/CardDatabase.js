@@ -28,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         series: {
 			type: DataTypes.STRING,
 		},
-		
+		obtain: {
+			type: DataTypes.STRING,
+		},
+
 		times_pulled: {
 			type: DataTypes.INTEGER,
 			defaultValue: 0,

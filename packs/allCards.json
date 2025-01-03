@@ -10,7 +10,8 @@
             "Rarity" : "Common",
             "CardType" : "BASIC",
             "PokeType": "BASIC",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "*Squirtle*" : {
             "Name" : "Squirtle",
@@ -21,7 +22,8 @@
             "Rarity" : "Common",
             "CardType" : "HOLO",
             "PokeType": "BASIC",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "[Squirtle]" : {
             "Name" : "Squirtle",
@@ -32,7 +34,8 @@
             "Rarity" : "Common",
             "CardType" : "FRAME",
             "PokeType": "BASIC",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "{Squirtle}" : {
             "Name" : "Squirtle",
@@ -43,7 +46,8 @@
             "Rarity" : "Common",
             "CardType" : "HOLOFRAME",
             "PokeType": "BASIC",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "Wartortle" : {
             "Name" : "Wartortle",
@@ -54,7 +58,8 @@
             "Rarity" : "Uncommon",
             "CardType" : "BASIC",
             "PokeType": "STAGE 1",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "*Wartortle*" : {
             "Name" : "Wartortle",
@@ -65,7 +70,8 @@
             "Rarity" : "Uncommon",
             "CardType" : "HOLO",
             "PokeType": "STAGE 1",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "Blastoise" : {
             "Name" : "Blastoise",
@@ -76,7 +82,8 @@
             "Rarity" : "Rare",
             "CardType" : "BASIC",
             "PokeType": "STAGE 2",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "*Blastoise*" : {
             "Name" : "Blastoise",
@@ -87,7 +94,8 @@
             "Rarity" : "Rare",
             "CardType" : "HOLO",
             "PokeType": "STAGE 2",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "[Blastoise]" : {
             "Name" : "Blastoise",
@@ -98,7 +106,8 @@
             "Rarity" : "Rare",
             "CardType" : "FRAME",
             "PokeType": "STAGE 2",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         },
         "{Blastoise}" : {
             "Name" : "Blastoise",
@@ -109,7 +118,8 @@
             "Rarity" : "Rare",
             "CardType" : "HOLOFRAME",
             "PokeType": "STAGE 2",
-            "Series": "EVE1"
+            "Series": "EVE1",
+            "Obtain": "`Pulling cards`, `Drawing from EVE1 packs`"
         }
     }
 }
