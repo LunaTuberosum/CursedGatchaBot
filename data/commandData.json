@@ -8,6 +8,11 @@
         "Command": "`g!register`",
         "Description": "Registers the user to the game. Allowing them to pull cards and interact with the bot."
     },
+    "userInfo": {
+        "Command": "`g!userInfo`, `g!user`, `g!ui",
+        "Usage": "`g!userInfo` *`user mention`",
+        "Description": "Show a user stats and titles. Sending without paramaters will show your stats."
+    },
     "pull": {
         "Command": "`g!pull`, `g!p`",
         "Description": "Draws two random cards to the current channel. Anyone can grab these cards."
@@ -29,6 +34,11 @@
     "inventory": {
         "Command": "`g!inventory`, `g!i`, `g!inv`",
         "Description": "View all items in your possession."
+    },
+    "itemInfo": {
+        "Command": "`g!itemInfo`, `g!ii`",
+        "Usage": "`g!itemInfo` `item name`",
+        "Description": "Shows the items usage and how to obtain it."
     },
     "tag": {
         "Command": "`g!tag`",
@@ -73,10 +83,15 @@
         "Command": "`g!cooldown`, `g!cd`",
         "Description": "Shows how long you have left on your pull and grab cooldowns."
     },
-    "cardinfo": {
+    "cardInfo": {
         "Command": "`g!cardInfo`, `g!ci`",
         "Usage": "`g!cardInfo` *`card code`",
         "Description": "Shows details about a certial card. Sending without paramaters will use your most recently obtained card."
+    },
+    "pokeDex": {
+        "Command": "`g!pokeDex`, `g!pd`",
+        "Usage": "`g!pokeDex` `card code`",
+        "Description": "Shows details about a certial card and how to obtain that card."
     },
     "serverinfo": {
         "Command": "`g!serverInfo`, `g!si`",
