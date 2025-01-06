@@ -38,9 +38,14 @@ function getWhichStar(series) {
         const pokemon = pullRandomCard(standedPack["uncommon"][seriesPack]);
         return allCards[seriesPack][pokemon];
     }
-    else if (random > 90 && random <= 100) {
+    else if (random > 90 && random <= 99) {
         const seriesPack = getSeries(series, standedPack["rare"])
         const pokemon = pullRandomCard(standedPack["rare"][seriesPack]);
+        return allCards[seriesPack][pokemon];
+    }
+    else if (random > 99 && random <= 100) {
+        const seriesPack = getSeries(series, standedPack["urare"])
+        const pokemon = pullRandomCard(standedPack["urare"][seriesPack]);
         return allCards[seriesPack][pokemon];
     }
 }
