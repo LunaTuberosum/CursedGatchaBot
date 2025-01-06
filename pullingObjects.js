@@ -93,7 +93,7 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
     const hp = await Canvas.loadImage(`./pokeImages/health/${getCurrentStatsSeperate(pokemonData, cardData)["HP"]}.png`);
     const top = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
 
-    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
+    // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.poke_type}/${pokemonData.type}/${pokemonData.card_type}.png`);
 
     let  affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
     
@@ -109,7 +109,7 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
     context.drawImage(frame, x, y, bottom.width, bottom.height);
     context.drawImage(hp, x, y, bottom.width, bottom.height);
     context.drawImage(top, x, y, bottom.width, bottom.height);
-    context.drawImage(moves, x, y, bottom.width, bottom.height);
+    // context.drawImage(moves, x, y, bottom.width, bottom.height);
     context.drawImage(affection, x, y, bottom.width, bottom.height);
 
     if (pokemonData.card_type == "HOLO" || pokemonData.card_type == "HOLOFRAME") {
@@ -141,7 +141,7 @@ async function makePokeImageDataNoAffection(pokemonData, context, x, y) {
     const hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
     const top = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
 
-    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
+    // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.poke_type}/${pokemonData.type}/${pokemonData.card_type}.png`)
 
     const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
 
@@ -149,7 +149,7 @@ async function makePokeImageDataNoAffection(pokemonData, context, x, y) {
     context.drawImage(frame, x, y, bottom.width, bottom.height);
     context.drawImage(hp, x, y, bottom.width, bottom.height);
     context.drawImage(top, x, y, bottom.width, bottom.height);
-    context.drawImage(moves, x, y, bottom.width, bottom.height);
+    // context.drawImage(moves, x, y, bottom.width, bottom.height);
 
     if (pokemonData.card_type == "HOLO" || pokemonData.card_type == "HOLOFRAME") {
         context.globalCompositeOperation = "multiply";
@@ -180,7 +180,7 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     let hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
     let top = await Canvas.loadImage(`./pokeImages/${pokemonData["Series"]}/${pokemonData["Name"]}/Top-${pokemonData["CardType"]}.png`);
 
-    const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["CardType"]}/${pokemonData["Type"]}/Moves.png`);
+    // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["PokeType"]}/${pokemonData["Type"]}/${pokemonData["CardType"]}.png`)
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     
@@ -200,7 +200,7 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     context.drawImage(frame, x, y, bottom.width, bottom.height);
     context.drawImage(hp, x, y, bottom.width, bottom.height);
     context.drawImage(top, x, y, bottom.width, bottom.height);
-    context.drawImage(moves, x, y, bottom.width, bottom.height);
+    // context.drawImage(moves, x, y, bottom.width, bottom.height);
     context.drawImage(affection, x, y, bottom.width, bottom.height);
     
     if (pokemonData["CardType"] == "HOLO") {
