@@ -1,34 +1,75 @@
 {
     "common" : {
-        "EVE1": 
-        {    
-            "Squirtle": {
-                "100" : "BASIC",
-                "10" : "HOLO"
-            }
-        }
+        "EVE1": [
+            "Squirtle", 
+            "Pidgey", 
+            "Sandshrew",
+            "Oddish",
+            "Growlithe",
+            "Abra",
+            "Farfetch'd",
+            "Exeggcute",
+            "Cubone",
+            "Hitmonlee",
+            "Hitmonchan",
+            "Seadra",
+            "Staryu"
+        ]
     },
 
     "uncommon" : {
-        "EVE1": 
-        {   
-            "Wartortle": {
-                "100" : "BASIC",
-                "10" : "HOLO"
-            }
-        }
+        "EVE1": [
+            "Wartortle", 
+            "Jigglypuff",
+            "Gloom",
+            "Marowack",
+            "Chansey",
+            "Kangaskhan",
+
+            "*Squirtle*", 
+            "*Pidgey*", 
+            "*Sandshrew*",
+            "*Oddish*",
+            "*Growlithe*",
+            "*Abra*",
+            "*Farfetch'd*",
+            "*Exeggcute*",
+            "*Cubone*",
+            "*Hitmonlee*",
+            "*Hitmonchan*",
+            "*Seadra*",
+            "*Staryu*"
+        ]
     },
 
     "rare" : {
-        "EVE1": 
-        {   
-            "Blastoise": {
-                "100" : "BASIC",
-                "10" : "HOLO",
-                "5" : "FRAME",
-                "1" : "HOLOFRAME"
-            }
-        }
+        "EVE1": [
+            "Blastoise" , 
+
+            "*Wartortle*", 
+            "*Blastoise*", 
+            "*Jigglypuff*",
+            "*Gloom*",
+            "*Marowack*",
+            "*Chansey*",
+            "*Kangaskhan*",
+            
+            "[Squirtle]", 
+            "[Blastoise]",
+            "[Jigglypuff]",
+            "[Marowack]",
+            "[Chansey]"
+        ]
+    },
+
+    "urare": {
+        "EVE1": [
+            "{Squirtle}", 
+            "{Blastoise}",
+            "{Jigglypuff}",
+            "{Marowack}",
+            "{Chansey}"
+        ]
     }
 
 }

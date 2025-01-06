@@ -12,7 +12,7 @@ function makeEmbed(itemDict, amount) {
 module.exports = {
     cooldown: 5,
     name: 'itemInfo',
-    shortName: ["i", "ii"],
+    shortName: ["ii"],
 
     async execute(message) {
         const splitMessage = message.content.split(" ");

@@ -45,25 +45,48 @@ function getWhichStar(series) {
     }
 }
 
+function pullRandomCard(starArray) {
+
+    // Make a random number base on the amount of pokemon in a list
+    var randomNum = Math.round(Math.random() * Object.keys(starArray).length) - 1;
+
+    if (randomNum >= starArray.length) {
+        randomNum = starArray.length - 1;
+    }
+    if (randomNum < 0) {
+        randomNum = 0;
+    }
+
+    var i = 0;
+    for(const poke of starArray) {
+        if (i == randomNum) {
+            return poke;
+            
+        }
+        i++;
+    }
+    
+}
+
 async function makePokeImageData(pokemonData, cardData, context, x, y) {
-    const bottom = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Bottom.png`);
+    const bottom = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Bottom.png`);
 
     let frame;
     if (pokemonData.poke_type == "BASIC") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Full-Frame.png`)
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Normal-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Full-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Normal-Frame.png`);
     }
     else if (pokemonData.poke_type == "STAGE 1") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/FullStage1-Frame.png`)
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Stage1-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage1-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage1-Frame.png`);
     }
     else if (pokemonData.poke_type == "STAGE 2") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/FullStage2-Frame.png`);
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Stage2-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage2-Frame.png`);
     }
 
     const hp = await Canvas.loadImage(`./pokeImages/health/${getCurrentStatsSeperate(pokemonData, cardData)["HP"]}.png`);
-    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top-${pokemonData.card_type}.png`);
+    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
 
@@ -94,24 +117,24 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
 }
 
 async function makePokeImageDataNoAffection(pokemonData, context, x, y) {
-    const bottom = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Bottom.png`);
+    const bottom = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Bottom.png`);
 
     let frame;
     if (pokemonData.poke_type == "BASIC") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Full-Frame.png`)
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Normal-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Full-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Normal-Frame.png`);
     }
     else if (pokemonData.poke_type == "STAGE 1") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/FullStage1-Frame.png`)
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Stage1-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage1-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage1-Frame.png`);
     }
     else if (pokemonData.poke_type == "STAGE 2") {
-        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/FullStage2-Frame.png`);
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/Stage2-Frame.png`);
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage2-Frame.png`);
     }
 
     const hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
-    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.card_id}-${pokemonData.name}/Top-${pokemonData.card_type}.png`);
+    const top = await Canvas.loadImage(`./pokeImages/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.card_type}/${pokemonData.type}/Moves.png`);
 
@@ -147,24 +170,26 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     const affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
     const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
 
-    let bottom = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Bottom.png`);
-    let frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/Normal-Frame.png`);
+    let bottom = await Canvas.loadImage(`./pokeImages/${pokemonData["Series"]}/${pokemonData["Name"]}/Bottom.png`);
+    let frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
     let hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
-    let top = await Canvas.loadImage(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}/Top-${pokemonData["CardType"]}.png`);
+    let top = await Canvas.loadImage(`./pokeImages/${pokemonData["Series"]}/${pokemonData["Name"]}/Top-${pokemonData["CardType"]}.png`);
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["CardType"]}/${pokemonData["Type"]}/Moves.png`);
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     
     if (pokemonData["PokeType"] == "BASIC") {
-        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/Normal-Frame.png`);
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Full-Frame.png`);
+        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
     }
     else if (pokemonData["PokeType"] == "STAGE 1") {
-        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/Stage1-Frame.png`);
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage1-Frame.png`);
+        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage1-Frame.png`);
     }
     else if (pokemonData["PokeType"] == "STAGE 2") {
-        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/FullStage2-Frame.png`);
-        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/Stage2-Frame.png`);
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage2-Frame.png`);
     }
 
     context.drawImage(frame, x, y, bottom.width, bottom.height);
@@ -204,46 +229,6 @@ async function makePokeImageTrade(pokemonData1, cardData1, pokemonData2, cardDat
     context = await makePokeImageData(pokemonData2, cardData2, context, 2460, 100);
 
     return canvas.encode('png');
-}
-
-function pullRandomCard(starArray) {
-
-    // Make a random number base on the amount of pokemon in a list
-    var randomNum = Math.round(Math.random() * Object.keys(starArray).length) - 1;
-
-    if (randomNum >= Object.keys(starArray).length) {
-        randomNum = Object.keys(starArray).length - 1;
-    }
-    if (randomNum < 0) {
-        randomNum = 0;
-    }
-
-    const pokeList = Object.keys(starArray)
-    
-    let cardName = 'None';
-    let cardType = 'None';
-
-    var i = 0;
-    for(const poke of Object.keys(starArray)) {
-        if (i == randomNum) {
-            cardName = pokeList[i];
-            
-            var randomPer = Math.round(Math.random() * 100);
-
-            for (const chance of Object.keys(starArray[cardName]).reverse()) {
-                if (randomPer <= Number.parseInt(chance)) cardType = starArray[cardName][chance];
-                
-            }
-            
-        }
-        i++;
-    }
-
-    if (cardType == "BASIC") return cardName;
-    if (cardType == "HOLO") return `*${cardName}*`;
-    if (cardType == "FRAME") return `[${cardName}]`;
-    if (cardType == "HOLOFRAME") return `{${cardName}}`;
-    
 }
 
 async function addBalance(id, amount) {

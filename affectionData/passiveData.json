@@ -6,26 +6,53 @@
                 "Type": "Normal",
                 "Levels": {
                     "1": "Every 10 auto attacks your next attack will deal a random damage type to the enemy.",
-                    "5": "Every 5 auto attacks your next attack will deal a random damage type to the enemy and deals 2x damage.",
-                    "10": "Every 5 auto attacks your next attack will deal a random damage type to the enemy and deals 2.5x damage."
+                    "5": "Every 10 auto attacks your next attack will deal a random damage type to the enemy and deals 2x damage.",
+                    "10": "Every 5 auto attacks your next attack will deal a random damage type to the enemy and deals 2x damage."
                 }
             },
             "Water": {
                 "Name": "Swift Swim",
                 "Type": "Water",
                 "Levels": {
-                    "1": "Cause it to rain for 3 seconds, during this rain your speed is doubled.",
-                    "5": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
-                    "10": "Cause it to rain for 9 seconds, during this rain your speed is doubled."
+                    "1": "Every 10 auto attacks, make it rain for 5 auto attacks. While raining your speed is doubled.",
+                    "5": "Every 10 auto attacks, make it rain for 10 auto attacks. While raining your speed is doubled.",
+                    "10": "Every 10 auto attacks, make it rain for 15 auto attacks. While raining your speed is doubled."
                 }
             },
             "Fire": {
-                "Name": "Fire Passive",
+                "Name": "Itimadate",
                 "Type": "Fire",
                 "Levels": {
-                    "1": "NA",
-                    "5": "NA",
-                    "10": "NA"
+                    "1": "When hit by a pokemone, lower its attack for 5 auto attacks.",
+                    "5": "When hit by a pokemone, lower its attack for 10 auto attacks.",
+                    "10": "When hit by a pokemone, lower its attack for 15 auto attacks."
+                }
+            },
+            "Grass": {
+                "Name": "Overgrow",
+                "Type": "Grass",
+                "Levels": {
+                    "1": "When below 50% HP, your attack is doubled.",
+                    "5": "When below 55% HP, your attack is doubled.",
+                    "10": "When below 60% HP, your attack is doubled."
+                }
+            },
+            "Fighting": {
+                "Name": "Iron Fist",
+                "Type": "Fighting",
+                "Levels": {
+                    "1": "When using a fighting special, have a 1 in 4 chance to increase the power by 10.",
+                    "5": "When using a fighting special, have a 1 in 4 chance to increase the power by 15.",
+                    "10": "When using a fighting special, have a 1 in 4 chance to increase the power by 20."
+                }
+            },
+            "Psychic": {
+                "Name": "Friend Gaurd",
+                "Type": "Psychic",
+                "Levels": {
+                    "1": "Reduce the damage done to allies by 10.",
+                    "5": "Reduce the damage done to allies by 15.",
+                    "10": "Reduce the damage done to allies by 20."
                 }
             }
         },
@@ -35,9 +62,27 @@
                 "Name": "Swift Swim+",
                 "Type": "Water",
                 "Levels": {
-                    "1": "Cause it to rain for 6 seconds, during this rain your speed is doubled.",
-                    "5": "Cause it to rain for 9 seconds, during this rain your speed is doubled.",
-                    "10": "Cause it to rain for 12 seconds, during this rain your speed is doubled."
+                    "1": "Every 10 auto attacks, make it rain for 6 auto attacks. While raining your speed is doubled.",
+                    "5": "Every 10 auto attacks, make it rain for 12 auto attacks. While raining your speed is doubled.",
+                    "10": "Every 10 auto attacks, make it rain for 18 auto attacks. While raining your speed is doubled."
+                }
+            },
+            "Grass": {
+                "Name": "Overgrow+",
+                "Type": "Grass",
+                "Levels": {
+                    "1": "When below 55% HP, your attack is doubled.",
+                    "5": "When below 60% HP, your attack is doubled.",
+                    "10": "When below 65% HP, your attack is doubled."
+                }
+            },
+            "Fighting": {
+                "Name": "Iron Fist+",
+                "Type": "Fighting",
+                "Levels": {
+                    "1": "When using a fighting special, have a 1 in 4 chance to increase the power by 15.",
+                    "5": "When using a fighting special, have a 1 in 4 chance to increase the power by 20.",
+                    "10": "When using a fighting special, have a 1 in 4 chance to increase the power by 25."
                 }
             }
         },
@@ -47,9 +92,9 @@
                 "Name": "Rain Dance",
                 "Type": "Water",
                 "Levels": {
-                    "1": "Cause it to rain for 3 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
-                    "5": "Cause it to rain for 6 seconds, during this rain regain 1/16 of maximum HP after each auto attack.",
-                    "10": "Cause it to rain for 9 seconds, during this rain regain 1/16 of maximum HP after each auto attack."
+                    "1": "Every 10 auto attacks, make it rain for 5 auto attacks. While raining regain 1/16 of your maximum HP after each auto attack.",
+                    "5": "Every 10 auto attacks, make it rain for 10 auto attacks. While raining regain 1/16 of your maximum HP after each auto attack.",
+                    "10": "Every 10 auto attacks, make it rain for 15 auto attacks. While raining regain 1/16 of your maximum HP after each auto attack."
                 }
             }
         }
