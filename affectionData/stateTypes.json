@@ -184,5 +184,1059 @@
             "Defense" : "16",
             "Speed" : "17"
         }
+    },
+    "Pidgey": {
+        "1": {
+            "HP" : "40",
+            "Attack" : "2",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "50",
+            "Attack" : "4",
+            "Defense" : "3",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "70",
+            "Attack" : "5",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "6",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "100",
+            "Attack" : "8",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "9",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "130",
+            "Attack" : "11",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "12",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "160",
+            "Attack" : "14",
+            "Defense" : "15",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "15",
+            "Speed" : "16"
+        }
+    },
+    "Sandshrew": {
+        "1": {
+            "HP" : "50",
+            "Attack" : "2",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "60",
+            "Attack" : "4",
+            "Defense" : "3",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "80",
+            "Attack" : "5",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "90",
+            "Attack" : "7",
+            "Defense" : "6",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "110",
+            "Attack" : "8",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "120",
+            "Attack" : "10",
+            "Defense" : "9",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "140",
+            "Attack" : "11",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "150",
+            "Attack" : "13",
+            "Defense" : "12",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "170",
+            "Attack" : "14",
+            "Defense" : "15",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "180",
+            "Attack" : "16",
+            "Defense" : "15",
+            "Speed" : "16"
+        }
+    },
+    "Jigglypuff": {
+        "1": {
+            "HP" : "50",
+            "Attack" : "5",
+            "Defense" : "4",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "60",
+            "Attack" : "7",
+            "Defense" : "4",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "80",
+            "Attack" : "8",
+            "Defense" : "7",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "90",
+            "Attack" : "10",
+            "Defense" : "7",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "110",
+            "Attack" : "11",
+            "Defense" : "10",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "120",
+            "Attack" : "13",
+            "Defense" : "10",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "140",
+            "Attack" : "14",
+            "Defense" : "13",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "150",
+            "Attack" : "16",
+            "Defense" : "13",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "170",
+            "Attack" : "17",
+            "Defense" : "16",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "180",
+            "Attack" : "19",
+            "Defense" : "16",
+            "Speed" : "14"
+        }
+    },
+    "Oddish": {
+        "1": {
+            "HP" : "60",
+            "Attack" : "5",
+            "Defense" : "3",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "3",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "6",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "6",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "9",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "9",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "12",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "12",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "15",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "200",
+            "Attack" : "19",
+            "Defense" : "15",
+            "Speed" : "14"
+        }
+    },
+    "Gloom": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "6",
+            "Defense" : "4",
+            "Speed" : "4"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "4",
+            "Speed" : "5"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "9",
+            "Defense" : "7",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "7",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "12",
+            "Defense" : "10",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "10",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "15",
+            "Defense" : "13",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "13",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "18",
+            "Defense" : "16",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "20",
+            "Defense" : "16",
+            "Speed" : "14"
+        }
+    },
+    "Growlithe": {
+        "1": {
+            "HP" : "50",
+            "Attack" : "4",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "60",
+            "Attack" : "6",
+            "Defense" : "3",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "90",
+            "Attack" : "9",
+            "Defense" : "6",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "120",
+            "Attack" : "12",
+            "Defense" : "9",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "150",
+            "Attack" : "15",
+            "Defense" : "12",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "15",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "180",
+            "Attack" : "18",
+            "Defense" : "15",
+            "Speed" : "16"
+        }
+    },
+    "Abra": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "3",
+            "Defense" : "2",
+            "Speed" : "4"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "5",
+            "Defense" : "2",
+            "Speed" : "5"
+        },
+        "3": {
+            "HP" : "110",
+            "Attack" : "6",
+            "Defense" : "5",
+            "Speed" : "6"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "8",
+            "Defense" : "5",
+            "Speed" : "7"
+        },
+        "5": {
+            "HP" : "140",
+            "Attack" : "9",
+            "Defense" : "8",
+            "Speed" : "9"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "11",
+            "Defense" : "8",
+            "Speed" : "10"
+        },
+        "7": {
+            "HP" : "170",
+            "Attack" : "12",
+            "Defense" : "11",
+            "Speed" : "11"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "14",
+            "Defense" : "11",
+            "Speed" : "12"
+        },
+        "9": {
+            "HP" : "200",
+            "Attack" : "15",
+            "Defense" : "14",
+            "Speed" : "13"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "17",
+            "Defense" : "14",
+            "Speed" : "15"
+        }
+    },
+    "Farfetch'd": {
+        "1": {
+            "HP" : "60",
+            "Attack" : "2",
+            "Defense" : "4",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "80",
+            "Attack" : "4",
+            "Defense" : "4",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "90",
+            "Attack" : "5",
+            "Defense" : "7",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "110",
+            "Attack" : "7",
+            "Defense" : "7",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "120",
+            "Attack" : "8",
+            "Defense" : "10",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "140",
+            "Attack" : "10",
+            "Defense" : "10",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "150",
+            "Attack" : "11",
+            "Defense" : "13",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "170",
+            "Attack" : "13",
+            "Defense" : "13",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "180",
+            "Attack" : "14",
+            "Defense" : "15",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "200",
+            "Attack" : "16",
+            "Defense" : "15",
+            "Speed" : "16"
+        }
+    },
+    "Exeggcute": {
+        "1": {
+            "HP" : "60",
+            "Attack" : "5",
+            "Defense" : "4",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "4",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "7",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "7",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "10",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "10",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "13",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "13",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "16",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "200",
+            "Attack" : "19",
+            "Defense" : "16",
+            "Speed" : "14"
+        }
+    },
+    "Cubone": {
+        "1": {
+            "HP" : "60",
+            "Attack" : "5",
+            "Defense" : "3",
+            "Speed" : "4"
+        },
+        "2": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "3": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "6",
+            "Speed" : "6"
+        },
+        "4": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "5": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "9",
+            "Speed" : "9"
+        },
+        "6": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "7": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "12",
+            "Speed" : "11"
+        },
+        "8": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "9": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "15",
+            "Speed" : "13"
+        },
+        "10": {
+            "HP" : "200",
+            "Attack" : "19",
+            "Defense" : "15",
+            "Speed" : "15"
+        }
+    },
+    "Marowack": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "6",
+            "Defense" : "4",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "4",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "9",
+            "Defense" : "7",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "7",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "12",
+            "Defense" : "10",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "10",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "15",
+            "Defense" : "13",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "13",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "18",
+            "Defense" : "16",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "20",
+            "Defense" : "16",
+            "Speed" : "16"
+        }
+    },
+    "Hitmonlee": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "5",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "7",
+            "Defense" : "3",
+            "Speed" : "6"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "8",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "10",
+            "Defense" : "6",
+            "Speed" : "8"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "11",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "13",
+            "Defense" : "9",
+            "Speed" : "11"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "14",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "16",
+            "Defense" : "12",
+            "Speed" : "13"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "17",
+            "Defense" : "15",
+            "Speed" : "14"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "19",
+            "Defense" : "15",
+            "Speed" : "16"
+        }
+    },
+    "Hitmonchan": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "5",
+            "Defense" : "5",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "7",
+            "Defense" : "5",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "8",
+            "Defense" : "8",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "10",
+            "Defense" : "8",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "11",
+            "Defense" : "11",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "13",
+            "Defense" : "11",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "14",
+            "Defense" : "14",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "16",
+            "Defense" : "14",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "17",
+            "Defense" : "17",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "19",
+            "Defense" : "17",
+            "Speed" : "14"
+        }
+    },
+    "Chansey": {
+        "1": {
+            "HP" : "80",
+            "Attack" : "4",
+            "Defense" : "5",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "100",
+            "Attack" : "6",
+            "Defense" : "5",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "110",
+            "Attack" : "7",
+            "Defense" : "8",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "130",
+            "Attack" : "9",
+            "Defense" : "8",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "140",
+            "Attack" : "11",
+            "Defense" : "11",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "160",
+            "Attack" : "13",
+            "Defense" : "11",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "170",
+            "Attack" : "14",
+            "Defense" : "14",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "190",
+            "Attack" : "16",
+            "Defense" : "14",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "200",
+            "Attack" : "17",
+            "Defense" : "17",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "220",
+            "Attack" : "19",
+            "Defense" : "17",
+            "Speed" : "14"
+        }
+    },
+    "Kangaskhan": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "4",
+            "Defense" : "6",
+            "Speed" : "3"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "6",
+            "Defense" : "6",
+            "Speed" : "4"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "7",
+            "Defense" : "9",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "9",
+            "Defense" : "9",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "11",
+            "Defense" : "12",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "13",
+            "Defense" : "12",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "14",
+            "Defense" : "15",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "16",
+            "Defense" : "15",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "17",
+            "Defense" : "18",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "19",
+            "Defense" : "18",
+            "Speed" : "14"
+        }
+    },
+    "Seadra": {
+        "1": {
+            "HP" : "70",
+            "Attack" : "6",
+            "Defense" : "4",
+            "Speed" : "4"
+        },
+        "2": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "4",
+            "Speed" : "5"
+        },
+        "3": {
+            "HP" : "100",
+            "Attack" : "9",
+            "Defense" : "7",
+            "Speed" : "5"
+        },
+        "4": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "7",
+            "Speed" : "6"
+        },
+        "5": {
+            "HP" : "130",
+            "Attack" : "12",
+            "Defense" : "10",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "10",
+            "Speed" : "9"
+        },
+        "7": {
+            "HP" : "160",
+            "Attack" : "15",
+            "Defense" : "13",
+            "Speed" : "10"
+        },
+        "8": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "13",
+            "Speed" : "11"
+        },
+        "9": {
+            "HP" : "190",
+            "Attack" : "18",
+            "Defense" : "16",
+            "Speed" : "12"
+        },
+        "10": {
+            "HP" : "210",
+            "Attack" : "20",
+            "Defense" : "16",
+            "Speed" : "14"
+        }
+    },
+    "Staryu": {
+        "1": {
+            "HP" : "60",
+            "Attack" : "5",
+            "Defense" : "3",
+            "Speed" : "4"
+        },
+        "2": {
+            "HP" : "80",
+            "Attack" : "7",
+            "Defense" : "3",
+            "Speed" : "5"
+        },
+        "3": {
+            "HP" : "90",
+            "Attack" : "8",
+            "Defense" : "6",
+            "Speed" : "6"
+        },
+        "4": {
+            "HP" : "110",
+            "Attack" : "10",
+            "Defense" : "6",
+            "Speed" : "7"
+        },
+        "5": {
+            "HP" : "120",
+            "Attack" : "11",
+            "Defense" : "9",
+            "Speed" : "8"
+        },
+        "6": {
+            "HP" : "140",
+            "Attack" : "13",
+            "Defense" : "9",
+            "Speed" : "10"
+        },
+        "7": {
+            "HP" : "150",
+            "Attack" : "14",
+            "Defense" : "12",
+            "Speed" : "11"
+        },
+        "8": {
+            "HP" : "170",
+            "Attack" : "16",
+            "Defense" : "12",
+            "Speed" : "12"
+        },
+        "9": {
+            "HP" : "180",
+            "Attack" : "17",
+            "Defense" : "15",
+            "Speed" : "13"
+        },
+        "10": {
+            "HP" : "200",
+            "Attack" : "19",
+            "Defense" : "15",
+            "Speed" : "15"
+        }
     }
 }

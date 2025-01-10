@@ -1,9 +1,9 @@
 {
     "EVE1": {    
         "BASIC":{
-            "Normal": {
+            "Colorless": {
                 "Name": "Untyped",
-                "Type": "Normal",
+                "Type": "Colorless",
                 "Levels": {
                     "1": "Every 10 auto attacks your next attack will deal a random damage type to the enemy.",
                     "5": "Every 10 auto attacks your next attack will deal a random damage type to the enemy and deals 2x damage.",
@@ -23,9 +23,9 @@
                 "Name": "Itimadate",
                 "Type": "Fire",
                 "Levels": {
-                    "1": "When hit by a pokemone, lower its attack for 5 auto attacks.",
-                    "5": "When hit by a pokemone, lower its attack for 10 auto attacks.",
-                    "10": "When hit by a pokemone, lower its attack for 15 auto attacks."
+                    "1": "When hit by a pokemon, lower the attacker's attack for 5 auto attacks.",
+                    "5": "When hit by a pokemon, lower the attacker's attack for 10 auto attacks.",
+                    "10": "When hit by a pokemon, lower the attacker's attack for 15 auto attacks."
                 }
             },
             "Grass": {

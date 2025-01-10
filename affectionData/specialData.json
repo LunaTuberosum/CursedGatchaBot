@@ -1,9 +1,9 @@
 {
     "EVE1": {
         "BASIC": {
-            "Normal": {
+            "Colorless": {
                 "Name": "Quick Attack",
-                "Type": "Normal",
+                "Type": "Colorless",
                 "Levels": {
                     "5": "You will do a quick attack that is 60 power attack.",
                     "10": "You will do a quick attack that is 80 power attack. After using this ability your speed will double for 5 auto attacks."
