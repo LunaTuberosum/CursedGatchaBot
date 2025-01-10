@@ -24,7 +24,7 @@ module.exports = {
 
         let itemName = "";
         for (const sub of splitMessage) {
-            if (sub.toLowerCase() == "cuse" || sub.toLowerCase() == "cu") continue;
+            if (sub.toLowerCase() == "guse" || sub.toLowerCase() == "gu") continue;
 
             itemName += ` ${sub}`;
         }

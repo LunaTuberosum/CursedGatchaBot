@@ -112,7 +112,7 @@
     "BIG PACK": {
         "Name": "`BIG PACK`",
         "Get": "`Trading 500 POKEDOLLARS at the PokeShop`",
-        "Description" : "Draws 5 cards with at least one being a Rare or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
+        "Description" : "Draws 5 cards with at least one being a Uncommon or greater and one being a Rare or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
     },
     "GREAT BALL": {
         "Name": "`GREAT BALL`",

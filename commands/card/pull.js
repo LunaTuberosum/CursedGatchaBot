@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
 const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats } = require('../../dbObjects.js');
-const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect } = require("../../pullingObjects.js");
+const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -39,44 +39,6 @@ async function checkGrabs(response, message) {
     if (card1Grabed == true && card2Grabed == true) {
         await response.edit({ components: [], content: `${message.author} pulled these cards.\nThese cards have expired` });
     }
-}
-
-async function createCardID(user){
-    const lastID = user.last_code;
-
-    let newCode = ""
-    
-    for (num of lastID.slice(2)) {
-        let lookNum = num.charCodeAt(0);
-
-        if (lookNum == 57) {
-            if (newCode.length > 0) {
-                let _ln = newCode[newCode.length - 1].charCodeAt(0);
-                _ln++;
-            
-                if(lastID[newCode.length + 1] == "9"){
-                    newCode = newCode.slice(0, newCode.length - 1) + "00";
-                } else {
-                    newCode = newCode.slice(0, newCode.length - 1) + String.fromCharCode(_ln) + "0";
-                }
-            }
-        }
-        else {
-            if(newCode.length == 3) {
-                lookNum++;
-                newCode +=  String.fromCharCode(lookNum);
-            }
-            else {
-                newCode += num;
-            }
-        }
-    }
-
-    newCode = lastID.slice(0, 2) + newCode;
-    user.last_code = newCode;
-    user.save();
-    return newCode;
-
 }
 
 async function checkGrabCard(message, response, pokemonData, i) {
@@ -146,6 +108,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 async function pullMechanics(message, pokemonData1, pokemonData2) {
     
     let attachment = new AttachmentBuilder(await makePokeImagePull(pokemonData1, pokemonData2), { name: 'poke-images.png' });
+    
 
     const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 

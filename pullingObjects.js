@@ -7,7 +7,7 @@ const { getCurrentStatsSeperate } = require("./affectionObjects.js");
 const { messageLink } = require("discord.js");
 
 function getSeries(series, starArray) {
-    let seriesPack = {};
+    let seriesPack = "";
     
     if (series == "random") {
         const randomPack = Math.floor(Math.random() * Object.keys(starArray).length);
@@ -18,14 +18,18 @@ function getSeries(series, starArray) {
             }
         }
     }
+    else{ 
+        seriesPack = series;
+        
+    }
 
     return seriesPack;
 }
 
-function getWhichStar(series) {
+function getWhichStar(series, boost=0) {
 
     // Make random number between 1 and 4
-    const random = Math.floor(Math.random() * 100) + 1;
+    const random = Math.min((Math.floor(Math.random() * 100) + 1) + boost, 100);
 
     // check what star that is
     if (random <= 60) {
@@ -186,11 +190,11 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     
     if (pokemonData["PokeType"] == "BASIC") {
         if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Full-Frame.png`);
-        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
     }
     else if (pokemonData["PokeType"] == "STAGE 1") {
         if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage1-Frame.png`);
-        frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage1-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage1-Frame.png`);
     }
     else if (pokemonData["PokeType"] == "STAGE 2") {
         if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage2-Frame.png`);
@@ -203,7 +207,7 @@ async function makePokeImageDict(pokemonData, context, x, y) {
     // context.drawImage(moves, x, y, bottom.width, bottom.height);
     context.drawImage(affection, x, y, bottom.width, bottom.height);
     
-    if (pokemonData["CardType"] == "HOLO") {
+    if (pokemonData["CardType"] == "HOLO" || pokemonData["CardType"] == "HOLOFRAME") {
         context.globalCompositeOperation = "multiply";
         context.drawImage(holoEffect, x, y, bottom.width, bottom.height);
         context.globalCompositeOperation = "source-over";
@@ -234,6 +238,76 @@ async function makePokeImageTrade(pokemonData1, cardData1, pokemonData2, cardDat
     context = await makePokeImageData(pokemonData2, cardData2, context, 2460, 100);
 
     return canvas.encode('png');
+}
+
+async function makePokeImageDraw3(pokemonDataList) {
+    let canvasList = []
+
+    const cardBack = await Canvas.loadImage(`./pokeImages/CardBack.png`);
+
+    for (let i = 0; i < 4; i++) {
+        const canvas = Canvas.createCanvas(4770, 2280);
+        let context = canvas.getContext('2d');
+        
+        context = await makePokeImageDict(pokemonDataList[0], context, 50, 100);
+        if (i == 0) {
+            context.drawImage(cardBack, 50, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[1], context, 1640, 100);
+        if (i <= 1) {
+            context.drawImage(cardBack, 1640, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[2], context, 3230, 100);
+        if (i <= 2) {
+            context.drawImage(cardBack, 3230, 100);
+        }
+
+        canvasList.push(canvas.encode('png'))
+    }
+
+    return canvasList;
+}
+
+async function makePokeImageDraw5(pokemonDataList) {
+    let canvasList = []
+
+    const cardBack = await Canvas.loadImage(`./pokeImages/CardBack.png`);
+
+    for (let i = 0; i < 6; i++) {
+        const canvas = Canvas.createCanvas(7950, 2280);
+        let context = canvas.getContext('2d');
+        
+        context = await makePokeImageDict(pokemonDataList[0], context, 50, 100);
+        if (i == 0) {
+            context.drawImage(cardBack, 50, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[1], context, 1640, 100);
+        if (i <= 1) {
+            context.drawImage(cardBack, 1640, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[2], context, 3230, 100);
+        if (i <= 2) {
+            context.drawImage(cardBack, 3230, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[3], context, 4820, 100);
+        if (i <= 3) {
+            context.drawImage(cardBack, 4820, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[4], context, 6410, 100);
+        if (i <= 4) {
+            context.drawImage(cardBack, 6410, 100);
+        }
+
+        canvasList.push(canvas.encode('png'))
+    }
+
+    return canvasList;
 }
 
 async function addBalance(id, amount) {
@@ -311,4 +385,42 @@ async function checkSeriesCollect(userCards, series, message) {
     }
 }
 
-module.exports = { getWhichStar, makePokeImage, makePokeImagePull, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect };
+async function createCardID(user){
+    const lastID = user.last_code;
+
+    let newCode = ""
+    
+    for (num of lastID.slice(2)) {
+        let lookNum = num.charCodeAt(0);
+
+        if (lookNum == 57) {
+            if (newCode.length > 0) {
+                let _ln = newCode[newCode.length - 1].charCodeAt(0);
+                _ln++;
+            
+                if(lastID[newCode.length + 1] == "9"){
+                    newCode = newCode.slice(0, newCode.length - 1) + "00";
+                } else {
+                    newCode = newCode.slice(0, newCode.length - 1) + String.fromCharCode(_ln) + "0";
+                }
+            }
+        }
+        else {
+            if(newCode.length == 3) {
+                lookNum++;
+                newCode +=  String.fromCharCode(lookNum);
+            }
+            else {
+                newCode += num;
+            }
+        }
+    }
+
+    newCode = lastID.slice(0, 2) + newCode;
+    user.last_code = newCode;
+    user.save();
+    return newCode;
+
+}
+
+module.exports = { getWhichStar, makePokeImage, makePokeImagePull, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, };

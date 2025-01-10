@@ -1,13 +1,13 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
-const { addBalance } = require("../../pullingObjects.js");
+const { addBalance, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
 
 function makeReleaseEmbed(cardInfo, releaseData, user) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#616161")
-        .setThumbnail(`attachment://${cardInfo["CardID"]}-${cardInfo["Name"]}.png`)
+        .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
         .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\``)
 
@@ -17,7 +17,7 @@ function makeReleaseEmbed(cardInfo, releaseData, user) {
 function makeReleaseEmbedCancel(cardInfo, releaseData, user) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#bd0f0f")
-        .setThumbnail(`attachment://${cardInfo["CardID"]}-${cardInfo["Name"]}.png`)
+        .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
         .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\`\n\n**Card Release has been canceled.**`)
 
@@ -27,7 +27,7 @@ function makeReleaseEmbedCancel(cardInfo, releaseData, user) {
 function makeReleaseEmbedConfirm(cardInfo, releaseData, user) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#26bd0f")
-        .setThumbnail(`attachment://${cardInfo["CardID"]}-${cardInfo["Name"]}.png`)
+        .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
         .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\`\n\n**The card has been released.**`)
 
@@ -54,10 +54,13 @@ function makeButton() {
 
 function findCardInCollection(card) {
     
-    for ( const pName of Object.keys(allCards)) {
-        if(pName == card) {
-            return allCards[pName];
+    for ( const series of Object.keys(allCards)) {
+        for (const pName of Object.keys(allCards[series])) {
+            if(pName == card) {
+                return allCards[series][pName];
+            }
         }
+        
     }
 }
 
@@ -113,7 +116,7 @@ module.exports = {
         pokemonData = findCardInCollection(cardData.item.name);            
         releaseData = getLevelUpCost(cardData)
         
-        attachment = new AttachmentBuilder(`./pokeImages/${pokemonData["CardID"]}-${pokemonData["Name"]}.png`);
+        attachment = new AttachmentBuilder(await makePokeImage(cardData.item, cardData), { name: 'poke-image.png' });
         releaseEmbed = makeReleaseEmbed(pokemonData, releaseData, message.author);
         await response.edit({ content: "", embeds: [releaseEmbed], files: [attachment], components: [makeButton()] });
 
