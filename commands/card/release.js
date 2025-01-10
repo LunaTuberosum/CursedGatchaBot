@@ -1,5 +1,5 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats } = require("../../dbObjects.js");
+const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats, TitleDatabase, UserTitles } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
 const { addBalance, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
@@ -147,6 +147,21 @@ module.exports = {
 
                     releaseEmbed = makeReleaseEmbedConfirm(pokemonData, releaseData, message.author)
                     response.edit({ content: "", embeds: [releaseEmbed], files: [attachment], components: [] });
+
+                    if (userStat.card_released == 100) {
+                        const titleData = await TitleDatabase.findOne({ where: { name: "Catch and Release" } });
+
+                        if (!titleData) { return; }
+
+                        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+                        
+                        if (userTitle) { return; }
+
+                        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+                        await message.channel.send(`${message.author}, you have released 100 cards! You have gained the title: \`${titleData.name}\``)
+                    }
+                    
                 }
             }
         });

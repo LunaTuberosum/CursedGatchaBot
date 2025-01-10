@@ -13,11 +13,13 @@ module.exports = {
             user.save();
             user.grab_cooldown = 0;
             user.save();
+            
+            await message.channel.send({ content: `${message.author} your cooldowns have been reset` });
+
         }
         else {
             return;
         }
 
-        await message.channel.send({ content: `${message.author} your cooldowns have been reset` })
     }
 };

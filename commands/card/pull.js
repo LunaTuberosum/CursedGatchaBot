@@ -1,5 +1,5 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
-const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats } = require('../../dbObjects.js');
+const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
 const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
@@ -41,6 +41,22 @@ async function checkGrabs(response, message) {
     }
 }
 
+async function checkGrabTitles(message, userStat) {
+    if (userStat.card_grabbed >= 100) {
+        const titleData = await TitleDatabase.findOne({ where: { name: "One Man\'s Trash" } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have grabbed 100 cards! You have gained the title: \`${titleData.name}\``)
+    }
+}
+
 async function checkGrabCard(message, response, pokemonData, i) {
     const user = await Users.findOne({ where: { user_id: i.user.id } });
     if (!user) { return; }
@@ -57,6 +73,8 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
         userStat.card_grabbed++;
         userStat.save();
+
+        await checkGrabTitles(message, userStat);
 
         cardCode = await createCardID(user);
         addCard(cardCode, user, pokeItem);
@@ -84,6 +102,8 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
             userStat.card_grabbed++;
             userStat.save();
+
+            await checkGrabTitles(message, userStat);
 
             cardCode = await createCardID(user);
             addCard(cardCode, user, pokeItem);
@@ -134,6 +154,22 @@ async function pullMechanics(message, pokemonData1, pokemonData2) {
     });
 }
 
+async function checkPullTitles(message, userStat) {
+    if (userStat.card_drawn >= 100) {
+        const titleData = await TitleDatabase.findOne({ where: { name: "Litterer" } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have pulled 100 cards! You have gained the title: \`${titleData.name}\``)
+    }
+}
+
 module.exports = {
     name: 'pull',
     shortName: ['p'],
@@ -155,6 +191,8 @@ module.exports = {
 
                 userStat.card_drawn += 2;
                 userStat.save();
+
+                await checkPullTitles(message, userStat);
 
                 user.pull_cooldown = now + (20 * 60_000);
                 user.save();

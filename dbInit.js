@@ -83,7 +83,10 @@ sequelize.sync({ force }).then(async () => {
 	const title = [
 		TitleDatabase.upsert({ name: 'Developer', description: 'Made the bot.' }),
 		TitleDatabase.upsert({ name: '"Artist"', description: 'Drew the cards herself.' }),
-		TitleDatabase.upsert({ name: 'Trash Collector', description: 'Has collected all cards in the EVE1 pack.' })
+		TitleDatabase.upsert({ name: 'Trash Collector', description: 'Has collected all cards in the EVE1 pack.' }),
+		TitleDatabase.upsert({ name: 'Catch and Release', description: 'Has released 100 cards' }),
+		TitleDatabase.upsert({ name: 'Litterer', description: 'Has pulled 100 cards.' }),
+		TitleDatabase.upsert({ name: 'One Man\'s Trash', description: 'Has grabbed 100 cards.' })
 	];
 
 	await Promise.all(database, shop, title);
