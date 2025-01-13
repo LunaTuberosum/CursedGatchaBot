@@ -133,6 +133,11 @@
         "Usage": "`g!trade` `other user` `your card` `their card`",
         "Description": "Trades two cards between two users. The other user must be refrenced using a mention."
     },
+    "gift": {
+        "Command": "`g!gift`, `g!g`, `g!give`",
+        "Usage": "`g!gift` `other user` `your card`",
+        "Description": "Gift a card to another user. The other user must be refrenced using a mention."
+    },
     "multitrade": {
         "Command": "`g!multiTrade`, `g!mt`",
         "Usage": "`g!multiTrade` `other user`",

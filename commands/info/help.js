@@ -12,7 +12,7 @@ function makeHelpEmbed() {
             { name: "**ℹ️ Information**", value: "\`cooldown\` \`cardInfo\`, \`pokeDex\`, \`itemInfo\`, \`userInfo\`, \`serverInfo\`, \`credits\`", inline: true },
             { name: "**🤞 Wishlist**", value: "\`wishlist\`, \`wishlistAdd\`, \`unWishlist\`, \`wishlistWatch\`", inline: true },
             { name: "**🪙 Shop**", value: "\`pokeShop\`, \`buy\`", inline: true },
-            { name: "**🔁 Trade**", value: "\`trade\`, \`multiTrade\`", inline: true },
+            { name: "**🔁 Trade**", value: "\`trade\`, \`multiTrade\`, \`gift\`", inline: true },
             { name: "**❓ Other**", value: "\`help\`", inline: true },
         )
 
