@@ -132,7 +132,7 @@ async function pullMechanics(message, pokemonData1, pokemonData2) {
 
     const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 
-    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 15_000 });
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
     card1Grabed = false;
     card2Grabed = false;
