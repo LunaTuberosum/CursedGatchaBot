@@ -43,6 +43,7 @@ module.exports = {
         const splitMessage = message.content.split(" ");
 
         let user;
+        let userAt;
 
         const buttons = makeButton();
         buttons.components[0].setDisabled(true);
@@ -54,10 +55,12 @@ module.exports = {
 
         if (splitMessage.length == 1) {
             user = await Users.findOne({ where: { user_id: message.author.id } });
+            userAt = message.author;
         }
         else {
             user = await Users.findOne({ where: { user_id: message.mentions.users.first().id } });
             if (!user) { await response.edit(`${message.author}, that user either dosen't exist or is not registered.`); return; }
+            userAt = message.mentions.users.first();
         }
 
         const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
@@ -76,7 +79,7 @@ module.exports = {
             titleDesc.push(`\`No Titles\``)
         }
 
-        await response.edit({ content: "", embeds: [makeEmbed(user, message.author, userStat, titleList)], components: [buttons] });
+        await response.edit({ content: "", embeds: [makeEmbed(user, userAt, userStat, titleList)], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -87,14 +90,14 @@ module.exports = {
                 buttons.components[0].setDisabled(true);
                 buttons.components[1].setDisabled(false);
 
-                await response.edit({ content: "", embeds: [makeEmbed(user, message.author, userStat, titleList)], components: [buttons] });
+                await response.edit({ content: "", embeds: [makeEmbed(user, userAt, userStat, titleList)], components: [buttons] });
                 i.deferUpdate();
             }
             else if (i.customId == "titles") {
                 buttons.components[0].setDisabled(false);
                 buttons.components[1].setDisabled(true);
 
-                await response.edit({ content: "", embeds: [makeTitleEmbed(message.author, titleDesc)], components: [buttons] });
+                await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc)], components: [buttons] });
                 i.deferUpdate();
             }
         })
