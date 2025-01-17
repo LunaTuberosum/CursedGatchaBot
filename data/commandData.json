@@ -147,6 +147,10 @@
         "Command": "`g!help`, `g!h`",
         "Usage": "`g!help` *`command`",
         "Description": "View this list of commands. Specify a command for detailed information."
+    },
+    "bugreport": {
+        "Command": "`g!bugReport`, `g!bug`, `g!bugs`",
+        "Description": "Get the link for the bug report form."
     }
     
 }

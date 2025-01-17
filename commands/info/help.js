@@ -13,7 +13,7 @@ function makeHelpEmbed() {
             { name: "**🤞 Wishlist**", value: "\`wishlist\`, \`wishlistAdd\`, \`unWishlist\`, \`wishlistWatch\`", inline: true },
             { name: "**🪙 Shop**", value: "\`pokeShop\`, \`buy\`", inline: true },
             { name: "**🔁 Trade**", value: "\`trade\`, \`multiTrade\`, \`gift\`", inline: true },
-            { name: "**❓ Other**", value: "\`help\`", inline: true },
+            { name: "**❓ Other**", value: "\`help\`, \`bugReport\`", inline: true },
         )
 
     return helpEmbed;
