@@ -20,10 +20,10 @@ module.exports = {
             return;
         }
 
-        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`20 POKEDOLLARS\`!`);
+        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`50 POKEDOLLARS\`!`);
 
         const itemData = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
-        user.addItem(itemData, 20);
+        user.addItem(itemData, 50);
 
         claimedUsers.push(message.author.id);
 
