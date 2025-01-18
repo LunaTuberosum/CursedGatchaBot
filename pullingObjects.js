@@ -77,6 +77,8 @@ function pullRandomCard(starArray) {
 }
 
 async function makePokeImageData(pokemonData, cardData, context, x, y) {
+
+    cardData.item = pokemonData;
     
     const bottom = getImage("pokemon-bottom", cardData, "DATA");
 

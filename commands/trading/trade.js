@@ -168,9 +168,11 @@ module.exports = {
             if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
 
                 cardInfo2.user_id = user.user_id;
+                cardInfo2.tag = "None";
                 cardInfo2.save();
 
                 cardInfo1.user_id = otherUser.user_id;
+                cardInfo1.tag = "None";
                 cardInfo1.save();
 
                 collector.stop();

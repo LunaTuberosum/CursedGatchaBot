@@ -134,6 +134,7 @@ module.exports = {
             if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
 
                 card.user_id = otherUser.user_id;
+                card.tag = "None";
                 card.save();
 
                 collector.stop();

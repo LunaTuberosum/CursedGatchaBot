@@ -162,7 +162,8 @@ module.exports = {
                     }
                     else {
                         const tag = await Tags.findOne({ where: { user_id: message.author.id, name: card.tag } });
-                        emojiTag = tag.emoji;
+                        if (!tag) { emojiTag = ":black_medium_small_square:";}
+                        else emojiTag = tag.emoji;
                     }
                     deckArray.push(`\n${emojiTag} \`${card.item_id}\` - \`${raritySymbol(pokemonData.rarity)}\` - \`${pokemonData.series}\` - **${formatName(pokemonData)}** ${card.level == 10 ? "❤️" : card.level >= 5 ? "🩷" : ""}`);
                 }

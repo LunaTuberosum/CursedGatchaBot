@@ -135,6 +135,7 @@ function isInTradeItem(userTradeData, itemInfo) {
 function transferTradeItems(otherUser, userTradeData) {
     for (card of userTradeData["Cards"]) {
         card.user_id = otherUser.user_id;
+        card.tag = "None";
         card.save();
     }
 
