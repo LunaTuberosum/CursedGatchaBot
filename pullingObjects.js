@@ -4,6 +4,7 @@ const seriesTitleData = require("./data/seriesTitleData.json");
 const { currency, UserTitles, TitleDatabase } = require("./dbObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const { getImage } = require("./imageObjects.js");
+const { getCurrentStatsSeperate } = require("./affectionObjects.js");
 
 function getSeries(series, starArray) {
     let seriesPack = "";
@@ -85,17 +86,42 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
 
     cardData.item = pokemonData;
     
-    const bottom = getImage("pokemon-bottom", cardData, "DATA");
+    const bottom = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData.series}/${pokemonData.name}/Bottom.png`);
+    // const bottom = getImage("pokemon-bottom", cardData, "DATA");
 
-    const frame = getImage("frames", cardData, "DATA");
+    let frame;
+    if (pokemonData.poke_type == "BASIC") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Full-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Normal-Frame.png`);
+    }
+    else if (pokemonData.poke_type == "STAGE 1") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage1-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage1-Frame.png`);
+    }
+    else if (pokemonData.poke_type == "STAGE 2") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage2-Frame.png`);
+    }
+    // const frame = getImage("frames", cardData, "DATA");
 
-    const hp = getImage("health", cardData, "DATA");
-    const top = getImage("pokemon-top", cardData, "DATA");
+    const hp = await Canvas.loadImage(`./pokeImages/health/${getCurrentStatsSeperate(pokemonData, cardData)["HP"]}.png`);
+    const top = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
+    // const hp = getImage("health", cardData, "DATA");
+    // const top = getImage("pokemon-top", cardData, "DATA");
 
     // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.poke_type}/${pokemonData.type}/${pokemonData.card_type}.png`);
 
-    const affection = getImage("affection", cardData, "DATA");
-    const holoEffect = getImage("effects", "HOLO.png", "DATA");
+    let  affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
+    
+    if (cardData.level >= 5 && cardData.level < 10) {
+        affection = await Canvas.loadImage(`./pokeImages/affection/level5.png`);
+    }
+    else if (cardData.level >= 10) {
+        affection = await Canvas.loadImage(`./pokeImages/affection/level10.png`);
+    }
+    const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
+    // const affection = getImage("affection", cardData, "DATA");
+    // const holoEffect = getImage("effects", "HOLO.png", "DATA");
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     context.drawImage(frame, x, y, bottom.width, bottom.height);
@@ -114,20 +140,37 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
 }
 
 async function makePokeImageDataNoAffection(pokemonData, context, x, y) {
-    const cardData = new Object;
-    cardData.level = 0;
-    cardData.item = pokemonData;
+    // const cardData = new Object;
+    // cardData.level = 0;
+    // cardData.item = pokemonData;
+    const bottom = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData.series}/${pokemonData.name}/Bottom.png`);
 
-    const bottom = getImage("pokemon-bottom", cardData, "DATA");
+    // const bottom = getImage("pokemon-bottom", cardData, "DATA");
 
-    const frame = getImage("frames", cardData, "DATA");
+    let frame;
+    if (pokemonData.poke_type == "BASIC") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Full-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Normal-Frame.png`);
+    }
+    else if (pokemonData.poke_type == "STAGE 1") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage1-Frame.png`)
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage1-Frame.png`);
+    }
+    else if (pokemonData.poke_type == "STAGE 2") {
+        if (pokemonData.card_type == "FRAME" || pokemonData.card_type == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData.series}/${pokemonData.type}/Stage2-Frame.png`);
+    }
+    // const frame = getImage("frames", cardData, "DATA");
 
-    const hp = getImage("health", cardData, "DATA");
-    const top = getImage("pokemon-top", cardData, "DATA");
+    const hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
+    const top = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData.series}/${pokemonData.name}/Top-${pokemonData.card_type}.png`);
+    // const hp = getImage("health", cardData, "DATA");
+    // const top = getImage("pokemon-top", cardData, "DATA");
 
     // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.poke_type}/${pokemonData.type}/${pokemonData.card_type}.png`)
 
-    const holoEffect = getImage("effects", "HOLO.png", "DATA");
+    const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
+    // const holoEffect = getImage("effects", "HOLO.png", "DATA");
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     context.drawImage(frame, x, y, bottom.width, bottom.height);
@@ -156,15 +199,34 @@ async function makePokeImage(pokemonData, cardData) {
 
 async function makePokeImageDict(pokemonData, context, x, y) {
 
-    const affection = getImage("affection", pokemonData, "DICT");
-    const holoEffect = getImage("effects", "HOLO.png", "DICT");
+    // const affection = getImage("affection", pokemonData, "DICT");
+    // const holoEffect = getImage("effects", "HOLO.png", "DICT");
+    const affection = await Canvas.loadImage(`./pokeImages/affection/level0.png`);
+    const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
 
-    let bottom = getImage("pokemon-bottom", pokemonData, "DICT");
-    let frame = getImage("frames", pokemonData, "DICT");
-    let hp = getImage("health", pokemonData, "DICT");
-    let top = getImage("pokemon-top", pokemonData, "DICT");
+    // let bottom = getImage("pokemon-bottom", pokemonData, "DICT");
+    // let frame = getImage("frames", pokemonData, "DICT");
+    // let hp = getImage("health", pokemonData, "DICT");
+    // let top = getImage("pokemon-top", pokemonData, "DICT");
+    let bottom = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData["Series"]}/${pokemonData["Name"]}/Bottom.png`);
+    let frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
+    let hp = await Canvas.loadImage(`./pokeImages/health/20.png`);
+    let top = await Canvas.loadImage(`./pokeImages/pokemon/${pokemonData["Series"]}/${pokemonData["Name"]}/Top-${pokemonData["CardType"]}.png`);
 
     // const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData["Series"]}/${pokemonData["PokeType"]}/${pokemonData["Type"]}/${pokemonData["CardType"]}.png`)
+
+    if (pokemonData["PokeType"] == "BASIC") {
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Full-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Normal-Frame.png`);
+    }
+    else if (pokemonData["PokeType"] == "STAGE 1") {
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage1-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage1-Frame.png`);
+    }
+    else if (pokemonData["PokeType"] == "STAGE 2") {
+        if (pokemonData["CardType"] == "FRAME" || pokemonData["CardType"] == "HOLOFRAME") frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/FullStage2-Frame.png`);
+        else frame = await Canvas.loadImage(`./pokeImages/frames/${pokemonData["Series"]}/${pokemonData["Type"]}/Stage2-Frame.png`);
+    }
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
 
@@ -210,7 +272,8 @@ async function makePokeImageTrade(pokemonData1, cardData1, pokemonData2, cardDat
 async function makePokeImageDraw3(pokemonDataList) {
     let canvasList = []
 
-    const cardBack = getImage("CardBack.png", null, "DICT");
+    const cardBack = await Canvas.loadImage(`./pokeImages/CardBack.png`);
+    // const cardBack = getImage("CardBack.png", null, "DICT");
 
     for (let i = 0; i < 4; i++) {
         const canvas = Canvas.createCanvas(4770, 2280);
@@ -240,7 +303,8 @@ async function makePokeImageDraw3(pokemonDataList) {
 async function makePokeImageDraw5(pokemonDataList) {
     let canvasList = []
 
-    const cardBack = getImage("CardBack.png", null, "DICT");
+    const cardBack = await Canvas.loadImage(`./pokeImages/CardBack.png`);
+    // const cardBack = getImage("CardBack.png", null, "DICT");
 
     for (let i = 0; i < 6; i++) {
         const canvas = Canvas.createCanvas(7950, 2280);

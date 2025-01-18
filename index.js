@@ -63,6 +63,6 @@ for (const file of eventFiles) {
 // instatateSpecialCollection(client);
 
 createItemList();
-createImageDict();
+// createImageDict();
 
 client.login(token);
