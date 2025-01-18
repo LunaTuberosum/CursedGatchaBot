@@ -125,7 +125,7 @@ module.exports = {
         const buttons = makeButton();
         buttons.components[0].setDisabled(true);
         
-        await response.edit({ embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
+        await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
         
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -139,7 +139,7 @@ module.exports = {
 
                 buttons.components[0].setDisabled(false);
                 if (pokeIndex + 1 == pokeList.length) buttons.components[1].setDisabled(true);
-                await response.edit({ embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
+                await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
                 i.deferUpdate();
             }
             else if (i.customId == "left") {
@@ -149,7 +149,7 @@ module.exports = {
 
                 buttons.components[1].setDisabled(false);
                 if (pokeIndex == 0) buttons.components[0].setDisabled(true);
-                await response.edit({ embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
+                await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
                 i.deferUpdate();
             }
         })
