@@ -90,8 +90,8 @@
     },
     "pokedex": {
         "Command": "`g!pokeDex`, `g!pd`",
-        "Usage": "`g!pokeDex` `card code`",
-        "Description": "Shows details about a certial card and how to obtain that card."
+        "Usage": "`g!pokeDex` `pokemon name/series name` *`HOLO/FRAME/HOLOFRAME`",
+        "Description": "Shows details about a certial card and how to obtain that card. Sending with a pokemon name, you can add a 3rd parameter to set it to that variant of the pokemon. Sending with a series name, it will show all the none holographic/full art in that series and if you have them."
     },
     "serverinfo": {
         "Command": "`g!serverInfo`, `g!si`",

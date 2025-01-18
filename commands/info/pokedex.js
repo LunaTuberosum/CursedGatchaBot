@@ -85,7 +85,7 @@ module.exports = {
 
         const splitMessage = message.content.split(" ");
 
-        if (splitMessage.length != 2) { await response.edit(`${message.author}, please enter the name of the pokemon you'd like to lookup`); return; }
+        if (splitMessage.length < 2) { await response.edit(`${message.author}, please enter the name of the pokemon you'd like to lookup`); return; }
 
         if (splitMessage[1].length == 4) {
             if (splitMessage[1].toUpperCase() == "EVE1")
@@ -101,6 +101,22 @@ module.exports = {
         if (pokeList.length == 0 || !pokeList) { await response.edit(`${message.author}, that pokemon either dosen't exist or its name is misspelt.`); return; }
 
         let pokeIndex = 0;
+
+        if (splitMessage.length == 3) {
+            let tempIndex = 0;
+            
+            if (splitMessage[2].toUpperCase() == "HOLO") {
+                tempIndex = 1;
+            }
+            else if (splitMessage[2].toUpperCase() == "FRAME" && pokeList.length >= 3) {
+                tempIndex = 2;
+            }
+            else if (splitMessage[2].toUpperCase() == "HOLOFRAME" && pokeList.length >= 3) {
+                tempIndex = 3;
+            }
+
+            pokeIndex = tempIndex;
+        }
 
         let wishlistInfo = (await Wishlists.findAll({ where: { card_id: pokeList[pokeIndex].card_id } })).length;
 
