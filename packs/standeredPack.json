@@ -47,12 +47,16 @@
             "Blastoise" , 
 
             "*Wartortle*", 
-            "*Blastoise*", 
             "*Jigglypuff*",
             "*Gloom*",
             "*Marowack*",
             "*Chansey*",
-            "*Kangaskhan*",
+            "*Kangaskhan*"
+        ]
+    },
+    "srare": {
+        "EVE1": [
+            "*Blastoise*", 
             
             "[Squirtle]", 
             "[Blastoise]",

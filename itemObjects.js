@@ -169,7 +169,7 @@ async function useDraw5After(message) {
     pokeItemList.push( await _getPokeItem(pokeDataList[3]));
 
     // Rare Card
-    pokeDataList.push(getWhichStar("EVE1", 91));
+    pokeDataList.push(getWhichStar("EVE1", 86));
     pokeItemList.push( await _getPokeItem(pokeDataList[4]));
 
     let attachmentList = [];

@@ -31,22 +31,27 @@ function getWhichStar(series, boost=0) {
     const random = Math.min((Math.floor(Math.random() * 100) + 1) + boost, 100);
 
     // check what star that is
-    if (random <= 60) {
+    if (random <= 60) { // 60 % chance
         const seriesPack = getSeries(series, standedPack["common"])
         const pokemon = pullRandomCard(standedPack["common"][seriesPack]);
         return allCards[seriesPack][pokemon];
     }
-    else if (random > 60 && random <= 90) {
+    else if (random > 60 && random <= 85) { // 25% chance
         const seriesPack = getSeries(series, standedPack["uncommon"])
         const pokemon = pullRandomCard(standedPack["uncommon"][seriesPack]);
         return allCards[seriesPack][pokemon];
     }
-    else if (random > 90 && random <= 99) {
+    else if (random > 85 && random <= 95) { // 10% chance 
         const seriesPack = getSeries(series, standedPack["rare"])
         const pokemon = pullRandomCard(standedPack["rare"][seriesPack]);
         return allCards[seriesPack][pokemon];
     }
-    else if (random > 99 && random <= 100) {
+    else if (random > 95 && random <= 99) { // 5% chance
+        const seriesPack = getSeries(series, standedPack["srare"])
+        const pokemon = pullRandomCard(standedPack["srare"][seriesPack]);
+        return allCards[seriesPack][pokemon];
+    }
+    else if (random > 99 && random <= 100) { // 1% chance
         const seriesPack = getSeries(series, standedPack["urare"])
         const pokemon = pullRandomCard(standedPack["urare"][seriesPack]);
         return allCards[seriesPack][pokemon];
