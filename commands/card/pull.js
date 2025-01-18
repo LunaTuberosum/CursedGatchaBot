@@ -129,8 +129,10 @@ async function pullMechanics(message, pokemonData1, pokemonData2) {
     
     let attachment = new AttachmentBuilder(await makePokeImagePull(pokemonData1, pokemonData2), { name: 'poke-images.png' });
     
-
     const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
+
+    console.log(`\nUser: ${message.author.id}\n${pokemonData1["Name"]} - ${pokemonData1["Series"]}\n${pokemonData2["Name"]} - ${pokemonData2["Series"]}`);
+    
 
     const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
