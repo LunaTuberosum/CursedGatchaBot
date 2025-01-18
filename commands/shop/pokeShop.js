@@ -61,7 +61,7 @@ async function getArray(shopItems, start, end) {
 }
 
 function getLength(shopData) {
-    let length = 0;
+    let length = 1;
     for (const item of shopData) {
         if (item.cost != 0) length += 1
     }
@@ -100,8 +100,8 @@ module.exports = {
 
                     }
                     else if (i.customId == "right") {
-                        start = Math.min(start + 5, length - 4);
-                        end = Math.min(end + 5, length);
+                        start = Math.min(start + 5, length - 5);
+                        end = Math.min(end + 5, length - 1);
                         checkButtons(buttons, start, end, length);
 
                         shopArray = await getArray(shopData, start, end);
