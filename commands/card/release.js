@@ -70,17 +70,19 @@ module.exports = {
     shortName: ['r'],
         
     async execute(message) {
+        const response = await message.channel.send("Preparing for release...");
+
         const splitMessage = message.content.split(" ");
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
         const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
 
         const userCards = await user.getCards();
 
         if (userCards.length == 0) {
-            message.channel.send(`${message.author} you have not cards to release.`);
+            response.edit(`${message.author} you have not cards to release.`);
             return;
         }
 
@@ -88,7 +90,6 @@ module.exports = {
         let cardData;
         let releaseEmbed;
         let attachment;
-        let response =  await message.channel.send("...");
 
         if (splitMessage.length > 1) {
             if (splitMessage[1].length < 6) {
@@ -126,7 +127,7 @@ module.exports = {
             if (i.user == message.author) {
                 if (i.customId == "cancel") {
                     releaseEmbed = makeReleaseEmbedCancel(pokemonData, releaseData, message.author)
-                    response.edit({ content: "", embeds: [releaseEmbed], files: [attachment], components: [] });
+                    response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
                 }
                 else if (i.customId == "release") {
 
@@ -146,7 +147,7 @@ module.exports = {
                     UserCards.destroy({ where: { item_id: cardData.item_id } });
 
                     releaseEmbed = makeReleaseEmbedConfirm(pokemonData, releaseData, message.author)
-                    response.edit({ content: "", embeds: [releaseEmbed], files: [attachment], components: [] });
+                    response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
 
                     if (userStat.card_released == 100) {
                         const titleData = await TitleDatabase.findOne({ where: { name: "Catch and Release" } });

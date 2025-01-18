@@ -6,6 +6,7 @@ const { Users, CurrencyShop } = require('./dbObjects.js');
 const { log } = require('node:console');
 const { instatatePassiveCollection, instatateSpecialCollection } = require('./affectionObjects.js');
 const { createItemList } = require('./itemObjects.js');
+const { createImageDict } = require('./imageObjects.js');
 
 const client = new Client({
     intents:[
@@ -61,6 +62,7 @@ for (const file of eventFiles) {
 // instatatePassiveCollection(client);
 // instatateSpecialCollection(client);
 
-createItemList()
+createItemList();
+createImageDict();
 
 client.login(token);
