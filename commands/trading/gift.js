@@ -77,38 +77,40 @@ module.exports = {
     shortName: ['g', "give"],
         
     async execute(message) {
+        const response = await message.channel.send("Creating your gift...");
+
         const splitMessage = message.content.split(" ");
 
         if (splitMessage.length < 3) {
-            await message.channel.send({ content: `${message.author}, you must specify the person you are gifting to and the card you are gifting.` });
+            await response.edit({ content: `${message.author}, you must specify the person you are gifting to and the card you are gifting.` });
             return;
         }
 
         if (splitMessage.length < 3) {
-            await message.channel.send({ content: `${message.author}, you must specify the person you are gifting to and the card you are gifting. You can only gift one card at a time.` });
+            await response.edit({ content: `${message.author}, you must specify the person you are gifting to and the card you are gifting. You can only gift one card at a time.` });
             return;
         }
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
         const card = await UserCards.findOne({ where: { user_id: user.user_id, item_id: splitMessage[2].toLowerCase() } });
 
-        if (!card) { await message.channel.send(`${message.author}, that card is either not in possesion or it does not exist. Please enter vaild card code.`); return; }
+        if (!card) { await response.edit(`${message.author}, that card is either not in possesion or it does not exist. Please enter vaild card code.`); return; }
 
         const pokemonData = await CardDatabase.findOne({ where: { id: card.item_info } });
 
-        if (!pokemonData) { await message.channel.send(`${message.author}, the pokemon attatched to that card could not be found. Please contact an admin.`); return; }
+        if (!pokemonData) { await response.edit(`${message.author}, the pokemon attatched to that card could not be found. Please contact an admin.`); return; }
 
         const otherUser = await Users.findOne({ where : { user_id: message.mentions.users.first().id } });
-        if (!otherUser) { await message.channel.send({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` }); return; }
+        if (!otherUser) { await response.edit({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` }); return; }
 
         let otherConfirmUser;
         let checkUser = -1;
 
         const attachment = new AttachmentBuilder(await makePokeImage(pokemonData, card), { name: 'poke-image.png' });
 
-        const response = await message.channel.send({ embeds: [makeEmbed(message.author, message.mentions.users.first(), pokemonData, card, checkUser)], files: [attachment], components: [makeButton()] });
+        await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), pokemonData, card, checkUser)], files: [attachment], components: [makeButton()] });
         
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 

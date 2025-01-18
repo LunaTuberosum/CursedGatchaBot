@@ -89,31 +89,33 @@ module.exports = {
     shortName: ['t'],
         
     async execute(message) {
+        const response = await message.channel.send("Loading your trade...");
+
         let confirm = false;
         const splitMessage = message.content.split(" ");
 
         if (splitMessage.length < 4) {
-            await message.channel.send(`${message.author}, you must specify the person your trading to, your card code, and their card code.`);
+            await response.edit(`${message.author}, you must specify the person your trading to, your card code, and their card code.`);
             return;
         }
         else if (splitMessage.length > 4) {
-            await message.channel.send(`${message.author}, you must only specify the person your trading to, your card code, and their card code.`);
+            await response.edit(`${message.author}, you must only specify the person your trading to, your card code, and their card code.`);
             return;
         }
         
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
         const otherUser = await Users.findOne({ where : { user_id: message.mentions.users.first().id } });
 
         if (user.user_id == otherUser.user_id) {
-            await message.channel.send(`${message.author}, you can not trade to yourself.`);
+            await response.edit(`${message.author}, you can not trade to yourself.`);
             return;
         }
 
         if (!otherUser) {
-            await message.channel.send(`${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.`);
+            await response.edit(`${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.`);
             return;
         }
 
@@ -121,7 +123,7 @@ module.exports = {
         const cardInfo1 = await findCard(userCards, splitMessage[2]);
 
         if (!cardInfo1) {
-            await message.channel.send(`${message.author}, that card can not be found in your collection.`);
+            await response.edit(`${message.author}, that card can not be found in your collection.`);
             return;
         }
         
@@ -131,7 +133,7 @@ module.exports = {
         const cardInfo2 = await findCard(otherUserCards, splitMessage[3]);
         
         if (!cardInfo2) {
-            await message.channel.send(`${message.author}, that card can not be found in ${splitMessage[1]} collection.`);
+            await response.edit(`${message.author}, that card can not be found in ${splitMessage[1]} collection.`);
             return;
         }
         
@@ -140,7 +142,7 @@ module.exports = {
         let attachment = new AttachmentBuilder(await makePokeImageTrade(pokemonData1, cardInfo1, pokemonData2, cardInfo2), { name: 'poke-images.png' });
         let checkUser = -1;
         
-        const response = await message.channel.send({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButton()] });
+        await response.edit({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 

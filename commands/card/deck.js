@@ -87,13 +87,15 @@ module.exports = {
     shortName: ["d"],
         
     async execute(message) {
+        const response = await message.channel.send("Loading your deck...");
+
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
         
         const userCards = await user.getCards();
 
         if (userCards.length == 0) {
-            message.channel.send({ embeds: [makeDeckEmbedEmpty(message.author)] });
+            await response.edit({ content: " ", embeds: [makeDeckEmbedEmpty(message.author)] });
         }
         else {
 
@@ -104,7 +106,7 @@ module.exports = {
                 let end = 10;
 
                 const buttons = makeButton();
-                const response = await message.channel.send({ embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
+                await response.edit({  content: " ",embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
 
                 const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -123,7 +125,7 @@ module.exports = {
                             checkButtons(buttons, start, end, userCards);
 
                             cardArray = await getArray(userCards, start, end, message);
-                            await response.edit({ embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
+                            await response.edit({ content: " ", embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
                             i.deferUpdate();
 
                         }
@@ -139,7 +141,7 @@ module.exports = {
                             checkButtons(buttons, start, end, userCards);
 
                             cardArray = await getArray(userCards, start, end, message);
-                            await response.edit({ embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
+                            await response.edit({ content: " ", embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
                             i.deferUpdate();
                         }
                     }
@@ -165,7 +167,7 @@ module.exports = {
                     deckArray.push(`\n${emojiTag} \`${card.item_id}\` - \`${raritySymbol(pokemonData.rarity)}\` - \`${pokemonData.series}\` - **${formatName(pokemonData)}** ${card.level == 10 ? "❤️" : card.level >= 5 ? "🩷" : ""}`);
                 }
                 
-                message.channel.send({ embeds: [makeDeckEmbed(deckArray, message.author, 1, userCards.length, userCards.length)] });
+                message.channel.send({ content: " ", embeds: [makeDeckEmbed(deckArray, message.author, 1, userCards.length, userCards.length)] });
             }
 
         }

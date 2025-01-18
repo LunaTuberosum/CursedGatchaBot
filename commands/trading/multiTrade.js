@@ -152,15 +152,17 @@ module.exports = {
     shortName: ['mt'],
         
     async execute(message) {
+        const response = await message.channel.send("Loading your trade...");
+
         const splitMessage = message.content.split(" ");
 
         if (splitMessage.length < 2) {
-            await message.channel.send({ content: `${message.author}, you must specify the person you are trading with.` });
+            await response.edit({ content: `${message.author}, you must specify the person you are trading with.` });
             return;
         }
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
         const userTrade = []
         const userTradeData = {
             "Cards": [], // card
@@ -168,7 +170,7 @@ module.exports = {
         }
 
         const otherUser = await Users.findOne({ where : { user_id: message.mentions.users.first().id } });
-        if (!otherUser) { await message.channel.send({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` }); return; }
+        if (!otherUser) { await response.edit({ content: `${message.author}, that user can not be found. They must register first before they can be traded to or they do not exist.` }); return; }
         const otherUserTrade = []
         const otherUserTradeData = {
             "Cards": [], // card
@@ -176,13 +178,13 @@ module.exports = {
         }
         
         if (user.user_id == otherUser.user_id) {
-            await message.channel.send(`${message.author}, you can not trade to yourself.`);
+            await response.edit(`${message.author}, you can not trade to yourself.`);
             return;
         }
         let otherConfirmUser;
         let checkUser = -1;
 
-        const response = await message.channel.send({ embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButton()] });
+        await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
         const messageCollector = message.channel.createMessageCollector({ time: 120_000 });

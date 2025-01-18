@@ -234,6 +234,8 @@ module.exports = {
     shortName: ["a"],
         
     async execute(message) {
+        const response = await message.channel.send("Loading your pokemon...");
+
         const splitMessage = message.content.split(" ");
         const user = await Users.findOne({ where: { user_id: message.author.id } });
 
@@ -252,21 +254,20 @@ module.exports = {
         let aCard;
 
         let attachment;
-        let response = await message.channel.send("...");
 
         if (splitMessage.length <= 1) {
-            message.channel.send({ content: `${message.author} please enter a valid card code.` });
+            response.edit({ content: `${message.author} please enter a valid card code.` });
             return;
         }
         if (splitMessage[1].length != 6) {
-            message.channel.send({ content: `${message.author} please enter a valid card code.` });
+            response.edit({ content: `${message.author} please enter a valid card code.` });
             return;
         }
             
         try {
             const user = await Users.findOne({ where: { user_id: message.author.id } });
             if (!user) { 
-                await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); 
+                await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); 
                 return; 
             }
             const userCards = await user.getCards();
@@ -300,7 +301,12 @@ module.exports = {
         }
         catch (e) {
             console.error(e);
-            message.channel.send({ content: `${message.author} you do not own that card.` });
+            response.edit({ content: `${message.author} you do not own that card.` });
+            return;
+        }
+
+        if (!aCard) {
+            await response.edit(`${message.author} you do not own that card.`);
             return;
         }
 

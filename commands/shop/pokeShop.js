@@ -2,8 +2,6 @@ const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentTyp
 const { Users, ItemShop } = require('../../dbObjects.js');
 
 function makeShopEmbed(shopArray, start, end, total) {
-    console.log(shopArray);
-    
 
     const invEmbed = new EmbedBuilder()
         .setColor("#616161")
@@ -55,7 +53,6 @@ async function getArray(shopItems, start, end) {
             return shopArray;
         }
         else if(i >= start) {
-            console.log(item.name); 
             shopArray.push(`${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
         }
         i++;

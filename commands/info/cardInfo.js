@@ -56,13 +56,14 @@ module.exports = {
         
     async execute(message) {
 
+        const response = await message.channel.send("Loading the info...");
+
         const splitMessage = message.content.split(" ");
 
         let imageEmbed;
         let statEmbed;
         let attachment;
         let pokemonData;
-        let response = await message.channel.send("...");
 
         if (splitMessage.length > 1) {
             if (splitMessage[1].length == 6) {
@@ -78,13 +79,13 @@ module.exports = {
                     attachment = new AttachmentBuilder(await makePokeImage(pokemonData, card), { name: 'poke-image.png' });
                     imageEmbed = makeCardImageEmbed(pokemonData, splitMessage[1], r);
                     statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { card_id: pokemonData.card_id } })).length);
-                    response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
+                    await response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
  
                 } )
 
             }
             else {
-                message.channel.send({ content: `${message.author} please enter a valid card code.` });
+                await response.edit({ content: `${message.author} please enter a valid card code.` });
                 return;
             }
             
@@ -100,7 +101,7 @@ module.exports = {
             attachment = new AttachmentBuilder(await makePokeImage(pokemonData, lastItem), { name: 'poke-image.png' });
             imageEmbed = makeCardImageEmbed(pokemonData, lastItem.item_id, message.author);
             statEmbed = makeCardStatEmbed(pokemonData, (await Wishlists.findAll({ where: { user_id: message.author.id, card_id: pokemonData.card_id } })).length);
-            response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
+            await response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
         }
         
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });

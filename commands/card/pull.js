@@ -35,12 +35,6 @@ async function addCard(code, user, pokeItem) {
     await user.addCard(code, pokeItem);
 }
 
-async function checkGrabs(response, message) {
-    if (card1Grabed == true && card2Grabed == true) {
-        await response.edit({ components: [], content: `${message.author} pulled these cards.\nThese cards have expired` });
-    }
-}
-
 async function checkGrabTitles(message, userStat) {
     if (userStat.card_grabbed >= 100) {
         const titleData = await TitleDatabase.findOne({ where: { name: "One Man\'s Trash" } });
@@ -58,6 +52,7 @@ async function checkGrabTitles(message, userStat) {
 }
 
 async function checkGrabCard(message, response, pokemonData, i) {
+
     const user = await Users.findOne({ where: { user_id: i.user.id } });
     if (!user) { return; }
     const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
@@ -83,7 +78,6 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
         await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
         await i.deferUpdate();
-        await checkGrabs(response, message);
 
         return true;
 
@@ -112,10 +106,9 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
             await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
             await i.deferUpdate();
-            await checkGrabs(response, message);
 
             await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
-            return;
+            return true;
         }
 
         await message.channel.send({ content: `${i.user} you must wait \`${Math.round((user.grab_cooldown - now) / 60_000)} minutes\` before grabing a card.`})
@@ -125,24 +118,31 @@ async function checkGrabCard(message, response, pokemonData, i) {
     }
 }
 
-async function pullMechanics(message, pokemonData1, pokemonData2) {
-    
-    let attachment = new AttachmentBuilder(await makePokeImagePull(pokemonData1, pokemonData2), { name: 'poke-images.png' });
-    
-
-    const response = await message.channel.send({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
-
-    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
+async function pullMechanics(message, response, pokemonData1, pokemonData2) {
 
     card1Grabed = false;
     card2Grabed = false;
 
+    async function checkGrabs(response, message) {
+        if (card1Grabed == true && card2Grabed == true) {
+            await response.edit({ components: [], content: `${message.author} pulled these cards.\nThese cards have expired` });
+        }
+    }
+    
+    let attachment = new AttachmentBuilder(await makePokeImagePull(pokemonData1, pokemonData2), { name: 'poke-images.png' });
+
+    await response.edit({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
+
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
+
     collector.on('collect', async i => {
         if (i.customId == 'card1' && card1Grabed == false) {
             card1Grabed = await checkGrabCard(message, response, pokemonData1, i);
+            await checkGrabs(response, message);
         }
         else if (i.customId == 'card2' && card2Grabed == false) {
             card2Grabed = await checkGrabCard(message, response, pokemonData2, i);
+            await checkGrabs(response, message);
         }
         else {
             await message.channel.send({ content: `${i.user} that card has already been taken.`})
@@ -176,10 +176,13 @@ module.exports = {
         
     async execute(message) {
 
+        const response = await message.channel.send("Loading your pull...");
+
         let pokemonData1 = {};
         let pokemonData2 = {};
+
         let user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
         const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
 
         let now = Date.now();
@@ -223,22 +226,22 @@ module.exports = {
                         }
                     }
 
-                    await message.channel.send(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
+                    await response.edit(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
 
                     setTimeout(() => {
-                        pullMechanics(message, pokemonData1, pokemonData2);
+                        pullMechanics(message, response, pokemonData1, pokemonData2);
                     }, "1000");
                 }
                 else {
-                    pullMechanics(message, pokemonData1, pokemonData2);
+                    pullMechanics(message, response, pokemonData1, pokemonData2);
                 }
             } else {
-                await message.channel.send({ content: `${message.author}  You must wait \`${Math.round((user.pull_cooldown - now) / 60000)} minutes\` before you can pull cards again.` })
+                await response.edit({ content: `${message.author}  You must wait \`${Math.round((user.pull_cooldown - now) / 60000)} minutes\` before you can pull cards again.` })
             }
 
         }
         else {
-            await message.channel.send(`${message.author}, you can't pull in this channel.`);
+            await response.edit(`${message.author}, you can't pull in this channel.`);
             return;
         }
     },
