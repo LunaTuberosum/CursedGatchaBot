@@ -226,7 +226,7 @@ module.exports = {
                         }
                     }
 
-                    await response.edit(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
+                    await message.channel.send(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
 
                     setTimeout(() => {
                         pullMechanics(message, response, pokemonData1, pokemonData2);
