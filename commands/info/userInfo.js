@@ -78,6 +78,8 @@ module.exports = {
             titleList.push('\`None\`')
             titleDesc.push(`\`No Titles\``)
         }
+        console.log(userStat);
+        
 
         await response.edit({ content: "", embeds: [makeEmbed(user, userAt, userStat, titleList)], components: [buttons] });
 

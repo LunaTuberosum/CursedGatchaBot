@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             defaultValue: 0,
             allowNull: false
+        },
+		money_own: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false
         }
 	}, {
 		timestamps: true,
