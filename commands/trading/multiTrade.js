@@ -1,6 +1,6 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, userMention } = require("discord.js");
 const { Users, UserCards, CardDatabase, ItemShop } = require("../../dbObjects");
-const { formatName, raritySymbol } = require("../../pullingObjects.js");
+const { formatName, raritySymbol, checkSeriesCollect } = require("../../pullingObjects.js");
 
 
 function makeEmbed(user, otherUser, userTrade, otherUserTrade, checkUser) {
@@ -132,17 +132,17 @@ function isInTradeItem(userTradeData, itemInfo) {
     return null;
 }
 
-function transferTradeItems(otherUser, userTradeData) {
+async function transferTradeItems(otherUser, userTradeData, userMention, message) {
     for (card of userTradeData["Cards"]) {
         card.user_id = otherUser.user_id;
         card.tag = "None";
         card.save();
+        checkSeriesCollect(await otherUser.getCards(), card.item.series, message, userMention);
     }
 
     for (itemData of userTradeData["Items"]) {
         itemData[0].amount -= itemData[1];
         itemData[0].save();
-
         otherUser.addItem(itemData[0].item, itemData[1]);
     }
 }
@@ -185,7 +185,7 @@ module.exports = {
         let otherConfirmUser;
         let checkUser = -1;
 
-        await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButton()] });
+        await response.edit({ content: " ", embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
         const messageCollector = message.channel.createMessageCollector({ time: 120_000 });
@@ -289,10 +289,9 @@ module.exports = {
 
             else if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
 
-                transferTradeItems(otherUser, userTradeData);
-                transferTradeItems(user, otherUserTradeData);
+                await transferTradeItems(otherUser, userTradeData, message.mentions.users.first(), message);
+                await transferTradeItems(user, otherUserTradeData, message.author, message);
 
-                messageCollector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), userTrade, otherUserTrade)], components: [] });
                 i.deferUpdate();
             }
