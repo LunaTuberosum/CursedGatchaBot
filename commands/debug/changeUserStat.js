@@ -26,6 +26,10 @@ module.exports = {
                 userStat.card_released = Number.parseInt(splitMessage[2]);
                 userStat.save();
             }
+            else if (splitMessage[1] == "spent") {
+                userStat.money_spent = Number.parseInt(splitMessage[2]);
+                userStat.save();
+            }
 
             await message.channel.send({ content: `${message.author} your stat has been changed.` });
         }

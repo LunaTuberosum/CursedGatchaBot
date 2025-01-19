@@ -188,7 +188,7 @@ async function makePokeImageDataNoAffection(pokemonData, context, x, y) {
 }
 
 async function makePokeImage(pokemonData, cardData) {
-    const canvas = Canvas.createCanvas(1490, 2080);
+    const canvas = Canvas.createCanvas(745, 1040);
     let context = canvas.getContext('2d');
 
     if (!cardData) context = await makePokeImageDataNoAffection(pokemonData, context, 0, 0);
@@ -246,25 +246,25 @@ async function makePokeImageDict(pokemonData, context, x, y) {
 }
 
 async function makePokeImagePull(pokemonData1, pokemonData2) {
-    const canvas = Canvas.createCanvas(4060, 2280);
+    const canvas = Canvas.createCanvas(1640, 1240);
     let context = canvas.getContext('2d');
 
-    context = await makePokeImageDict(pokemonData1, context, 270, 100);
-    context = await makePokeImageDict(pokemonData2, context, 2300, 100);
+    context = await makePokeImageDict(pokemonData1, context, 50, 100);
+    context = await makePokeImageDict(pokemonData2, context, 845, 100);
 
     return canvas.encode('png');
 }
 
 async function makePokeImageTrade(pokemonData1, cardData1, pokemonData2, cardData2) {
-    const canvas = Canvas.createCanvas(4520, 2280);
+    const canvas = Canvas.createCanvas(1990, 1240);
     let context = canvas.getContext('2d');
 
-    context = await makePokeImageData(pokemonData1, cardData1, context, 270, 100);
+    context = await makePokeImageData(pokemonData1, cardData1, context, 50, 100);
 
     const trade = await Canvas.loadImage(`./resources/trade.png`);
-    context.drawImage(trade, 1710, 740, 800, 800);
+    context.drawImage(trade, 795, 420, 400, 400);
 
-    context = await makePokeImageData(pokemonData2, cardData2, context, 2460, 100);
+    context = await makePokeImageData(pokemonData2, cardData2, context, 1195, 100);
 
     return canvas.encode('png');
 }
@@ -276,7 +276,7 @@ async function makePokeImageDraw3(pokemonDataList) {
     // const cardBack = getImage("CardBack.png", null, "DICT");
 
     for (let i = 0; i < 4; i++) {
-        const canvas = Canvas.createCanvas(4770, 2280);
+        const canvas = Canvas.createCanvas(2435, 1240);
         let context = canvas.getContext('2d');
         
         context = await makePokeImageDict(pokemonDataList[0], context, 50, 100);
@@ -284,14 +284,14 @@ async function makePokeImageDraw3(pokemonDataList) {
             context.drawImage(cardBack, 50, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[1], context, 1640, 100);
+        context = await makePokeImageDict(pokemonDataList[1], context, 845, 100);
         if (i <= 1) {
-            context.drawImage(cardBack, 1640, 100);
+            context.drawImage(cardBack, 845, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[2], context, 3230, 100);
+        context = await makePokeImageDict(pokemonDataList[2], context, 1640, 100);
         if (i <= 2) {
-            context.drawImage(cardBack, 3230, 100);
+            context.drawImage(cardBack, 1640, 100);
         }
 
         canvasList.push(canvas.encode('png'))
@@ -307,7 +307,7 @@ async function makePokeImageDraw5(pokemonDataList) {
     // const cardBack = getImage("CardBack.png", null, "DICT");
 
     for (let i = 0; i < 6; i++) {
-        const canvas = Canvas.createCanvas(7950, 2280);
+        const canvas = Canvas.createCanvas(4025, 1240);
         let context = canvas.getContext('2d');
         
         context = await makePokeImageDict(pokemonDataList[0], context, 50, 100);
@@ -315,24 +315,24 @@ async function makePokeImageDraw5(pokemonDataList) {
             context.drawImage(cardBack, 50, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[1], context, 1640, 100);
+        context = await makePokeImageDict(pokemonDataList[1], context, 845, 100);
         if (i <= 1) {
+            context.drawImage(cardBack, 845, 100);
+        }
+
+        context = await makePokeImageDict(pokemonDataList[2], context, 1640, 100);
+        if (i <= 2) {
             context.drawImage(cardBack, 1640, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[2], context, 3230, 100);
-        if (i <= 2) {
-            context.drawImage(cardBack, 3230, 100);
-        }
-
-        context = await makePokeImageDict(pokemonDataList[3], context, 4820, 100);
+        context = await makePokeImageDict(pokemonDataList[3], context, 3180, 100);
         if (i <= 3) {
-            context.drawImage(cardBack, 4820, 100);
+            context.drawImage(cardBack, 3180, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[4], context, 6410, 100);
+        context = await makePokeImageDict(pokemonDataList[4], context, 3975, 100);
         if (i <= 4) {
-            context.drawImage(cardBack, 6410, 100);
+            context.drawImage(cardBack, 3975, 100);
         }
 
         canvasList.push(canvas.encode('png'))
