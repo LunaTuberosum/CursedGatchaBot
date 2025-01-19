@@ -1,6 +1,6 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const { Users, UserCards, CardDatabase } = require("../../dbObjects");
-const { formatName, raritySymbol, makePokeImage, checkSeriesCollect } = require("../../pullingObjects");
+const { formatName, raritySymbol, makePokeImage } = require("../../pullingObjects");
 
 function makeEmbed(user, otherUser, pokemonData, card, checkUser) {
     const giftEmbed = new EmbedBuilder()
@@ -110,7 +110,7 @@ module.exports = {
 
         const attachment = new AttachmentBuilder(await makePokeImage(pokemonData, card), { name: 'poke-image.png' });
 
-        await response.edit({ content: " ", embeds: [makeEmbed(message.author, message.mentions.users.first(), pokemonData, card, checkUser)], files: [attachment], components: [makeButton()] });
+        await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), pokemonData, card, checkUser)], files: [attachment], components: [makeButton()] });
         
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 
@@ -137,8 +137,7 @@ module.exports = {
                 card.tag = "None";
                 card.save();
 
-                checkSeriesCollect(await otherUser.getCards(), card.item.series, message, message.mentions.users.first());
-
+                collector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), pokemonData, card)], files: [attachment], components: [] });
                 i.deferUpdate();
             }

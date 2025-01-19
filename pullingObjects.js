@@ -375,8 +375,7 @@ function formatNameSmall(pokemonData) {
     else return `${pokemonData.card_id}-${pokemonData.name}`;
 }
 
-async function checkSeriesCollect(userCards, series, message, userMention=null) {
-    if (!userMention) { userMention = message.author}
+async function checkSeriesCollect(userCards, series, message) {
     let seriesDict = {}
 
     for (card of Object.keys(allCards[series])) {
@@ -407,13 +406,13 @@ async function checkSeriesCollect(userCards, series, message, userMention=null) 
 
         if (!titleData) { return; }
 
-        const userTitle = await UserTitles.findOne({ where: { user_id: userMention.id, title_id: titleData.id } });
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
         
         if (userTitle) { return; }
 
-        await UserTitles.create({ user_id: userMention.id, title_id: titleData.id });
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
 
-        await message.channel.send(`${userMention}, you have collected all cards in the \`${series} Pack\`. You have gained the title: \`${titleData.name}\``)
+        await message.channel.send(`${message.author}, you have collected all cards in the \`${series} Pack\`. You have gained the title: \`${titleData.name}\``)
     }
 }
 

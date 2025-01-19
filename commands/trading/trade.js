@@ -1,7 +1,7 @@
 const { EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const { Users } = require("../../dbObjects");
 const allCards = require("../../packs/allCards.json");
-const { raritySymbol, makePokeImageTrade, checkSeriesCollect } = require("../../pullingObjects.js");
+const { raritySymbol, makePokeImageTrade } = require("../../pullingObjects.js");
 
 function makeEmbed(user, otherUser, cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser) {
     const tradeEmebed = new EmbedBuilder()
@@ -142,7 +142,7 @@ module.exports = {
         let attachment = new AttachmentBuilder(await makePokeImageTrade(pokemonData1, cardInfo1, pokemonData2, cardInfo2), { name: 'poke-images.png' });
         let checkUser = -1;
         
-        await response.edit({ content: " ", embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButton()] });
+        await response.edit({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 
@@ -170,13 +170,12 @@ module.exports = {
                 cardInfo2.user_id = user.user_id;
                 cardInfo2.tag = "None";
                 cardInfo2.save();
-                checkSeriesCollect(await user.getCards(), cardInfo2.item.series, message, message.author);
 
                 cardInfo1.user_id = otherUser.user_id;
                 cardInfo1.tag = "None";
                 cardInfo1.save();
-                checkSeriesCollect(await otherUser.getCards(), cardInfo1.item.series, message, message.mentions.users.first());
 
+                collector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2)], files: [attachment], components: [] });
             }
         });

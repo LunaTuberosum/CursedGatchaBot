@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { token } = require("./configDEV.json"); // TODO: Change back before prod
+const { token } = require("./config.json"); // TODO: Change back before prod
 const { Client, codeBlock, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { Users, CurrencyShop } = require('./dbObjects.js');
 const { log } = require('node:console');

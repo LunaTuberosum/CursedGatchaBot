@@ -24,7 +24,6 @@ require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes('--force') || process.argv.includes('-f');
 
-
 sequelize.sync({ force }).then(async () => {
 	const database = [ ];
 
@@ -41,8 +40,8 @@ sequelize.sync({ force }).then(async () => {
 				card_type: allCards[series][card]["CardType"],
 				poke_type: allCards[series][card]["PokeType"],
 				series: allCards[series][card]["Series"],
-				obtain: allCards[series][card]["Obtain"]
-			}));
+				obtain: allCards[series][card]["Obtain"]})
+			);
 	}
 
 	const shop = [
