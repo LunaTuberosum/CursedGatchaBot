@@ -35,7 +35,7 @@ module.exports = {
         if (shinyChance <= 5) {
             shinyMult = 2;
             shinyMin = 10;
-            dailyText += `You pulled a shiny daily! x2 rewards and increased chances!\n`
+            dailyText += `You pulled a **Shiny** daily! x2 rewards and increased chances!\n`
         }
 
         const pokeDollars = (Math.floor(Math.random() * (5 - 2) + 2)) * 10; // The maximum is exclusive and the minimum is inclusive
