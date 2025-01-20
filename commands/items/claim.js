@@ -11,7 +11,7 @@ module.exports = {
         // // For disabling the command
         // return;
 
-        let moneyGiven = 100;
+        let moneyGiven = 50;
 
         const response = await message.channel.send("loading claim...");
 
@@ -23,7 +23,7 @@ module.exports = {
             return;
         }
 
-        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`100 POKEDOLLARS\`!`);
+        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`${moneyGiven} POKEDOLLARS\`!`);
 
         const itemData = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
         user.addItem(itemData, moneyGiven);

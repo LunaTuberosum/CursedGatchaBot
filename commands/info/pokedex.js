@@ -20,7 +20,6 @@ function makeButton() {
         .setCustomId("left")
         .setStyle(ButtonStyle.Secondary)
         .setEmoji("◀️")
-        .setDisabled(true);
 
     const rightButton = new ButtonBuilder()
         .setCustomId("right")
@@ -123,7 +122,9 @@ module.exports = {
         let attachment = new AttachmentBuilder(await makePokeImage(pokeList[pokeIndex], null), { name: 'poke-image.png' });
 
         const buttons = makeButton();
-        buttons.components[0].setDisabled(true);
+        
+        if (pokeIndex == 0) buttons.components[0].setDisabled(true);
+        else if (pokeIndex == pokeList.length - 1) buttons.components[1].setDisabled(true);
         
         await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
         
