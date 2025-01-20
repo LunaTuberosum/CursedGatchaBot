@@ -140,8 +140,8 @@
     },
     "multitrade": {
         "Command": "`g!multiTrade`, `g!mt`",
-        "Usage": "`g!multiTrade` `other user`",
-        "Description": "Trades any amount of cards or items between two users. The other user must be refrenced using a mention."
+        "Usage": "`g!multiTrade` `other user` *`your items/card codes`",
+        "Description": "Trades any amount of cards or items between two users. The other user must be refrenced using a mention. \n\nSending with the 3rd+ optional paramaters, it will add your items/cards listed. Each objects must be seperated by a comma. To list an amount of the item you must prefrace the number with a \"x\". \n**EX:** gmt @medibotEVE aa0000, aa0001, Draw 5 x2"
     },
     "help": {
         "Command": "`g!help`, `g!h`",

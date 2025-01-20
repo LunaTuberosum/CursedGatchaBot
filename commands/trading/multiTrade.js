@@ -185,6 +185,64 @@ module.exports = {
         let otherConfirmUser;
         let checkUser = -1;
 
+        if (splitMessage.length >= 3) {
+            const optionalArg = ((splitMessage.slice(2)).join(" ")).split(",");
+
+            for (_m of optionalArg) {
+                const _splitM = _m.trim().split(" ");
+
+                if (_splitM.length == 1 && _splitM[0].length == 6) {
+                    const cardInfo = findCard(await user.getCards(), _splitM[0].toLowerCase());
+
+                    if (!cardInfo) {
+                        continue;
+                    }
+
+                    const existingCard = isInTradeCard(userTradeData["Cards"], cardInfo);
+                    if (existingCard > -1) {
+                        userTradeData["Cards"].splice(existingCard, 1);
+
+                        const cardTextIndex = userTrade.indexOf(`x1 ${formatName(cardInfo.item)} - ${raritySymbol(cardInfo.item.rarity)} - ${cardInfo.item_id}`);
+                        userTrade.splice(cardTextIndex, 1);
+                        continue;
+                    }
+
+                    userTradeData["Cards"].push(cardInfo);
+                    userTrade.push(`x1 ${formatName(cardInfo.item)} - ${raritySymbol(cardInfo.item.rarity)} - ${cardInfo.item_id}`);
+
+                }
+                else {
+                    const itemData = getItemData(_splitM);
+                    const itemInfo = findItem(await user.getItems(), itemData[0]);
+
+                    if (!itemInfo || itemInfo.amount < itemData[1]) {
+                        continue;
+                    }
+
+                    const existingItem = isInTradeItem(userTradeData["Items"], itemInfo);
+                    if (existingItem) {
+                        if (itemData[1] == "0") {
+                            const itemTextIndex = userTrade.indexOf(`x${existingItem[1]} ${existingItem[0].item.name}`);
+                            userTrade.splice(itemTextIndex, 1);
+
+                            const itemIndex = userTradeData["Items"].indexOf(existingItem);
+                            userTradeData["Items"].splice(itemIndex, 1);
+                            continue;
+                        }
+
+                        const itemTextIndex = userTrade.indexOf(`x${existingItem[1]} ${existingItem[0].item.name}`);
+                        existingItem[1] += Number.parseInt(itemData[1]);
+                        userTrade[itemTextIndex] = `x${existingItem[1]} ${existingItem[0].item.name}`;
+                        continue;
+                    }
+                    
+                    userTradeData["Items"].push([itemInfo, Number.parseInt(itemData[1])]);
+                    userTrade.push(`x${itemData[1]} ${itemInfo.item.name}`);
+                }
+            }
+        }
+        
+
         await response.edit({ content: " ", embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
@@ -207,12 +265,12 @@ module.exports = {
             }
             else { return; }
 
-            const splitM = m.content.split(",");
-            if (splitM[0][0] == "#") { return; }
-
             otherConfirmUser = null;
             let checkUser = -1;
             m.delete();
+
+            const splitM = m.content.split(",");
+            if (splitM[0][0] == "#") { return; }
 
             for (_m of splitM) {
                 const _splitM = _m.trim().split(" ");
