@@ -14,6 +14,7 @@ const UserStats = require('./models/UserStats.js')(sequelize, Sequelize.DataType
 const UserTitles = require('./models/UserTitles.js')(sequelize, Sequelize.DataTypes);
 const TitleDatabase = require('./models/TitleDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserCards = require('./models/UserCards.js')(sequelize, Sequelize.DataTypes);
+const UserDailys = require('./models/UserDailys.js')(sequelize, Sequelize.DataTypes);
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
@@ -45,6 +46,7 @@ async function print() {
         "userTitles" : await UserTitles.findAll({ where: { }, raw: true }),
         "titleDatabase" : await TitleDatabase.findAll({ where: { }, raw: true }),
         "userCards" : await UserCards.findAll({ where: { }, raw: true }),
+        "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
         "cardDatabase" : await CardDatabase.findAll({ where: { }, raw: true }),
         "userItems" : await UserItems.findAll({ where: { }, raw: true }),
         "itemShop" : await ItemShop.findAll({ where: { }, raw: true }),
@@ -98,8 +100,10 @@ async function print() {
                 card_released: userStat["card_released"],
                 card_drawn: userStat["card_drawn"],
                 card_grabbed: userStat["card_grabbed"],
+
                 money_spent: userStat["money_spent"],
                 // money_own: 0,
+
                 money_own: userStat["money_own"],
                 createdAt: userStat["createdAt"],
                 updatedAt: userStat["updatedAt"]
@@ -152,6 +156,19 @@ async function print() {
                 tag: userCard["tag"],
                 createdAt: userCard["createdAt"],
                 updatedAt: userCard["updatedAt"]
+            }));
+        }
+
+        // RECREATE USER DAILY
+        const userDailys = [];
+
+        for (const userDailyIndex in databaseDict["userDailys"]) {
+            const userDaily = databaseDict["userDailys"][userDailyIndex];
+
+            userDailys.push(UserDailys.upsert({
+                user_id: userDaily["user_id"],
+                month: userDaily["month"],
+                day: userDaily["day"]
             }));
         }
 
@@ -256,7 +273,7 @@ async function print() {
             }));
         }
 
-        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, cardDatabase, userItems, itemShop, serverInfo, wishlists);
+        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, itemShop, serverInfo, wishlists);
         console.log('Database updated');
     
         sequelize.close();

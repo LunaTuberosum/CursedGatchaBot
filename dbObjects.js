@@ -14,6 +14,7 @@ const UserStats = require('./models/UserStats.js')(sequelize, Sequelize.DataType
 const UserTitles = require('./models/UserTitles.js')(sequelize, Sequelize.DataTypes);
 const TitleDatabase = require('./models/TitleDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserCards = require('./models/UserCards.js')(sequelize, Sequelize.DataTypes);
+const UserDailys = require('./models/UserDailys.js')(sequelize, Sequelize.DataTypes);
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
@@ -73,4 +74,4 @@ Reflect.defineProperty(Users.prototype, 'getItems', {
 	},
 });
 
-module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, CardDatabase, UserItems, ItemShop, Wishlists, Tags, ServerInfo };
+module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, UserDailys, CardDatabase, UserItems, ItemShop, Wishlists, Tags, ServerInfo };

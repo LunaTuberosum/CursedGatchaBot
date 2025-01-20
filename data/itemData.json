@@ -106,17 +106,17 @@
 
     "SMALL PACK": {
         "Name": "`SMALL PACK`",
-        "Get": "`Trading 300 POKEDOLLARS at the PokeShop`",
+        "Get": "`Trading 160 POKEDOLLARS at the PokeShop`",
         "Description" : "Draws 3 cards with at least one being a Uncommon or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
     },
     "BIG PACK": {
         "Name": "`BIG PACK`",
-        "Get": "`Trading 500 POKEDOLLARS at the PokeShop`",
+        "Get": "`Trading 210 POKEDOLLARS at the PokeShop`",
         "Description" : "Draws 5 cards with at least one being a Uncommon or greater and one being a Rare or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
     },
     "GREAT BALL": {
         "Name": "`GREAT BALL`",
-        "Get": "`Trading 250 POKEDOLLARS at the PokeShop`",
+        "Get": "`Trading 100 POKEDOLLARS at the PokeShop`",
         "Description": "Lets you try again to get a raid card or grab another card on a pull when your cool down is active."
     }
 }

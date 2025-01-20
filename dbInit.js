@@ -16,6 +16,7 @@ const TitleDatabase = require('./models/TitleDatabase.js')(sequelize, Sequelize.
 require('./models/Users.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserCards.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
+require('./models/UserDailys.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserStats.js')(sequelize, Sequelize.DataTypes);
 require('./models/UserTitles.js')(sequelize, Sequelize.DataTypes);
 require('./models/ServerInfo.js')(sequelize, Sequelize.DataTypes);
