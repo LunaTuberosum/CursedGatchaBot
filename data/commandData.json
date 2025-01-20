@@ -151,6 +151,10 @@
     "bugreport": {
         "Command": "`g!bugReport`, `g!bug`, `g!bugs`",
         "Description": "Get the link for the bug report form."
+    },
+    "claim": {
+        "Command": "`g!claim`",
+        "Description": "Claims after maintenance gift. `50 POKEDOLLAR` for patch, `80 POKEDOLLAR` for update, `100 POKEDOLLAR` for hotfix."
     }
     
 }

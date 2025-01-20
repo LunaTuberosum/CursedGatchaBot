@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const commandData = require("../../data/commandData.json");
+const commandShortNameData = require("../../data/commandShortNameData.json");
 
 function makeHelpEmbed() {
     const helpEmbed = new EmbedBuilder()
@@ -8,7 +9,7 @@ function makeHelpEmbed() {
         .addFields(
             { name: "**⚙️ Setup**", value: "\`set\`, \`register\`", inline: true },
             { name: "**⚜️ Basic**", value: "\`pull\`, \`release\`, \`affection\`", inline: true },
-            { name: "**📚 Possessions**", value: "\`deck\`, \`inventory\`, \`tag\`, \`tagCreate\`, \`tagDelete\`, \`tagEmoji\`, \`tagRename\`, \`tags\`, \`untag\`, \`use\`", inline: true },
+            { name: "**📚 Possessions**", value: "\`deck\`, \`inventory\`, \`tag\`, \`tagCreate\`, \`tagDelete\`, \`tagEmoji\`, \`tagRename\`, \`tags\`, \`untag\`, \`use\`, \`claim\`", inline: true },
             { name: "**ℹ️ Information**", value: "\`cooldown\`, \`cardInfo\`, \`pokeDex\`, \`itemInfo\`, \`userInfo\`, \`serverInfo\`, \`credits\`", inline: true },
             { name: "**🤞 Wishlist**", value: "\`wishlist\`, \`wishlistAdd\`, \`unWishlist\`, \`wishlistWatch\`", inline: true },
             { name: "**🪙 Shop**", value: "\`pokeShop\`, \`buy\`", inline: true },
@@ -41,9 +42,12 @@ module.exports = {
             return
         }
 
-        const commandDict = commandData[splitMessage[1].toLowerCase()];
+        let comamndName = splitMessage[1].toLowerCase();
+        if (commandShortNameData[comamndName]) comamndName = commandShortNameData[comamndName];
+
+        const commandDict = commandData[comamndName];
         if (!commandDict) {
-            await message.channel.send(`${message.author}, ${splitMessage[1]} is not a valid command name.`);
+            await message.channel.send(`${message.author}, ${comamndName} is not a valid command name.`);
             return;
         }
 
