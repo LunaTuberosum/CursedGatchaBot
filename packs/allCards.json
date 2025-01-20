@@ -388,7 +388,7 @@
         "Marowack" : {
             "Name" : "Marowack",
             "Type": "Fighting",
-            "CardID" : "0014",
+            "CardID" : "014",
             "DrawDate" : "11/30/2022",
             "Poke#" : "0105",
             "Rarity" : "Uncommon",
@@ -400,7 +400,7 @@
         "*Marowack*" : {
             "Name" : "Marowack",
             "Type": "Fighting",
-            "CardID" : "0014",
+            "CardID" : "014",
             "DrawDate" : "11/30/2022",
             "Poke#" : "0105",
             "Rarity" : "Uncommon",
