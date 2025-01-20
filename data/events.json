@@ -1,0 +1,25 @@
+{
+    "blank": {
+        "active": false,
+        "name": "na",
+        "description": "na",
+        "time": "na",
+        "rewards": "na"
+    },
+
+    "race I": {
+        "active": true,
+        "name": "Title Race: -Trash Collector-",
+        "description": "A race to see who gets the -Trash Collector- title first!",
+        "time": "na",
+        "rewards": "350 POKEDOLLARS"
+    },
+
+    "affection I": {
+        "active": true,
+        "name": "Affection Contest: -006-Jigglypuff-",
+        "description": "Raise your affection with a basic Jigglypuff and who ever has the highest at the end of the event wins!",
+        "time": "Ends <t:1737918000:R>",
+        "rewards": "A refund of all SHARDS and GEMS used to level, +1 level of SHARDS/GEMS, 200 POKEDOLLARS"
+    }
+}

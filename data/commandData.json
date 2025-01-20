@@ -95,7 +95,7 @@
     },
     "serverinfo": {
         "Command": "`g!serverInfo`, `g!si`",
-        "Description": "Shows information related to the current server. Shows which channels are used for pulling and raiding and shows any ongoing events."
+        "Description": "Shows information related to the current server. Shows which channels are used for pulling and raiding."
     },
     "credits": {
         "Command": "`g!credits`",
