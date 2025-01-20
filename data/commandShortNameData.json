@@ -31,5 +31,6 @@
     "mt": "multitrade",
     "h": "help",
     "bug": "bugreport",
-    "bugs": "bugreport"
+    "bugs": "bugreport",
+    "e": "event"
 }

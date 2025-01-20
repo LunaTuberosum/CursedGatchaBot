@@ -10,6 +10,7 @@ function makeHelpEmbed() {
             { name: "**⚙️ Setup**", value: "\`set\`, \`register\`", inline: true },
             { name: "**⚜️ Basic**", value: "\`pull\`, \`release\`, \`affection\`, \`daily\`", inline: true },
             { name: "**📚 Possessions**", value: "\`deck\`, \`inventory\`, \`tag\`, \`tagCreate\`, \`tagDelete\`, \`tagEmoji\`, \`tagRename\`, \`tags\`, \`untag\`, \`use\`, \`claim\`", inline: true },
+            { name: "**📜 Events**", value: "\`event\`", inline: true },
             { name: "**ℹ️ Information**", value: "\`cooldown\`, \`cardInfo\`, \`pokeDex\`, \`itemInfo\`, \`userInfo\`, \`serverInfo\`, \`credits\`", inline: true },
             { name: "**🤞 Wishlist**", value: "\`wishlist\`, \`wishlistAdd\`, \`unWishlist\`, \`wishlistWatch\`", inline: true },
             { name: "**🪙 Shop**", value: "\`pokeShop\`, \`buy\`", inline: true },
