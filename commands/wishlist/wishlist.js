@@ -102,6 +102,7 @@ module.exports = {
             collector.on("collect", async i => {
 
                 if (i.user == message.author) {
+                    await i.deferUpdate();
                     if (i.customId == "left") {
                         if (start - 10 < 1) {
                             start = 1;
@@ -115,7 +116,6 @@ module.exports = {
 
                         wishlistArray = await getArray(userWishlist, start, end);
                         await response.edit({ embeds: [makeWishlistEmbed(wishlistArray, message.author, start, end, userWishlist.length)], components: [buttons] });
-                        i.deferUpdate();
 
                     }
                     else if (i.customId == "right") {
@@ -131,7 +131,6 @@ module.exports = {
 
                         wishlistArray = await getArray(userWishlist, start, end);
                         await response.edit({ embeds: [makeWishlistEmbed(wishlistArray, message.author, start, end, userWishlist.length)], components: [buttons] });
-                        i.deferUpdate();
                     }
                 }
             });

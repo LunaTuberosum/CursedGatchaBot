@@ -108,13 +108,12 @@ module.exports = {
 
         collector.on("collect", async i => {
             if (i.user == message.author) {
+                await i.deferUpdate();
                 if (i.customId == "stat") {
                     response.edit({ content: "", embeds: [statEmbed], components: [makeButtonStat()], files: [attachment] });
-                    i.deferUpdate();
                 }
                 else if (i.customId == "image") {
                     response.edit({ content: "", embeds: [imageEmbed], components: [makeButtonImage()], files: [attachment] });
-                    i.deferUpdate();
                 }
             }
         });

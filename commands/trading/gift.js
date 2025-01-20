@@ -118,17 +118,16 @@ module.exports = {
             if (i.user.id == user.user_id) { null }
             else if (i.user.id == otherUser.user_id) { null }
             else { i.deferUpdate(); return; }
+            await i.deferUpdate();
 
             if(i.customId == "cancel") {
                 collector.stop();
-                i.deferUpdate();
             }
             if (i.customId == "confirm") {
                 if (i.user.id == user.user_id) { otherConfirmUser = otherUser; checkUser = 0; }
                 else if (i.user.id == otherUser.user_id) { otherConfirmUser = user; checkUser = 1; }
 
                 await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), pokemonData, card, checkUser)], files: [attachment], components: [makeButtonConfirm()] });
-                i.deferUpdate();
 
             }
             if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
@@ -140,7 +139,6 @@ module.exports = {
                 checkSeriesCollect(await otherUser.getCards(), card.item.series, message, message.mentions.users.first());
 
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), pokemonData, card)], files: [attachment], components: [] });
-                i.deferUpdate();
             }
         });
 

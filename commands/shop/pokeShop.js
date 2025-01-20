@@ -89,6 +89,7 @@ module.exports = {
             collector.on("collect", async i => {
 
                 if (i.user == message.author) {
+                    await i.deferUpdate();
                     if (i.customId == "left") {
                         start = Math.max(start - 5, 1);
                         end = Math.max(end - 5, 5);
@@ -96,7 +97,6 @@ module.exports = {
 
                         shopArray = await getArray(shopData, start, end);
                         await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
-                        i.deferUpdate();
 
                     }
                     else if (i.customId == "right") {
@@ -106,7 +106,6 @@ module.exports = {
 
                         shopArray = await getArray(shopData, start, end);
                         await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
-                        i.deferUpdate();
                     }
                 }
         });

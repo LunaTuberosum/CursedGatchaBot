@@ -314,18 +314,17 @@ module.exports = {
 
         collector.on("collect", async i => {
             if (i.user == message.author) {
+                i.deferUpdate();
+                
                 if (i.customId == "level") {
                     response.edit({ content: "", embeds: [levelEmbed], components: [levelButton], files: [attachment] });
-                    i.deferUpdate();
                 }
                 else if (i.customId == "info") {
                     await response.edit({ content: "", embeds: [infoEmbed], components: [infoButton], files: [attachment] });
-                    i.deferUpdate();
                 }
 
                 else if (i.customId == "back") {
                     await response.edit({ content: "", embeds: [affectionEmbed], components: [affectionButton], files: [attachment] });
-                    i.deferUpdate();
                 }
 
                 else if (i.customId == "confirm") {
@@ -384,13 +383,11 @@ module.exports = {
                     levelCancelEmbed = new makeLevelCancelEmbed(splitMessage[1], aCard);
                     levelButton = makeButtonLevel();
 
-                    i.deferUpdate();
                     return;
                 }
 
                 else if (i.customId == "cancel") {
                     await response.edit({ content: "", embeds: [levelCancelEmbed], components: [], files: [attachment] });
-                    i.deferUpdate();
                 }
             }
         });

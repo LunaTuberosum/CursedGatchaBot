@@ -77,7 +77,6 @@ async function checkGrabCard(message, response, pokemonData, i) {
         checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
         await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
-        await i.deferUpdate();
 
         return true;
 
@@ -105,14 +104,12 @@ async function checkGrabCard(message, response, pokemonData, i) {
             checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
             await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
-            await i.deferUpdate();
 
             await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
             return true;
         }
 
         await message.channel.send({ content: `${i.user} you must wait \`${Math.round((user.grab_cooldown - now) / 60_000)} minutes\` before grabing a card.`})
-        await i.deferUpdate();
 
         return false;
     }
@@ -136,6 +133,7 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
     const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 80_000 });
 
     collector.on('collect', async i => {
+        i.deferUpdate();
         if (i.customId == 'card1' && card1Grabed == false) {
             card1Grabed = await checkGrabCard(message, response, pokemonData1, i);
             await checkGrabs(response, message);
@@ -146,7 +144,6 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
         }
         else {
             await message.channel.send({ content: `${i.user} that card has already been taken.`})
-            await i.deferUpdate();
         }
     });
     collector.on('end', async i => {

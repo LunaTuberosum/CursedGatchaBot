@@ -278,13 +278,13 @@ module.exports = {
             if (i.user.id == user.user_id) { null }
             else if (i.user.id == otherUser.user_id) { null }
             else { i.deferUpdate(); return; }
+            i.deferUpdate();
 
             if (i.customId == "confirm") {
                 if (i.user.id == user.user_id) { otherConfirmUser = otherUser; checkUser = 0; }
                 else if (i.user.id == otherUser.user_id) { otherConfirmUser = user; checkUser = 1; }
 
                 await response.edit({ embeds: [makeEmbed(message.author, message.mentions.users.first(), userTrade, otherUserTrade, checkUser)], components: [makeButtonConfirm()] });
-                i.deferUpdate();
             }
 
             else if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {
@@ -293,12 +293,10 @@ module.exports = {
                 await transferTradeItems(user, otherUserTradeData, message.author, message);
 
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), userTrade, otherUserTrade)], components: [] });
-                i.deferUpdate();
             }
 
             else if (i.customId == 'cancel') {
                 messageCollector.stop();
-                i.deferUpdate();
             }
         });
     },

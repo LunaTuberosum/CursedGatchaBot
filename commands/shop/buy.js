@@ -113,6 +113,7 @@ module.exports = {
 
         collector.on("collect", async i => {
             if (i.user == message.author) {
+                await i.deferUpdate();
                 if (i.customId == "cancel") {
                     await response.edit({ embeds: [makeBuyEmbedCancel(itemData, quantity, message.author)], components: [] });
                 }

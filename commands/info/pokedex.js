@@ -130,6 +130,7 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
+            await i.deferUpdate();
             if (i.user.id != message.author.id) return;
 
             if (i.customId == "right") {
@@ -140,7 +141,6 @@ module.exports = {
                 buttons.components[0].setDisabled(false);
                 if (pokeIndex + 1 == pokeList.length) buttons.components[1].setDisabled(true);
                 await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
-                i.deferUpdate();
             }
             else if (i.customId == "left") {
                 pokeIndex--;
@@ -150,7 +150,6 @@ module.exports = {
                 buttons.components[1].setDisabled(false);
                 if (pokeIndex == 0) buttons.components[0].setDisabled(true);
                 await response.edit({ content: " ", embeds: [makeEmbed(pokeList[pokeIndex], wishlistInfo)], files: [attachment], components: [buttons] });
-                i.deferUpdate();
             }
         })
     }

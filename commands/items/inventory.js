@@ -100,6 +100,7 @@ module.exports = {
 
             collector.on("collect", async i => {
 
+                await i.deferUpdate();
                 if (i.user == message.author) {
                     if (i.customId == "left") {
                         start = Math.max(start - 10, 1);
@@ -108,7 +109,6 @@ module.exports = {
 
                         invArray = getArray(userItems, start, end);
                         await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
-                        i.deferUpdate();
 
                     }
                     else if (i.customId == "right") {
@@ -118,7 +118,6 @@ module.exports = {
 
                         invArray = getArray(userItems, start, end);
                         await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
-                        i.deferUpdate();
                     }
                 }
                 

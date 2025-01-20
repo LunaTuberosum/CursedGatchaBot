@@ -152,17 +152,16 @@ module.exports = {
             if (i.user.id == user.user_id) { null }
             else if (i.user.id == otherUser.user_id) { null }
             else { i.deferUpdate(); return; }
+            await i.deferUpdate();
 
             if(i.customId == "cancel") {
                 collector.stop();
-                i.deferUpdate();
             }
             if (i.customId == "confirm") {
                 if (i.user.id == user.user_id) { otherConfirmUser = otherUser; checkUser = 0; }
                 else if (i.user.id == otherUser.user_id) { otherConfirmUser = user; checkUser = 1; }
 
                 await response.edit({ embeds: [makeEmbed(message.author, splitMessage[1], cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser)], files: [attachment], components: [makeButtonConfirm()] });
-                i.deferUpdate();
 
             }
             if (i.customId == "finalConfirm" && i.user.id == otherConfirmUser.user_id) {

@@ -113,6 +113,7 @@ module.exports = {
                 collector.on("collect", async i => {
 
                     if (i.user == message.author) {
+                        i.deferUpdate();
                         if (i.customId == "left") {
                             if (start - 10 < 1) {
                                 start = 1;
@@ -126,7 +127,6 @@ module.exports = {
 
                             cardArray = await getArray(userCards, start, end, message);
                             await response.edit({ content: " ", embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
-                            i.deferUpdate();
 
                         }
                         else if (i.customId == "right") {
@@ -142,7 +142,6 @@ module.exports = {
 
                             cardArray = await getArray(userCards, start, end, message);
                             await response.edit({ content: " ", embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
-                            i.deferUpdate();
                         }
                     }
                     

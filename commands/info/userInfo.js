@@ -85,20 +85,19 @@ module.exports = {
 
         collector.on("collect", async i => {
             if (i.user.id != message.author.id) { i.deferUpdate(); return; }
+            await i.deferUpdate();
 
             if (i.customId == "stats") {
                 buttons.components[0].setDisabled(true);
                 buttons.components[1].setDisabled(false);
 
                 await response.edit({ content: "", embeds: [makeEmbed(user, userAt, userStat, titleList)], components: [buttons] });
-                i.deferUpdate();
             }
             else if (i.customId == "titles") {
                 buttons.components[0].setDisabled(false);
                 buttons.components[1].setDisabled(true);
 
                 await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc)], components: [buttons] });
-                i.deferUpdate();
             }
         })
     }

@@ -101,6 +101,7 @@ async function useDraw3After(message) {
     collector.on("collect", async i => {
         if (i.user != message.author) { return }
 
+        i.deferUpdate();
         if (i.customId == "next") {
             await response.edit({ embeds: [makeDraw3Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. ...\n3. ...`)], components: [], files: [attachmentList[1]] });
             i.deferUpdate();
@@ -186,9 +187,9 @@ async function useDraw5After(message) {
     collector.on("collect", async i => {
         if (i.user != message.author) { return }
 
+        i.deferUpdate();
         if (i.customId == "next") {
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. ...\n3. ...\n 4. ...\n5. ...`)], components: [], files: [attachmentList[1]] });
-            i.deferUpdate();
 
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. ...\n 4. ...\n5. ...`)], components: [], files: [attachmentList[2]] });
 
@@ -256,6 +257,7 @@ async function _useDraw(message, drawItemName, drawCommand) {
     collector.on("collect", async i => {
         if (i.user != message.author) { return; }
 
+        i.deferUpdate();
         if (i.customId == "confirm") {
             hasItem.amount--;
             hasItem.save();
@@ -265,7 +267,6 @@ async function _useDraw(message, drawItemName, drawCommand) {
 
         } else if (i.customId == "cancel") {
             await response.edit({ embeds: [makeDrawUseCancelEmbed(message, drawItemName)], components: [] });
-            i.deferUpdate()
             
         }
     });
@@ -335,6 +336,7 @@ async function useRaidLure(message) {
 
     collector.on("collect", async i => {
         if (i.user == message.author) {
+            i.deferUpdate();
             if (i.customId == "cancel") {
                 await response.edit({ embeds: [makeRaidLureCanceledEmbed(message)], components: [] });
                 return;

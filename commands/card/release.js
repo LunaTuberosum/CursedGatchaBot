@@ -125,6 +125,7 @@ module.exports = {
 
         collector.on("collect", async i => {
             if (i.user == message.author) {
+                await i.deferUpdate();
                 if (i.customId == "cancel") {
                     releaseEmbed = makeReleaseEmbedCancel(pokemonData, releaseData, message.author)
                     response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
