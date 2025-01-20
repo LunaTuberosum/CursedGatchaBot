@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
-const { UserDailys, ItemShop, Users } = require("../../dbObjects")
+const { UserDailys, ItemShop, Users, UserStats, TitleDatabase, UserTitles } = require("../../dbObjects");
+const { checkOwnTitle } = require("../../imageObjects");
 
 function makeEmbed(message, dailyText) {
 
@@ -22,10 +23,15 @@ module.exports = {
 
         const date = new Date()
 
-        if (!userDaily) userDaily = await UserDailys.create({ user_id: message.author.id, month: date.getMonth(), day: date.getDate() });
+        if (!userDaily) userDaily = await UserDailys.create({ user_id: message.author.id, month: date.getMonth(), day: date.getDate(), amount: 1 });
         else {
             if (userDaily.month == date.getMonth() && userDaily.day - 1 == date.getDate()) { await message.channel.send(`${message.author}, you have already claimed your daily.`); return; }
-            else { userDaily.month = date.getMonth(); userDaily.day= date.getDate(); userDaily.save(); }
+            else { 
+                userDaily.month = date.getMonth(); 
+                userDaily.day = date.getDate(); 
+                userDaily.amount++;
+                userDaily.save();
+            }
         }
         let dailyText = ``;
 
@@ -69,5 +75,25 @@ module.exports = {
         user.addItem(shardData, shardAmount * shinyMult);
         if (gemData) user.addItem(gemData, 1 * shinyMult);
         if (grabData) user.addItem(grabData, 1 * shinyMult);
+
+        const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
+        userStat.money_own += pokeDollars * shinyMult;
+        userStat.save()
+
+        checkOwnTitle(userStat, message);
+
+        if (userDaily.amount >= 7) {
+            const titleData = await TitleDatabase.findOne({ where: { name: "Addicted" } });
+    
+            if (!titleData) { return; }
+    
+            const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+            
+            if (userTitle) { return; }
+    
+            await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+    
+            await message.channel.send(`${message.author}, you have claimed your daily 7 times! You have gained the title: \`${titleData.name}\``)
+        }
     }
 }

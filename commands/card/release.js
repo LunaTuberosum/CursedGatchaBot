@@ -3,6 +3,7 @@ const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats, TitleDat
 const allCards = require("../../packs/allCards.json");
 const { addBalance, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
+const { checkOwnTitle } = require("../../imageObjects.js");
 
 function makeReleaseEmbed(cardInfo, releaseData, user) {
     const releaseEmbed = new EmbedBuilder()
@@ -137,13 +138,17 @@ module.exports = {
 
                     item = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
                     user.addItem(item, releaseData["Money"]);
+
                     
                     card = await CardDatabase.findOne({ where: { card_id: cardData.item.card_id } });
                     card.in_circulation--;
                     card.save();
 
                     userStat.card_released++;
+                    userStat.money_own += releaseData["Money"];
                     userStat.save()
+
+                    checkOwnTitle(userStat, message);
 
                     UserCards.destroy({ where: { item_id: cardData.item_id } });
 

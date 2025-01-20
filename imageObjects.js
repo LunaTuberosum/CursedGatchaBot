@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const Canvas = require('@napi-rs/canvas');
 const { getCurrentStatsSeperate } = require('./affectionObjects');
+const { UserTitles, TitleDatabase } = require('./dbObjects');
 
 const imageDict = {}
 
@@ -187,4 +188,20 @@ function _getImageData(folder, cardData) {
     }
 }
 
-module.exports = { createImageDict, getImage };
+async function checkOwnTitle(userStat, message) {
+    if (userStat.money_own >= 10_000) {
+        const titleData = await TitleDatabase.findOne({ where: { name: "Upper-Class" } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have gained 10,000 POKEDOLLARS! You have gained the title: \`${titleData.name}\``)
+    }
+}
+
+module.exports = { createImageDict, getImage, checkOwnTitle };

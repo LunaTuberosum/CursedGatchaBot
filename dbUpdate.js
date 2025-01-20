@@ -63,7 +63,7 @@ async function print() {
 
     // let databaseDict = JSON.parse(fs.readFileSync("databaseBackup.json"));
     
-    // databaseDict = await changeData(databaseDict);
+    databaseDict = await changeData(databaseDict);
 
     const force = true;
 
@@ -100,11 +100,11 @@ async function print() {
                 card_released: userStat["card_released"],
                 card_drawn: userStat["card_drawn"],
                 card_grabbed: userStat["card_grabbed"],
-
                 money_spent: userStat["money_spent"],
-                // money_own: 0,
 
+                // money_own: 0,
                 money_own: userStat["money_own"],
+
                 createdAt: userStat["createdAt"],
                 updatedAt: userStat["updatedAt"]
             }));
@@ -138,6 +138,14 @@ async function print() {
             }));
         }
 
+        // TEMP
+
+        titleDatabase.push([
+            TitleDatabase.upsert({name: 'Big Spender', description: 'Has spent 1,000 POKEDOLLARS.' }),
+            TitleDatabase.upsert({name: 'Upper-Class', description: 'Has gained 10,000 POKEDOLLARS.' }),
+            TitleDatabase.upsert({name: 'Addicted', description: 'Has claimed g!daily 7 times.' })
+        ])
+
         // RECREATE USER CARDS
         const userCards = [];
 
@@ -168,7 +176,8 @@ async function print() {
             userDailys.push(UserDailys.upsert({
                 user_id: userDaily["user_id"],
                 month: userDaily["month"],
-                day: userDaily["day"]
+                day: userDaily["day"],
+                amount: userDaily["amount"]
             }));
         }
 

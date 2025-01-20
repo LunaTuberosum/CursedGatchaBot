@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop, UserStats } = require('../../dbObjects.js');
+const { Users, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
 
 function makeBuyEmbed(itemData, quantity, userAt) {
 
@@ -136,12 +136,26 @@ module.exports = {
                     userItemData.amount -= (quantity * itemData.cost);
                     userItemData.save();
 
+                    await response.edit({ embeds: [makeBuyEmbedConfirm(itemData, quantity, message.author)], components: [] });
+
                     if (userItemData.item.name == "POKEDOLLAR") {
                         userStat.money_spent += quantity * itemData.cost;
                         userStat.save();
-                    }
 
-                    await response.edit({ embeds: [makeBuyEmbedConfirm(itemData, quantity, message.author)], components: [] });
+                        if (userStat.money_spent >= 1_000) {
+                            const titleData = await TitleDatabase.findOne({ where: { name: "Big Spender" } });
+    
+                            if (!titleData) { return; }
+    
+                            const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+                            
+                            if (userTitle) { return; }
+    
+                            await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+    
+                            await message.channel.send(`${message.author}, you have spent 1,000 POKEDOLLARS! You have gained the title: \`${titleData.name}\``)
+                        }
+                    }
                     return;
                 }
             }

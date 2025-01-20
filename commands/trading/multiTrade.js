@@ -1,6 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, userMention } = require("discord.js");
-const { Users, UserCards, CardDatabase, ItemShop } = require("../../dbObjects");
+const { Users, UserCards, CardDatabase, ItemShop, UserStats } = require("../../dbObjects");
 const { formatName, raritySymbol, checkSeriesCollect } = require("../../pullingObjects.js");
+const { checkOwnTitle } = require("../../imageObjects.js");
 
 
 function makeEmbed(user, otherUser, userTrade, otherUserTrade, checkUser) {
@@ -133,6 +134,7 @@ function isInTradeItem(userTradeData, itemInfo) {
 }
 
 async function transferTradeItems(otherUser, userTradeData, userMention, message) {
+    let moneyGiven = 0;
     for (card of userTradeData["Cards"]) {
         card.user_id = otherUser.user_id;
         card.tag = "None";
@@ -144,7 +146,15 @@ async function transferTradeItems(otherUser, userTradeData, userMention, message
         itemData[0].amount -= itemData[1];
         itemData[0].save();
         otherUser.addItem(itemData[0].item, itemData[1]);
+
+        if (itemData[0].item.name == "POKEDOLLAR") moneyGiven += itemData[1];
     }
+
+    const userStat = await UserStats.findOne({ where: { user_id: otherUser.user_id } });
+    userStat.money_own += moneyGiven;
+    userStat.save()
+
+    checkOwnTitle(userStat, message);
 }
 
 module.exports = {
@@ -352,6 +362,7 @@ module.exports = {
                 await transferTradeItems(otherUser, userTradeData, message.mentions.users.first(), message);
                 await transferTradeItems(user, otherUserTradeData, message.author, message);
 
+                messageCollector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), userTrade, otherUserTrade)], components: [] });
             }
 

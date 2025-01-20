@@ -1,4 +1,5 @@
-const { Users, ItemShop } = require("../../dbObjects");
+const { Users, ItemShop, UserStats } = require("../../dbObjects");
+const { checkOwnTitle } = require("../../imageObjects");
 
 const claimedUsers = []
 
@@ -9,6 +10,8 @@ module.exports = {
     async execute(message) {
         // // For disabling the command
         // return;
+
+        let moneyGiven = 100;
 
         const response = await message.channel.send("loading claim...");
 
@@ -23,7 +26,14 @@ module.exports = {
         await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`100 POKEDOLLARS\`!`);
 
         const itemData = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
-        user.addItem(itemData, 100);
+        user.addItem(itemData, moneyGiven);
+
+        const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
+        userStat.money_own += moneyGiven;
+        userStat.save()
+
+        checkOwnTitle(userStat, message);
+
 
         claimedUsers.push(message.author.id);
 
