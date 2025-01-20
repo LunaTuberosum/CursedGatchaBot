@@ -24,16 +24,6 @@ const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 
 async function changeData(databaseDict) {
 
-    // TEMP
-
-    for (const userIndex in databaseDict["userStats"]) {
-        const userData = databaseDict["userStats"][userIndex];
-
-        const money = await UserItems.findOne({ where: { user_id: userData["user_id"], item_id: 1 } });
-        
-        databaseDict["userStats"][userIndex]["money_own"] = databaseDict["userStats"][userIndex]["money_spent"] + money.amount;
-    }
-
     return databaseDict
 }
 
@@ -46,7 +36,7 @@ async function print() {
         "userTitles" : await UserTitles.findAll({ where: { }, raw: true }),
         "titleDatabase" : await TitleDatabase.findAll({ where: { }, raw: true }),
         "userCards" : await UserCards.findAll({ where: { }, raw: true }),
-        // "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
+        "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
         "cardDatabase" : await CardDatabase.findAll({ where: { }, raw: true }),
         "userItems" : await UserItems.findAll({ where: { }, raw: true }),
         "itemShop" : await ItemShop.findAll({ where: { }, raw: true }),
@@ -63,7 +53,7 @@ async function print() {
 
     // let databaseDict = JSON.parse(fs.readFileSync("databaseBackup.json"));
     
-    // databaseDict = await changeData(databaseDict);
+    databaseDict = await changeData(databaseDict);
 
     const force = true;
 
@@ -101,10 +91,7 @@ async function print() {
                 card_drawn: userStat["card_drawn"],
                 card_grabbed: userStat["card_grabbed"],
                 money_spent: userStat["money_spent"],
-
-                // money_own: 0,
-                // money_own: userStat["money_own"],
-
+                money_own: userStat["money_own"],
                 createdAt: userStat["createdAt"],
                 updatedAt: userStat["updatedAt"]
             }));
@@ -137,14 +124,6 @@ async function print() {
                 description: title["description"]
             }));
         }
-
-        // TEMP
-
-        titleDatabase.push([
-            TitleDatabase.upsert({name: 'Big Spender', description: 'Has spent 1,000 POKEDOLLARS.' }),
-            TitleDatabase.upsert({name: 'Upper-Class', description: 'Has gained 10,000 POKEDOLLARS.' }),
-            TitleDatabase.upsert({name: 'Addicted', description: 'Has claimed g!daily 7 times.' })
-        ])
 
         // RECREATE USER CARDS
         const userCards = [];

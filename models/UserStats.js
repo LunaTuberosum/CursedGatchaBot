@@ -36,11 +36,11 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0,
             allowNull: false
         },
-		// money_own: {
-        //     type: DataTypes.INTEGER,
-        //     defaultValue: 0,
-        //     allowNull: false
-        // }
+		money_own: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false
+        }
 	}, {
 		timestamps: true,
 	});
