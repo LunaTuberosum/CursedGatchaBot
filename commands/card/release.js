@@ -145,7 +145,7 @@ module.exports = {
                     card.save();
 
                     userStat.card_released++;
-                    userStat.money_own = money_own + Number(releaseData["Money"]);
+                    userStat.money_own = userStat.money_own + Number(releaseData["Money"]);
                     userStat.save()
 
                     checkOwnTitle(userStat, message);
