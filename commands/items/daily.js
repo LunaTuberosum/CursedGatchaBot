@@ -25,7 +25,7 @@ module.exports = {
 
         if (!userDaily) userDaily = await UserDailys.create({ user_id: message.author.id, month: date.getMonth(), day: date.getDate(), amount: 1 });
         else {
-            if (userDaily.month == date.getMonth() && userDaily.day - 1 == date.getDate()) { await message.channel.send(`${message.author}, you have already claimed your daily.`); return; }
+            if (userDaily.month == date.getMonth() && userDaily.day == date.getDate()) { await message.channel.send(`${message.author}, you have already claimed your daily.`); return; }
             else { 
                 userDaily.month = date.getMonth(); 
                 userDaily.day = date.getDate(); 
