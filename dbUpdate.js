@@ -46,7 +46,7 @@ async function print() {
         "userTitles" : await UserTitles.findAll({ where: { }, raw: true }),
         "titleDatabase" : await TitleDatabase.findAll({ where: { }, raw: true }),
         "userCards" : await UserCards.findAll({ where: { }, raw: true }),
-        "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
+        // "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
         "cardDatabase" : await CardDatabase.findAll({ where: { }, raw: true }),
         "userItems" : await UserItems.findAll({ where: { }, raw: true }),
         "itemShop" : await ItemShop.findAll({ where: { }, raw: true }),
@@ -63,7 +63,7 @@ async function print() {
 
     // let databaseDict = JSON.parse(fs.readFileSync("databaseBackup.json"));
     
-    databaseDict = await changeData(databaseDict);
+    // databaseDict = await changeData(databaseDict);
 
     const force = true;
 
@@ -103,7 +103,7 @@ async function print() {
                 money_spent: userStat["money_spent"],
 
                 // money_own: 0,
-                money_own: userStat["money_own"],
+                // money_own: userStat["money_own"],
 
                 createdAt: userStat["createdAt"],
                 updatedAt: userStat["updatedAt"]
