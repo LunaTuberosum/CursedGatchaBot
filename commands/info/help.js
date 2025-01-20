@@ -8,7 +8,7 @@ function makeHelpEmbed() {
         .setDescription(`Type \`g!help\` followed by a command name to see more details about that command.`)
         .addFields(
             { name: "**⚙️ Setup**", value: "\`set\`, \`register\`", inline: true },
-            { name: "**⚜️ Basic**", value: "\`pull\`, \`release\`, \`affection\`", inline: true },
+            { name: "**⚜️ Basic**", value: "\`pull\`, \`release\`, \`affection\`, \`daily\`", inline: true },
             { name: "**📚 Possessions**", value: "\`deck\`, \`inventory\`, \`tag\`, \`tagCreate\`, \`tagDelete\`, \`tagEmoji\`, \`tagRename\`, \`tags\`, \`untag\`, \`use\`, \`claim\`", inline: true },
             { name: "**ℹ️ Information**", value: "\`cooldown\`, \`cardInfo\`, \`pokeDex\`, \`itemInfo\`, \`userInfo\`, \`serverInfo\`, \`credits\`", inline: true },
             { name: "**🤞 Wishlist**", value: "\`wishlist\`, \`wishlistAdd\`, \`unWishlist\`, \`wishlistWatch\`", inline: true },

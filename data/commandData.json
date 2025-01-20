@@ -155,6 +155,10 @@
     "claim": {
         "Command": "`g!claim`",
         "Description": "Claims after maintenance gift. `50 POKEDOLLAR` for patch, `80 POKEDOLLAR` for update, `100 POKEDOLLAR` for hotfix."
+    },
+    "daily": {
+        "Command": "`g!daily`",
+        "Description": "Claims a daily reward. Recieve `POKEDOLLARS` and `SHARDS`. \n\nAdditionaly, a 20% chance for one random `GEM` and 1% chance for one `GREAT BALL`. \n\nThere is also a 5% chance your daily will become **Shiny**. **Shiny** dailys give x2 rewards and your chance to recive the rare rewards are increased."
     }
     
 }
