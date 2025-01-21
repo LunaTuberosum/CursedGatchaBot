@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const commandData = require("../../data/commandData.json");
 const commandShortNameData = require("../../data/commandShortNameData.json");
+const { splitContent } = require("../../commandObjects");
 
 function makeHelpEmbed() {
     const helpEmbed = new EmbedBuilder()
@@ -36,7 +37,7 @@ module.exports = {
     shortName: ['h'],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length == 1) {
             await message.channel.send({ embeds: [makeHelpEmbed()] });

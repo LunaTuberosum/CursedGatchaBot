@@ -2,6 +2,7 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentTyp
 const { Users, UserCards, CardDatabase, ItemShop, UserStats } = require("../../dbObjects");
 const { formatName, raritySymbol, checkSeriesCollect } = require("../../pullingObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
+const { splitContent } = require("../../commandObjects.js");
 
 
 function makeEmbed(user, otherUser, userTrade, otherUserTrade, checkUser) {
@@ -165,7 +166,7 @@ module.exports = {
     async execute(message) {
         const response = await message.channel.send("Loading your trade...");
 
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 2) {
             await response.edit({ content: `${message.author}, you must specify the person you are trading with.` });

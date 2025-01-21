@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const { CardDatabase, Wishlists } = require('../../dbObjects.js');
+const { splitContent } = require('../../commandObjects.js');
 
 function checkIfSpecial(cardName) {
     switch (cardName[0]) {
@@ -22,7 +23,7 @@ module.exports = {
     shortName: ["uw"],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length != 2) {
             message.channel.send(`${message.author}, you must inclued the name of the card you wish to unwishlist.`);

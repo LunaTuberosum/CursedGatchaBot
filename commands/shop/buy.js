@@ -1,5 +1,6 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
+const { splitContent } = require("../../commandObjects.js");
 
 function makeBuyEmbed(itemData, quantity, userAt) {
 
@@ -73,7 +74,7 @@ module.exports = {
     shortName: ["b"],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
         
         if (splitMessage.length == 1) {
             await message.channel.send(`${message.author} you must include the name of the item you wish to buy.`);

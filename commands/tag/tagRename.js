@@ -1,3 +1,4 @@
+const { splitContent } = require('../../commandObjects');
 const { Tags } = require('../../dbObjects');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     shortName: ['trn'],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length != 3) {
             message.channel.send(`${message.author}, you must specify both the orinal name and the new name.`);

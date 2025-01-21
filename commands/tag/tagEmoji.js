@@ -1,5 +1,6 @@
 const emojiRegex = require('emoji-regex');
 const { Tags } = require('../../dbObjects');
+const { splitContent } = require('../../commandObjects');
 
 module.exports = {
     cooldown: 5,
@@ -7,7 +8,7 @@ module.exports = {
     shortName: ['te'],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length != 3) {
             message.channel.send(`${message.author}, you must specify both the original name and the new emoji.`);

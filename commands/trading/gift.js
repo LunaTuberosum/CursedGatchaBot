@@ -1,6 +1,7 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const { Users, UserCards, CardDatabase } = require("../../dbObjects");
 const { formatName, raritySymbol, makePokeImage, checkSeriesCollect } = require("../../pullingObjects");
+const { splitContent } = require("../../commandObjects");
 
 function makeEmbed(user, otherUser, pokemonData, card, checkUser) {
     const giftEmbed = new EmbedBuilder()
@@ -79,7 +80,7 @@ module.exports = {
     async execute(message) {
         const response = await message.channel.send("Creating your gift...");
 
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 3) {
             await response.edit({ content: `${message.author}, you must specify the person you are gifting to and the card you are gifting.` });

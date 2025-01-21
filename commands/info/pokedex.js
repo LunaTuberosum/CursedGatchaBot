@@ -2,6 +2,7 @@ const { EmbedBuilder, AttachmentBuilder, ComponentType, ButtonBuilder, ActionRow
 const { CardDatabase, Wishlists, Users } = require("../../dbObjects");
 const { formatName, raritySymbol, makePokeImage } = require("../../pullingObjects");
 const allCards = require("../../packs/allCards.json");
+const { splitContent } = require("../../commandObjects");
 
 function makeEmbed(pokemonData, wishlistInfo) {
 
@@ -82,7 +83,7 @@ module.exports = {
     async execute(message) {
         const response = await message.channel.send("Loading the data...");
 
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 2) { await response.edit(`${message.author}, please enter the name of the pokemon you'd like to lookup`); return; }
 

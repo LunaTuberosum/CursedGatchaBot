@@ -1,6 +1,7 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
 const { Users, CardDatabase, Wishlists, UserCards } = require("../../dbObjects.js");
 const { raritySymbol, makePokeImage, formatName } = require("../../pullingObjects.js");
+const { splitContent } = require("../../commandObjects.js");
 
 function makeCardImageEmbed(pokemonData, cardCode, user) {
     const cardImageEmbed = new EmbedBuilder()
@@ -58,7 +59,7 @@ module.exports = {
 
         const response = await message.channel.send("Loading the info...");
 
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         let imageEmbed;
         let statEmbed;

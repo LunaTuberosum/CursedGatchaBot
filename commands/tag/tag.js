@@ -1,3 +1,4 @@
+const { splitContent } = require('../../commandObjects');
 const { Tags, Users, UserCards } = require('../../dbObjects');
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
     name: 'tag',
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 3) {
             message.channel.send(`${message.author}, you must specify both the name of tag and the card codes.`);

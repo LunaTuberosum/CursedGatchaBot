@@ -1,5 +1,6 @@
 const { getItemUse } = require("../../itemObjects.js")
 const { Users, ItemShop } = require('../../dbObjects.js');
+const { splitContent } = require("../../commandObjects.js");
 
 function findItem(collection, itemName) {
     for (const item of collection) {
@@ -15,7 +16,7 @@ module.exports = {
     shortName: ["u"],
         
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length == 1) {
             await message.channel.send({ content: `${message.author}, please include the name of the item you would like to use.` })

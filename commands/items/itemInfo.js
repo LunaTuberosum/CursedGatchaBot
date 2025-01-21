@@ -1,6 +1,7 @@
 const { UserItems, ItemShop } = require("../../dbObjects");
 const itemData = require("../../data/itemData.json");
 const { EmbedBuilder } = require("discord.js");
+const { splitContent } = require("../../commandObjects");
 
 function makeEmbed(itemDict, amount) {
     const itemEmbed = new EmbedBuilder()
@@ -15,7 +16,7 @@ module.exports = {
     shortName: ["ii"],
 
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 2) { await message.channel.send(`${message.author}, please enter the item name that you would like to lookup.`); return; }
 

@@ -2,6 +2,7 @@ const { EmbedBuilder, AttachmentBuilder, ButtonBuilder, ActionRowBuilder, Button
 const { Users } = require("../../dbObjects");
 const allCards = require("../../packs/allCards.json");
 const { raritySymbol, makePokeImageTrade, checkSeriesCollect } = require("../../pullingObjects.js");
+const { splitContent } = require("../../commandObjects.js");
 
 function makeEmbed(user, otherUser, cardInfo1, cardInfo2, pokemonData1, pokemonData2, checkUser) {
     const tradeEmebed = new EmbedBuilder()
@@ -92,7 +93,7 @@ module.exports = {
         const response = await message.channel.send("Loading your trade...");
 
         let confirm = false;
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         if (splitMessage.length < 4) {
             await response.edit(`${message.author}, you must specify the person your trading to, your card code, and their card code.`);

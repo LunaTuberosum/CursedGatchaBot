@@ -1,5 +1,6 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const { Users, UserStats, UserTitles, TitleDatabase } = require("../../dbObjects");
+const { splitContent } = require("../../commandObjects");
 
 function makeEmbed(user, userAt, userStat, titleList) {
     const embed = new EmbedBuilder()
@@ -40,7 +41,7 @@ module.exports = {
     shortName: ["ui", "user"],
 
     async execute(message) {
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         let user;
         let userAt;

@@ -4,6 +4,7 @@ const allCards = require("../../packs/allCards.json");
 const { addBalance, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
+const { splitContent } = require("../../commandObjects.js");
 
 function makeReleaseEmbed(cardInfo, releaseData, user) {
     const releaseEmbed = new EmbedBuilder()
@@ -73,7 +74,7 @@ module.exports = {
     async execute(message) {
         const response = await message.channel.send("Preparing for release...");
 
-        const splitMessage = message.content.split(" ");
+        const splitMessage = splitContent(message);
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
