@@ -1,4 +1,4 @@
-const { Users, UserStats } = require('../../dbObjects.js');
+const { Users, UserStats, UserDailys } = require('../../dbObjects.js');
 
 module.exports = {
     name: "changeuserstat",
@@ -9,6 +9,9 @@ module.exports = {
 
             const user = await Users.findOne({ where: { user_id: message.author.id } });
             const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
+            if (!userStat) return;
+            const userDaily = await UserDailys.findOne({ where: { user_id: message.author.id } });
+            if (!userDaily) return;
 
             const splitMessage = message.content.split(" ");
 
@@ -33,6 +36,10 @@ module.exports = {
             else if (splitMessage[1] == "own") {
                 userStat.money_own = Number.parseInt(splitMessage[2]);
                 userStat.save();
+            }
+            else if (splitMessage[1] == "daily") {
+                userDaily.amount = Number.parseInt(splitMessage[2]);
+                userDaily.save();
             }
 
             await message.channel.send({ content: `${message.author} your stat has been changed.` });

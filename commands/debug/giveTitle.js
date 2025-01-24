@@ -28,7 +28,7 @@ module.exports = {
 
             const userTitle = await UserTitles.findOne({ where: { user_id: user.user_id, title_id: titleData.id } });
             
-            if (userTitle) { await message.channel.send(`${message.author}, that user already has that title.`); return; }
+            if (userTitle) { UserTitles.destroy({ where: { user_id: user.user_id, title_id: titleData.id } }); await message.channel.send(`${message.author}, user has lost that title.`); return; }
 
             await UserTitles.create({ user_id: user.user_id, title_id: titleData.id });
 
