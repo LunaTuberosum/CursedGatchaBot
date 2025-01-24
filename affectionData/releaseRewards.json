@@ -1,0 +1,122 @@
+{
+    "EVE1": {
+        "BASIC": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [10, 10]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [1, 3]
+            }
+        ],
+        "HOLO": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [30, 30]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [2, 5]
+            }
+        ],
+        "FRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [40, 40]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [4, 6]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [1, 3]
+            }
+        ],
+        "HOLOFRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [70, 70]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [6, 8]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [2, 4]
+            }
+        ]
+    },
+    "SHY1": {
+        "BASIC": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [20, 20]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [2, 4]
+            }
+        ],
+        "HOLO": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [60, 60]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [3, 6]
+            }
+        ],
+        "FRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [80, 80]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [5, 7]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [2, 4]
+            }
+        ],
+        "HOLOFRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [140, 140]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [7, 9]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [3, 5]
+            }
+        ]
+    }
+}

@@ -2,36 +2,36 @@ const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBu
 const { Users, UserCards, ItemShop, CardDatabase, UserStats, TitleDatabase, UserTitles } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
 const { makePokeImage } = require("../../pullingObjects.js");
-const { getLevelUpCost } = require("../../affectionObjects.js");
+const { getReleaseReward } = require("../../affectionObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
 const { splitContent } = require("../../commandObjects.js");
 
-function makeReleaseEmbed(cardInfo, releaseData, user) {
+function makeReleaseEmbed(cardInfo, itemText, user, leveled) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
-        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\``)
+        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n${itemText}\n${leveled ? "### This card has been level. Are you sure you want to release it?": ""}`)
 
     return releaseEmbed;
 }
 
-function makeReleaseEmbedCancel(cardInfo, releaseData, user) {
+function makeReleaseEmbedCancel(cardInfo, itemText, user) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#bd0f0f")
         .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
-        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\`\n\n**Card Release has been canceled.**`)
+        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n${itemText}\n\n**Card Release has been canceled.**`)
 
     return releaseEmbed;
 }
 
-function makeReleaseEmbedConfirm(cardInfo, releaseData, user) {
+function makeReleaseEmbedConfirm(cardInfo, itemText, user) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#26bd0f")
         .setThumbnail(`attachment://poke-image.png`)
         .setTitle("Release Card")
-        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n:yen: **${releaseData["Money"]}** - \`POKEDOLLARS\`\n:small_orange_diamond: **${releaseData["Resource"]["Amount"]}** - \`${(cardInfo["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}\`\n\n**The card has been released.**`)
+        .setDescription(`${user}, **${cardInfo["Name"]}** will leave behind for you:\n\n${itemText}\n\n**The card has been released.**`)
 
     return releaseEmbed;
 }
@@ -117,10 +117,29 @@ module.exports = {
         }
 
         pokemonData = findCardInCollection(cardData.item.name);            
-        releaseData = getLevelUpCost(cardData)
+        releaseData = getReleaseReward(cardData)
+
+        const itemDict = {
+            "POKEDOLLAR": 0
+        };
+            
+        for ([name, amount] of Object.entries(releaseData)) {
+            if (name == "SHARD" || name == "GEM") {
+                if (itemDict[`${(cardData.item.type).toUpperCase()} ${name}`]) itemDict[`${(cardData.item.type).toUpperCase()} ${name}`] += amount;
+                else itemDict[`${(cardData.item.type).toUpperCase()} ${name}`] = amount;
+            }
+            else itemDict["POKEDOLLAR"] += amount;
+        }
+
+        let itemText = "";
+        for ([name, amount] of Object.entries(itemDict)) {
+            if (name.includes("SHARD")) itemText += `🔸 ${amount} - \`${name}\`\n`;
+            else if (name.includes("GEM")) itemText += `🔶 ${amount} - \`${name}\`\n`;
+            else if (name.includes("POKEDOLLAR")) itemText += `💴 ${amount} - \`${name}\`\n`;
+        }
         
         attachment = new AttachmentBuilder(await makePokeImage(cardData.item, cardData), { name: 'poke-image.png' });
-        releaseEmbed = makeReleaseEmbed(pokemonData, releaseData, message.author);
+        releaseEmbed = makeReleaseEmbed(pokemonData, itemText, message.author, cardData.level > 0);
         await response.edit({ content: "", embeds: [releaseEmbed], files: [attachment], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
@@ -130,16 +149,26 @@ module.exports = {
             await i.deferUpdate();
 
             if (i.customId == "cancel") {
-                releaseEmbed = makeReleaseEmbedCancel(pokemonData, releaseData, message.author)
+                releaseEmbed = makeReleaseEmbedCancel(pokemonData, itemText, message.author)
                 response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
             }
             else if (i.customId == "release") {
 
-                item = await ItemShop.findOne({ where: { name: `${(pokemonData["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}` } });
-                user.addItem(item, releaseData["Resource"]["Amount"]);
-
-                item = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
-                user.addItem(item, releaseData["Money"]);
+                for ([name, amount] of Object.entries(itemDict)) {
+                    if (name.includes("SHARD")) {
+                        item = await ItemShop.findOne({ where: { name: name } });
+                        user.addItem(item, amount);
+                    }
+                    else if (name.includes("GEM")) {
+                        item = await ItemShop.findOne({ where: { name: name } });
+                        user.addItem(item, amount);
+                    }
+                    else if (name.includes("POKEDOLLAR")) {
+                        item = await ItemShop.findOne({ where: { name: name } });
+                        user.addItem(item, amount);
+                        userStat.money_own = userStat.money_own + amount;
+                    }
+                }
 
                 
                 card = await CardDatabase.findOne({ where: { card_id: cardData.item.card_id } });
@@ -147,14 +176,13 @@ module.exports = {
                 card.save();
 
                 userStat.card_released++;
-                userStat.money_own = userStat.money_own + Number(releaseData["Money"]);
                 userStat.save()
 
                 checkOwnTitle(userStat, message);
 
                 UserCards.destroy({ where: { item_id: cardData.item_id } });
 
-                releaseEmbed = makeReleaseEmbedConfirm(pokemonData, releaseData, message.author)
+                releaseEmbed = makeReleaseEmbedConfirm(pokemonData, itemText, message.author)
                 response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
 
                 if (userStat.card_released == 100) {

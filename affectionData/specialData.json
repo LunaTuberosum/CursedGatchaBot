@@ -88,5 +88,95 @@
                 }
             }
         }
+    },
+    "SHY1": {
+        "BASIC": {
+            "Colorless": {
+                "Name": "Quick Attack",
+                "Type": "Colorless",
+                "Levels": {
+                    "5": "You will do a quick attack that is 60 power attack.",
+                    "10": "You will do a quick attack that is 80 power attack. After using this ability your speed will double for 5 auto attacks."
+                }
+            },
+            "Water": {
+                "Name": "Water Gun",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is a 20 power attack.",
+                    "10": "Shoot a stream of water that is a 40 power attack."
+                }
+            },
+            "Fire": {
+                "Name": "Flame Blitz",
+                "Type": "Fire",
+                "Levels": {
+                    "5": "Cloak your self in fire and charge at the foe for a 100 power attack.",
+                    "10": "Cloak your self in fire and charge at the foe for a 120 power attack."
+                }
+            },
+            "Grass": {
+                "Name": "Solar Beam",
+                "Type": "Grass",
+                "Levels": {
+                    "5": "Shoot down a beam of sunlight that is a 80 power attack.",
+                    "10": "Shoot down a beam of sunlight that is a 100 power attack."
+                }
+            },
+            "Fighting": {
+                "Name": "Focus Punch",
+                "Type": "Fighting",
+                "Levels": {
+                    "5": "Focus your energy into a strong punch that is a 80 power attack.",
+                    "10": "Focus your energy into a strong punch that is a 120 power attack."
+                }
+            },
+            "Psychic": {
+                "Name": "Hyper Voice",
+                "Type": "Psychic",
+                "Levels": {
+                    "5": "Let loose a horrible echoing shout that is a 70 power attack.",
+                    "10": "Let loose a horrible echoing shout that is a 90 power attack."
+                }
+            }
+        },
+
+        "STAGE 1" : {
+            "Water": {
+                "Name": "Water Gun+",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is a 60 power attack.",
+                    "10": "Shoot a stream of water that is a 80 power attack"
+                }
+            },
+            "Grass": {
+                "Name": "Solar Beam+",
+                "Type": "Grass",
+                "Levels": {
+                    "5": "Shoot down a beam of sunlight that is a 100 power attack.",
+                    "10": "Shoot down a beam of sunlight that is a 120 power attack."
+                }
+            },
+            "Fighting": {
+                "Name": "Focus Punch+",
+                "Type": "Fighting",
+                "Levels": {
+                    "5": "Focus your energy into a strong punch that is a 100 power attack.",
+                    "10": "Focus your energy into a strong punch that is a 150 power attack."
+                }
+            }
+        },
+
+        "STAGE 2" : {
+            "Water": {
+                "Name": "Hydro Pump",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shot a strong stream of water that is a 80 power attack.",
+                    "10": "Shot a strong stream of water that is a 110 power attack."
+                }
+            }
+        }
     }
 }

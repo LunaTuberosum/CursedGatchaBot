@@ -1,10 +1,42 @@
 const levelUpCost = require("./affectionData/levelUpCost.json");
+const releaseRewards = require("./affectionData/releaseRewards.json");
 const stateTypes = require("./affectionData/stateTypes.json");
 const passiveData = require("./affectionData/passiveData.json");
 const specialData = require("./affectionData/specialData.json");
 
-function getLevelUpCost(card) {
-    return levelUpCost[card.item.card_type][card.level + 1];
+function getLevelUpCost(card, level=0) {
+    if (level == 0) level = card.level + 1
+
+    return levelUpCost[card.item.card_type][level];
+}
+
+function getReleaseReward(card) {
+    const baseRewards = releaseRewards[card.item.series][card.item.card_type];
+
+    if (!baseRewards) return -1;
+
+    const rewards = {};
+
+    for (const _reward of baseRewards) {
+        const chance = Math.floor(Math.random() * (101 - 1) + 1);
+        if (chance > _reward["Chance"]) continue;
+
+        const amount = Math.floor(Math.random() * (_reward["Range"][0] - _reward["Range"][1]) + _reward["Range"][1]);
+        rewards[_reward["Name"]] = amount
+    }
+
+    if (card.level <= 1) return rewards;
+
+    for (let _level = 1; _level < card.level; _level++) {
+        const levelUp = getLevelUpCost(card, _level);
+        
+        if (rewards[levelUp["Resource"]["Type"]]) rewards[levelUp["Resource"]["Type"]] += levelUp["Resource"]["Amount"];
+        else rewards[levelUp["Resource"]["Type"]] = levelUp["Resource"]["Amount"];
+
+        rewards["POKEDOLLAR"] += Number(levelUp["Money"]);
+    }
+
+    return rewards;
 }
 
 function getCurrentStats(card) {
@@ -33,7 +65,7 @@ function getSpecial(card) {
     return specialData[card.item.series][card.item.poke_type][card.item.type]
 }
 
-module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial };
+module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial, getReleaseReward };
 
 // const { Collection } = require('discord.js');
 // const fs = require('node:fs');

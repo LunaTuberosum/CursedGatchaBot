@@ -2,15 +2,15 @@ const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBu
 const { Users, UserCards, ItemShop, CardDatabase, UserStats, TitleDatabase, UserTitles, Tags } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
 const { makePokeImage, formatName } = require("../../pullingObjects.js");
-const { getLevelUpCost } = require("../../affectionObjects.js");
+const { getReleaseReward } = require("../../affectionObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
 const { splitContent } = require("../../commandObjects.js");
 
-function makeReleaseEmbed(relaeseText, itemText, user) {
+function makeReleaseEmbed(relaeseText, itemText, user, warningText) {
     const releaseEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle("Multi Release Cards")
-        .setDescription(`${user}, say goodbye to:\n\`\`\`${relaeseText}\`\`\`\nThey will leave behind for you:\n\`\`\`${itemText}\`\`\``)
+        .setDescription(`${user}, say goodbye to:\n\`\`\`${relaeseText}\`\`\`\nThey will leave behind for you:\n\`\`\`${itemText}\`\`\`\n${warningText}`)
 
     return releaseEmbed;
 }
@@ -101,27 +101,34 @@ module.exports = {
 
             if(tag) {
                 for (const _card of userCards) {
-                    if (_card.tag == tag.name) { cardData.push(_card); releaseData.push(getLevelUpCost(_card)); }
+                    if (_card.tag == tag.name) { cardData.push(_card); releaseData.push(getReleaseReward(_card)); }
                 }
                 continue;
             }
 
             for (const _card of userCards) {
-                if (_card.item_id == _sub) { cardData.push(_card); releaseData.push(getLevelUpCost(_card)); continue; }
+                if (_card.item_id == _sub) { cardData.push(_card); releaseData.push(getReleaseReward(_card)); continue; }
             }
             
         }
 
         let relaeseText = "";
+        let warningText = "";
         const itemDict = {
             "POKEDOLLAR": 0
         };
         let index = 0;
         for (const card of cardData) {
-            if (itemDict[`${(card.item.type).toUpperCase()} ${releaseData[index]["Resource"]["Type"]}`]) itemDict[`${(card.item.type).toUpperCase()} ${releaseData[index]["Resource"]["Type"]}`] += releaseData[index]["Resource"]["Amount"];
-            else itemDict[`${(card.item.type).toUpperCase()} ${releaseData[index]["Resource"]["Type"]}`] = releaseData[index]["Resource"]["Amount"];
+            for ([name, amount] of Object.entries(releaseData[index])) {
+                
+                if (name == "SHARD" || name == "GEM") {
+                    if (itemDict[`${(card.item.type).toUpperCase()} ${name}`]) itemDict[`${(card.item.type).toUpperCase()} ${name}`] += amount;
+                    else itemDict[`${(card.item.type).toUpperCase()} ${name}`] = amount;
+                }
+                else itemDict["POKEDOLLAR"] += amount;
+            }
 
-            itemDict["POKEDOLLAR"] += Number(releaseData[index]["Money"]);
+            if (card.level > 0) warningText = "### One or more of cards are leveled. Are you sure you want to release these?";
 
             if (index == 6) relaeseText += "...";
             else if (index > 6) continue;
@@ -143,7 +150,7 @@ module.exports = {
         }
 
         
-        releaseEmbed = makeReleaseEmbed(relaeseText, itemText, message.author);
+        releaseEmbed = makeReleaseEmbed(relaeseText, itemText, message.author, warningText);
         await response.edit({ content: "", embeds: [releaseEmbed], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
