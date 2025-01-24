@@ -93,7 +93,7 @@ async function print() {
                 card_drawn: userStat["card_drawn"],
                 card_grabbed: userStat["card_grabbed"],
 
-                // shiny_grabed: 0,
+                shiny_grabed: 0,
 
                 money_spent: userStat["money_spent"],
                 money_own: userStat["money_own"],
@@ -129,6 +129,23 @@ async function print() {
                 description: title["description"]
             }));
         }
+
+        titleDatabase.push(TitleDatabase.upsert({
+            name: "Sparkly Garbage",
+            description: "Has grabbed their first SHINY Pokemon"
+        }))
+        titleDatabase.push(TitleDatabase.upsert({
+            name: "Shiny Trash Collector",
+            description: "Has collected all cards in the SHY1 pack."
+        }))
+        titleDatabase.push(TitleDatabase.upsert({
+            name: "Shiny Trash Hoarder",
+            description: "Has collected all cards in the SHY1 pack and each card variant"
+        }))
+        titleDatabase.push(TitleDatabase.upsert({
+            name: "Trash Hoarder",
+            description: "Has collected all cards in the EVE1 pack and each card variant."
+        }))
 
         // RECREATE USER CARDS
         const userCards = [];

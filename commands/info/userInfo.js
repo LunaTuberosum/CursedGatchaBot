@@ -68,11 +68,16 @@ module.exports = {
 
         const userTitles = await UserTitles.findAll({ where: { user_id: user.user_id } });
 
+        let index = 0;
         for (title of userTitles) {
             const titleData = await TitleDatabase.findOne({ where: { id: title.title_id } });
             
-            titleList.push(`\`${titleData.name}\``);
+            if (index == 5) titleList.push(`\`...\``);
+            if (index >= 5) null;
+            else titleList.push(`\`${titleData.name}\``);
+
             titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
+            index++;
         }
 
         if (titleList.length == 0) {

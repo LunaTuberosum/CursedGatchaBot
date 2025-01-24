@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
 const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
-const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID } = require("../../pullingObjects.js");
+const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID, checkShinyGrab } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -68,6 +68,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
         userStat.card_grabbed++;
         if (pokemonData["Series"].substring(0, 3) == "SHY") userStat.shiny_grabbed++;
+        if (userStat.shiny_grabbed >= 1) checkShinyGrab(message);
         userStat.save();
 
         await checkGrabTitles(message, userStat);
@@ -96,6 +97,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
             userStat.card_grabbed++;
             if (pokemonData["Series"].substring(0, 3) == "SHY") userStat.shiny_grabbed++;
+            if (userStat.shiny_grabbed >= 1) checkShinyGrab(message);
             userStat.save();
 
             await checkGrabTitles(message, userStat);
