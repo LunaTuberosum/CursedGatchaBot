@@ -1,7 +1,7 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, UserCards, UserItems, ItemShop, CardDatabase, UserStats, TitleDatabase, UserTitles } = require("../../dbObjects.js");
+const { Users, UserCards, ItemShop, CardDatabase, UserStats, TitleDatabase, UserTitles } = require("../../dbObjects.js");
 const allCards = require("../../packs/allCards.json");
-const { addBalance, makePokeImage } = require("../../pullingObjects.js");
+const { makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost } = require("../../affectionObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
 const { splitContent } = require("../../commandObjects.js");
@@ -126,52 +126,53 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
-            if (i.user == message.author) {
-                await i.deferUpdate();
-                if (i.customId == "cancel") {
-                    releaseEmbed = makeReleaseEmbedCancel(pokemonData, releaseData, message.author)
-                    response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
-                }
-                else if (i.customId == "release") {
+            if (i.user != message.author) { return; }
+            await i.deferUpdate();
 
-                    item = await ItemShop.findOne({ where: { name: `${(pokemonData["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}` } });
-                    user.addItem(item, releaseData["Resource"]["Amount"]);
-
-                    item = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
-                    user.addItem(item, releaseData["Money"]);
-
-                    
-                    card = await CardDatabase.findOne({ where: { card_id: cardData.item.card_id } });
-                    card.in_circulation--;
-                    card.save();
-
-                    userStat.card_released++;
-                    userStat.money_own = userStat.money_own + Number(releaseData["Money"]);
-                    userStat.save()
-
-                    checkOwnTitle(userStat, message);
-
-                    UserCards.destroy({ where: { item_id: cardData.item_id } });
-
-                    releaseEmbed = makeReleaseEmbedConfirm(pokemonData, releaseData, message.author)
-                    response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
-
-                    if (userStat.card_released == 100) {
-                        const titleData = await TitleDatabase.findOne({ where: { name: "Catch and Release" } });
-
-                        if (!titleData) { return; }
-
-                        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
-                        
-                        if (userTitle) { return; }
-
-                        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
-
-                        await message.channel.send(`${message.author}, you have released 100 cards! You have gained the title: \`${titleData.name}\``)
-                    }
-                    
-                }
+            if (i.customId == "cancel") {
+                releaseEmbed = makeReleaseEmbedCancel(pokemonData, releaseData, message.author)
+                response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
             }
+            else if (i.customId == "release") {
+
+                item = await ItemShop.findOne({ where: { name: `${(pokemonData["Type"]).toUpperCase()} ${releaseData["Resource"]["Type"]}` } });
+                user.addItem(item, releaseData["Resource"]["Amount"]);
+
+                item = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
+                user.addItem(item, releaseData["Money"]);
+
+                
+                card = await CardDatabase.findOne({ where: { card_id: cardData.item.card_id } });
+                card.in_circulation--;
+                card.save();
+
+                userStat.card_released++;
+                userStat.money_own = userStat.money_own + Number(releaseData["Money"]);
+                userStat.save()
+
+                checkOwnTitle(userStat, message);
+
+                UserCards.destroy({ where: { item_id: cardData.item_id } });
+
+                releaseEmbed = makeReleaseEmbedConfirm(pokemonData, releaseData, message.author)
+                response.edit({ content: " ", embeds: [releaseEmbed], files: [attachment], components: [] });
+
+                if (userStat.card_released == 100) {
+                    const titleData = await TitleDatabase.findOne({ where: { name: "Catch and Release" } });
+
+                    if (!titleData) { return; }
+
+                    const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+                    
+                    if (userTitle) { return; }
+
+                    await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+                    await message.channel.send(`${message.author}, you have released 100 cards! You have gained the title: \`${titleData.name}\``)
+                }
+                
+            }
+            
         });
 
     },

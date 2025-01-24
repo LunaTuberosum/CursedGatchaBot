@@ -139,6 +139,7 @@ module.exports = {
 
                 checkSeriesCollect(await otherUser.getCards(), card.item.series, message, message.mentions.users.first());
 
+                collector.stop();
                 await response.edit({ embeds: [makeEmbedConfirm(message.author, message.mentions.users.first(), pokemonData, card)], files: [attachment], components: [] });
             }
         });
