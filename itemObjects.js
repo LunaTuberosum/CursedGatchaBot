@@ -104,10 +104,14 @@ async function useDraw3After(message) {
         i.deferUpdate();
         if (i.customId == "next") {
             await response.edit({ embeds: [makeDraw3Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. ...\n3. ...`)], components: [], files: [attachmentList[1]] });
-            i.deferUpdate();
+            if ((pokeItemList[0].series).substring(0, 3)) userStat.shiny_grabbed++;
+
             await response.edit({ embeds: [makeDraw3Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. ...`)], components: [], files: [attachmentList[2]] });
+            if ((pokeItemList[1].series).substring(0, 3)) userStat.shiny_grabbed++;
+
             setTimeout(async () => {
                 await response.edit({ embeds: [makeDraw3Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. **${formatName(pokeItemList[2])}**`)], components: [], files: [attachmentList[3]] });
+                if ((pokeItemList[2].series).substring(0, 3)) userStat.shiny_grabbed++;
 
                 let newCards = [];
 
@@ -190,15 +194,20 @@ async function useDraw5After(message) {
         i.deferUpdate();
         if (i.customId == "next") {
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. ...\n3. ...\n 4. ...\n5. ...`)], components: [], files: [attachmentList[1]] });
+            if ((pokeItemList[0].series).substring(0, 3)) userStat.shiny_grabbed++;
 
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. ...\n 4. ...\n5. ...`)], components: [], files: [attachmentList[2]] });
+            if ((pokeItemList[1].series).substring(0, 3)) userStat.shiny_grabbed++;
 
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. **${formatName(pokeItemList[2])}**\n 4. ...\n5. ...`)], components: [], files: [attachmentList[3]] });
+            if ((pokeItemList[2].series).substring(0, 3)) userStat.shiny_grabbed++;
 
             await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. **${formatName(pokeItemList[2])}**\n 4. **${formatName(pokeItemList[3])}**\n5. ...`)], components: [], files: [attachmentList[4]] });
+            if ((pokeItemList[3].series).substring(0, 3)) userStat.shiny_grabbed++;
 
             setTimeout(async () => {
                 await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}**\n2. **${formatName(pokeItemList[1])}**\n3. **${formatName(pokeItemList[2])}**\n 4. **${formatName(pokeItemList[3])}**\n5. **${formatName(pokeItemList[4])}**`)], components: [], files: [attachmentList[5]] });
+                if ((pokeItemList[4].series).substring(0, 3)) userStat.shiny_grabbed++;
 
                 let newCards = [];
 
@@ -273,7 +282,7 @@ async function _useDraw(message, drawItemName, drawCommand) {
 }
 
 async function _getPokeItem(pokeData) {
-    const pokeItem = await CardDatabase.findOne({ where: { card_id: pokeData["CardID"] || "001", card_type: pokeData["CardType"] } })
+    const pokeItem = await CardDatabase.findOne({ where: { card_id: pokeData["CardID"] || "001", series: pokeData["Series"] } });
     pokeItem.times_pulled++;
     pokeItem.save();
 

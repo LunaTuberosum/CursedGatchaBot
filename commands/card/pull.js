@@ -62,11 +62,12 @@ async function checkGrabCard(message, response, pokemonData, i) {
         user.grab_cooldown = now + 600_000;
         user.save();
 
-        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", card_type: pokemonData["CardType"] } });
+        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"] } });
         pokeItem.in_circulation++;
         pokeItem.save();
 
         userStat.card_grabbed++;
+        if (pokemonData["Series"].substring(0, 3) == "SHY") userStat.shiny_grabbed++;
         userStat.save();
 
         await checkGrabTitles(message, userStat);
@@ -76,7 +77,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
         
         checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
-        await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
+        await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });
 
         return true;
 
@@ -89,11 +90,12 @@ async function checkGrabCard(message, response, pokemonData, i) {
             userItemData.amount -= 1;
             userItemData.save();
 
-            const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", card_type: pokemonData["CardType"] } });
+            const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"] } });
             pokeItem.in_circulation++;
             pokeItem.save();
 
             userStat.card_grabbed++;
+            if (pokemonData["Series"].substring(0, 3) == "SHY") userStat.shiny_grabbed++;
             userStat.save();
 
             await checkGrabTitles(message, userStat);
@@ -103,7 +105,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
             
             checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
-            await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
+            await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });
 
             await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
             return true;
@@ -198,12 +200,12 @@ module.exports = {
                 user.save();
 
                 pokemonData1 = getWhichStar("random");
-                const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", card_type: pokemonData1["CardType"] } });
+                const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", series: pokemonData1["Series"] } });
                 pokeItem1.times_pulled++;
                 pokeItem1.save();
 
                 pokemonData2 = getWhichStar("random");
-                const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", card_type: pokemonData2["CardType"] } });
+                const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", series: pokemonData2["Series"] } });
                 pokeItem2.times_pulled++;
                 pokeItem2.save();
 

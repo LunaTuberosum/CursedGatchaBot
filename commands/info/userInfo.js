@@ -6,7 +6,7 @@ function makeEmbed(user, userAt, userStat, titleList) {
     const embed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle("User Stats")
-        .setDescription(`**User:** ${userAt}\n**Titles:** ${titleList.join(", ")}\n\n📚 **Cards:**\nCards Released: \`${userStat.card_released}\`\nCards Pulled: \`${userStat.card_drawn}\`\nCards Grabbed: \`${userStat.card_grabbed}\`\n\n🪙 **Shop:**\nMoney Spent: \`${userStat.money_spent}\`\nMoney Own: \`${userStat.money_own}\``)
+        .setDescription(`**User:** ${userAt}\n**Titles:** ${titleList.join(", ")}\n\n📚 **Cards:**\nCards Released: \`${userStat.card_released}\`\nCards Pulled: \`${userStat.card_drawn}\`\nCards Grabbed: \`${userStat.card_grabbed}\`\nShinys Grabbed: \`${userStat.shiny_grabbed}\`\n\n🪙 **Shop:**\nMoney Spent: \`${userStat.money_spent}\`\nMoney Own: \`${userStat.money_own}\``)
     return embed
 }
 

@@ -1,5 +1,6 @@
 const standedPack = require("./packs/standeredPack.json");
 const allCards = require("./packs/allCards.json");
+const shinyPacks = require("./packs/shinyPacks.json");
 const seriesTitleData = require("./data/seriesTitleData.json");
 const { currency, UserTitles, TitleDatabase } = require("./dbObjects.js");
 const Canvas = require('@napi-rs/canvas');
@@ -26,35 +27,51 @@ function getSeries(series, starArray) {
     return seriesPack;
 }
 
+function checkForShiny(seriesPack) {
+    const shinyChance = Math.floor(Math.random() * (101 - 1) + 1);
+    if (shinyChance <= 1) {
+        const shinyPack = shinyPacks[seriesPack];
+
+        if (shinyPack) return shinyPack;
+    }
+
+    return seriesPack;
+}
+
 function getWhichStar(series, boost=0) {
 
     // Make random number between 1 and 4
-    const random = Math.min((Math.floor(Math.random() * 100) + 1) + boost, 100);
+    const random = Math.min(Math.floor(Math.random() * (101 - 1) + 1) + boost, 100);
 
     // check what star that is
     if (random <= 60) { // 60 % chance
-        const seriesPack = getSeries(series, standedPack["common"])
+        let seriesPack = getSeries(series, standedPack["common"])
         const pokemon = pullRandomCard(standedPack["common"][seriesPack]);
+        seriesPack = checkForShiny(seriesPack);
         return allCards[seriesPack][pokemon];
     }
     else if (random > 60 && random <= 85) { // 25% chance
-        const seriesPack = getSeries(series, standedPack["uncommon"])
+        let seriesPack = getSeries(series, standedPack["uncommon"])
         const pokemon = pullRandomCard(standedPack["uncommon"][seriesPack]);
+        seriesPack = checkForShiny(seriesPack);
         return allCards[seriesPack][pokemon];
     }
     else if (random > 85 && random <= 95) { // 10% chance 
-        const seriesPack = getSeries(series, standedPack["rare"])
+        let seriesPack = getSeries(series, standedPack["rare"])
         const pokemon = pullRandomCard(standedPack["rare"][seriesPack]);
+        seriesPack = checkForShiny(seriesPack);
         return allCards[seriesPack][pokemon];
     }
     else if (random > 95 && random <= 99) { // 5% chance
-        const seriesPack = getSeries(series, standedPack["srare"])
+        let seriesPack = getSeries(series, standedPack["srare"])
         const pokemon = pullRandomCard(standedPack["srare"][seriesPack]);
+        seriesPack = checkForShiny(seriesPack);
         return allCards[seriesPack][pokemon];
     }
     else if (random > 99 && random <= 100) { // 1% chance
-        const seriesPack = getSeries(series, standedPack["urare"])
+        let seriesPack = getSeries(series, standedPack["urare"])
         const pokemon = pullRandomCard(standedPack["urare"][seriesPack]);
+        seriesPack = checkForShiny(seriesPack);
         return allCards[seriesPack][pokemon];
     }
 }
@@ -403,7 +420,11 @@ async function checkSeriesCollect(userCards, series, message, userMention=null) 
 
     if (has == Object.keys(seriesDict).length) {
         
-        const titleData = await TitleDatabase.findOne({ where: { name: seriesTitleData[series] } });
+        const titleSeriesName = seriesTitleData[series];
+
+        if (!titleSeriesName) { return; }
+
+        const titleData = await TitleDatabase.findOne({ where: { name: titleSeriesName } });
 
         if (!titleData) { return; }
 

@@ -10,6 +10,7 @@ function makeImageEmbed(newCardCode) {
         .setColor("#616161")
         .setTitle(`Card ID: \`${newCardCode}\` - \`${raritySymbol(pokemonData["Rarity"])}\``)
         .setImage(`attachment://${pokemonData["CardID"]}-${pokemonData["Name"]}.png`)
+        .setDescription(`${pokemonData["Series"].substring(0, 3) == "SHY" ? "It's **SHINY**!!!" : ""}`)
         .setFooter({ text: `${pokemonData["Series"]}`});
 
     return imageEmbed;
@@ -77,6 +78,10 @@ module.exports = {
         
         user.last_code = userCode + "0000";
         user.save();
+
+        if (pokemonData["Series"].substring(0, 3) == "SHY") newUserData.shiny_grabbed++;
+        newUserData.save();
+
         card.times_pulled++;
         card.in_circulation++;
         card.save();
