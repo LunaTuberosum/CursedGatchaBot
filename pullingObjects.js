@@ -30,7 +30,7 @@ function getSeries(series, starArray) {
 
 function checkForShiny(seriesPack) {
     const shinyChance = Math.floor(Math.random() * (101 - 1) + 1);
-    if (shinyChance <= 100) {
+    if (shinyChance <= 1) {
         const shinyPack = shinyPacks[seriesPack];
 
         if (shinyPack) return shinyPack;
