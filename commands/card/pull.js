@@ -242,7 +242,7 @@ module.exports = {
 
         }
         else {
-            await response.edit(`${message.author}, you can't pull in this channel.`);
+            await message.channel.send(`${message.author}, you can't pull in this channel.`);
             return;
         }
     },
