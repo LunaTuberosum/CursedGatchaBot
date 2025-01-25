@@ -177,13 +177,11 @@ module.exports = {
         
     async execute(message) {
 
-        const response = await message.channel.send("Loading your pull...");
-
         let pokemonData1 = {};
         let pokemonData2 = {};
 
         let user = await Users.findOne({ where: { user_id: message.author.id } });
-        if (!user) { await response.edit(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
+        if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
         const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
 
         let now = Date.now();
@@ -228,12 +226,14 @@ module.exports = {
                     }
 
                     await message.channel.send(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
+                    const response = await message.channel.send("Loading your pull...");
 
                     setTimeout(() => {
                         pullMechanics(message, response, pokemonData1, pokemonData2);
                     }, "1000");
                 }
                 else {
+                    const response = await message.channel.send("Loading your pull...");
                     pullMechanics(message, response, pokemonData1, pokemonData2);
                 }
             } else {
