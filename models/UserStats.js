@@ -29,11 +29,11 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: 0,
 			allowNull: false,
 		},
-		// shiny_grabbed: {
-		// 	type: DataTypes.INTEGER,
-		// 	defaultValue: 0,
-		// 	allowNull: false,
-		// },
+		shiny_grabbed: {
+			type: DataTypes.INTEGER,
+			defaultValue: 0,
+			allowNull: false,
+		},
 
         // ITEM DATA
         money_spent: {
