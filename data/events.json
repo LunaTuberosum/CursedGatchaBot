@@ -15,19 +15,21 @@
         "rewards": "350 POKEDOLLARS"
     },
 
-    "affectionI": {
-        "active": true,
-        "name": "Affection Contest: -006-Jigglypuff-",
-        "description": "Raise your affection with a basic Jigglypuff and who ever has the highest at the end of the event wins!",
-        "time": "Ends <t:1737918000:R>",
-        "rewards": "A refund of all SHARDS and GEMS used to level, +1 level of SHARDS/GEMS, 350 POKEDOLLARS"
-    },
-
     "raceII": {
         "active": true,
         "name": "Title Race: -Sparkly Garbage-",
         "description": "A race to see who gets the -Sparkly Garbage- title!",
         "time": "na",
         "rewards": "500 POKEDOLLARS"
+    },
+
+    "affectionI": {
+        "active": true,
+        "name": "Affection Contest: -006-Jigglypuff-",
+        "description": "Raise your affection with a basic Jigglypuff and who ever has the highest at the end of the event wins!",
+        "time": "Ends <t:1737918000:R>",
+        "rewards": "A refund of all SHARDS and GEMS used to level, +1 level of SHARDS/GEMS, 350 POKEDOLLARS"
     }
+
+    
 }
