@@ -22,6 +22,11 @@
         "Usage": "`g!release` *`card code`",
         "Description": "Release card to gain money and crystals. Sending without paramaters will use your most recently obtained card."
     },
+    "multirelease": {
+        "Command": "`g!multiRelease`, `g!mr`",
+        "Usage": "`g!release` `card codes/tags`",
+        "Description": "Release cards to gain money and crystals. When sending with a tag it will add all cards with that tag."
+    },
     "affection": {
         "Command": "`g!affection`, `g!a`",
         "Usage": "`g!affection` `card code`",

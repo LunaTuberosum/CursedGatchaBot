@@ -32,5 +32,6 @@
     "h": "help",
     "bug": "bugreport",
     "bugs": "bugreport",
-    "e": "event"
+    "e": "event",
+    "mr": "multirelease"
 }
