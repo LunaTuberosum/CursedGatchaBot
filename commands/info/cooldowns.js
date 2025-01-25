@@ -16,7 +16,7 @@ module.exports = {
     async execute(message) {
         const user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \n\`g!register\`.`); return; }
-        const now = Date.now();
+        const now = Date.now(); 
 
         const pullCD = Math.round((user.pull_cooldown - now) / 60_000);
         let pullMessage;
