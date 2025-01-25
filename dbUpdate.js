@@ -32,28 +32,28 @@ async function changeData(databaseDict) {
 async function print() {
 
     // CREATE DICT BACK UP
-    // let databaseDict = {
-    //     "users" : await Users.findAll({ where: { }, raw: true }),
-    //     "userStats" : await UserStats.findAll({ where: { }, raw: true }),
-    //     "userTitles" : await UserTitles.findAll({ where: { }, raw: true }),
-    //     "titleDatabase" : await TitleDatabase.findAll({ where: { }, raw: true }),
-    //     "userCards" : await UserCards.findAll({ where: { }, raw: true }),
-    //     "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
-    //     "cardDatabase" : await CardDatabase.findAll({ where: { }, raw: true }),
-    //     "userItems" : await UserItems.findAll({ where: { }, raw: true }),
-    //     "itemShop" : await ItemShop.findAll({ where: { }, raw: true }),
-    //     "serverInfo" : await ServerInfo.findAll({ where: { }, raw: true }),
-    //     "wishlists" : await Wishlists.findAll({ where: { }, raw: true }),
-    //     "tags" : await Tags.findAll({ where: { }, raw: true })
-    // }
+    let databaseDict = {
+        "users" : await Users.findAll({ where: { }, raw: true }),
+        "userStats" : await UserStats.findAll({ where: { }, raw: true }),
+        "userTitles" : await UserTitles.findAll({ where: { }, raw: true }),
+        "titleDatabase" : await TitleDatabase.findAll({ where: { }, raw: true }),
+        "userCards" : await UserCards.findAll({ where: { }, raw: true }),
+        "userDailys" : await UserDailys.findAll({ where: { }, raw: true }),
+        "cardDatabase" : await CardDatabase.findAll({ where: { }, raw: true }),
+        "userItems" : await UserItems.findAll({ where: { }, raw: true }),
+        "itemShop" : await ItemShop.findAll({ where: { }, raw: true }),
+        "serverInfo" : await ServerInfo.findAll({ where: { }, raw: true }),
+        "wishlists" : await Wishlists.findAll({ where: { }, raw: true }),
+        "tags" : await Tags.findAll({ where: { }, raw: true })
+    }
     
-    // // WRITE DATA BASE BACK UP
-    // const dictString = JSON.stringify(databaseDict, null, "\t");
-    // fs.writeFile("databaseBackup.json", dictString, function(err, result) {
-    //     if(err) console.log('error', err);
-    // });
+    // WRITE DATA BASE BACK UP
+    const dictString = JSON.stringify(databaseDict, null, "\t");
+    fs.writeFile("databaseBackup.json", dictString, function(err, result) {
+        if(err) console.log('error', err);
+    });
 
-    let databaseDict = JSON.parse(fs.readFileSync("databaseBackup.json"));
+    // let databaseDict = JSON.parse(fs.readFileSync("databaseBackup.json"));
     
     databaseDict = await changeData(databaseDict);
 
@@ -93,7 +93,7 @@ async function print() {
                 card_drawn: userStat["card_drawn"],
                 card_grabbed: userStat["card_grabbed"],
 
-                shiny_grabed: 0,
+                // shiny_grabed: 0,
 
                 money_spent: userStat["money_spent"],
                 money_own: userStat["money_own"],
@@ -130,22 +130,22 @@ async function print() {
             }));
         }
 
-        titleDatabase.push(TitleDatabase.upsert({
-            name: "Sparkly Garbage",
-            description: "Has grabbed their first SHINY Pokemon"
-        }))
-        titleDatabase.push(TitleDatabase.upsert({
-            name: "Shiny Trash Collector",
-            description: "Has collected all cards in the SHY1 pack."
-        }))
-        titleDatabase.push(TitleDatabase.upsert({
-            name: "Shiny Trash Hoarder",
-            description: "Has collected all cards in the SHY1 pack and each card variant"
-        }))
-        titleDatabase.push(TitleDatabase.upsert({
-            name: "Trash Hoarder",
-            description: "Has collected all cards in the EVE1 pack and each card variant."
-        }))
+        // titleDatabase.push(TitleDatabase.upsert({
+        //     name: "Sparkly Garbage",
+        //     description: "Has grabbed their first SHINY Pokemon"
+        // }))
+        // titleDatabase.push(TitleDatabase.upsert({
+        //     name: "Shiny Trash Collector",
+        //     description: "Has collected all cards in the SHY1 pack."
+        // }))
+        // titleDatabase.push(TitleDatabase.upsert({
+        //     name: "Shiny Trash Hoarder",
+        //     description: "Has collected all cards in the SHY1 pack and each card variant"
+        // }))
+        // titleDatabase.push(TitleDatabase.upsert({
+        //     name: "Trash Hoarder",
+        //     description: "Has collected all cards in the EVE1 pack and each card variant."
+        // }))
 
         // RECREATE USER CARDS
         const userCards = [];
