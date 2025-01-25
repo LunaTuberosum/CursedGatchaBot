@@ -213,8 +213,8 @@ module.exports = {
 
                 usersWishArray = [];
 
-                usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData1["CardID"] } })));
-                usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData2["CardID"] } })));
+                usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData1["CardID"], card_type : pokemonData1["CardType"] } })));
+                usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData2["CardID"], card_type : pokemonData2["CardType"] } })));
 
                 if (usersWishArray[0].length > 0 || usersWishArray[1].length > 0) {
                     userAtArray = []
