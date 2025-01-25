@@ -1,0 +1,20 @@
+{
+    "raceI": [
+        {
+            "Name": "POKEDOLLAR",
+            "Amount": 350
+        }
+    ],
+    "affectionI": [
+        {
+            "Name": "POKEDOLLAR",
+            "Amount": 350
+        }
+    ],
+    "raceII": [
+        {
+            "Name": "POKEDOLLAR",
+            "Amount": 500
+        }
+    ]
+}

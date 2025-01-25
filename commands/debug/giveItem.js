@@ -1,3 +1,4 @@
+const { splitContent } = require('../../commandObjects.js');
 const { Users, ItemShop } = require('../../dbObjects.js');
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
         
     async execute(message) {
         if (message.member.permissionsIn(message.channel).has("ADMINISTRATOR")) {
-            const splitMessage = message.content.split(" ");
+            const splitMessage = splitContent(message);
 
             const user = await Users.findOne({ where: { user_id: message.mentions.users.first().id } });
 

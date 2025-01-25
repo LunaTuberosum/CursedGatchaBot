@@ -1,3 +1,4 @@
+const { splitContent } = require("../../commandObjects");
 const { TitleDatabase, UserTitles, Users } = require("../../dbObjects");
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
         
     async execute(message) {
         if (message.member.permissionsIn(message.channel).has("ADMINISTRATOR")) {
-            const splitMessage = message.content.split(" ");
+            const splitMessage = splitContent(message);
 
             if (splitMessage < 3) { await message.channel.send(`${message.author}, please include the user you would like to grant a title to and the title you'd like to grant.`); return; }
 

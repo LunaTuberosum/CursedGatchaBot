@@ -1,3 +1,4 @@
+const { splitContent } = require('../../commandObjects.js');
 const { Users, UserStats, UserDailys } = require('../../dbObjects.js');
 
 module.exports = {
@@ -7,15 +8,15 @@ module.exports = {
     async execute(message) {
         if (message.member.permissionsIn(message.channel).has("ADMINISTRATOR")) {
 
-            const user = await Users.findOne({ where: { user_id: message.author.id } });
-            const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
+            const user = await Users.findOne({ where: { user_id: message.mentions.users.first().id } });
+            const userStat = await UserStats.findOne({ where: { user_id: message.mentions.users.first().id } });
             if (!userStat) return;
-            const userDaily = await UserDailys.findOne({ where: { user_id: message.author.id } });
+            const userDaily = await UserDailys.findOne({ where: { user_id: message.mentions.users.first().id } });
             if (!userDaily) return;
 
-            const splitMessage = message.content.split(" ");
+            const splitMessage = splitContent(message)
 
-            if (splitMessage.length != 3) return;
+            if (splitMessage.length != 4) return;
 
             if (splitMessage[1] == "grab") {
                 userStat.card_grabbed = Number.parseInt(splitMessage[2]);
@@ -42,7 +43,7 @@ module.exports = {
                 userDaily.save();
             }
 
-            await message.channel.send({ content: `${message.author} your stat has been changed.` });
+            await message.channel.send({ content: `${message.author}, ${message.mentions.users.first().username}'s stat has been changed.` });
         }
         else {
             return;

@@ -20,8 +20,6 @@ module.exports = {
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
 
         let userDaily = await UserDailys.findOne({ where: { user_id: message.author.id } });
-        console.log(userDaily);
-        
 
         const date = new Date()
 
