@@ -27,6 +27,8 @@ module.exports = {
 
         const tag = await Tags.findOne({ where: { user_id: message.author.id, name: splitMessage[1] } });
 
+        if (!tag) { await message.channel.send(`${message.author}, please send a vaild tag name`); return; }
+
         tag.name = splitMessage[2];
         tag.save();
 

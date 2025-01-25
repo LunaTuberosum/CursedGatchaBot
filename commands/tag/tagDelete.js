@@ -14,7 +14,14 @@ module.exports = {
             return;
         }
 
-        Tags.destroy({ where: { name: splitMessage[1] } });
+        try {
+            Tags.destroy({ where: { name: splitMessage[1] } });
+            
+        } catch (error) {
+            await message.channel.send(`${message.author}, please send a vaild tag name`); 
+            return; 
+            
+        }
 
         message.channel.send(`${message.author}, tag has been successfully deleted.`);
 
