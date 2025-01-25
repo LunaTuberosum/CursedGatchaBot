@@ -343,14 +343,14 @@ async function makePokeImageDraw5(pokemonDataList) {
             context.drawImage(cardBack, 1640, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[3], context, 1690, 100);
+        context = await makePokeImageDict(pokemonDataList[3], context, 2435, 100);
         if (i <= 3) {
-            context.drawImage(cardBack, 1690, 100);
+            context.drawImage(cardBack, 2435, 100);
         }
 
-        context = await makePokeImageDict(pokemonDataList[4], context, 2485, 100);
+        context = await makePokeImageDict(pokemonDataList[4], context, 3230, 100);
         if (i <= 4) {
-            context.drawImage(cardBack, 2485, 100);
+            context.drawImage(cardBack, 3230, 100);
         }
 
         canvasList.push(canvas.encode('png'))
