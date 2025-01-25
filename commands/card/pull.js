@@ -198,7 +198,7 @@ module.exports = {
 
                 await checkPullTitles(message, userStat);
 
-                user.pull_cooldown = now + (20 * 60_000);
+                user.pull_cooldown = now + (20 * 40_000);
                 user.save();
 
                 pokemonData1 = getWhichStar("random");
