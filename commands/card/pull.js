@@ -134,7 +134,7 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
 
     await response.edit({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 
-    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 80_000 });
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 40_000 });
 
     collector.on('collect', async i => {
         i.deferUpdate();
@@ -196,7 +196,7 @@ module.exports = {
 
                 await checkPullTitles(message, userStat);
 
-                user.pull_cooldown = now + (20 * 40_000);
+                user.pull_cooldown = now + (20 * 60_000);
                 user.save();
 
                 pokemonData1 = getWhichStar("random");
@@ -237,7 +237,7 @@ module.exports = {
                     pullMechanics(message, response, pokemonData1, pokemonData2);
                 }
             } else {
-                await response.edit({ content: `${message.author}  You must wait \`${Math.round((user.pull_cooldown - now) / 60000)} minutes\` before you can pull cards again.` })
+                await message.channel.send({ content: `${message.author}  You must wait \`${Math.round((user.pull_cooldown - now) / 60000)} minutes\` before you can pull cards again.` })
             }
 
         }
