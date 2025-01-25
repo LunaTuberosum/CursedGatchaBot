@@ -38,6 +38,10 @@ module.exports = {
                 userStat.money_own = Number.parseInt(splitMessage[2]);
                 userStat.save();
             }
+            else if (splitMessage[1] == "shiny") {
+                userStat.shiny_grabbed = Number.parseInt(splitMessage[2]);
+                userStat.save();
+            }
             else if (splitMessage[1] == "daily") {
                 userDaily.amount = Number.parseInt(splitMessage[2]);
                 userDaily.save();

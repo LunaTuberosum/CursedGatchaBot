@@ -11,7 +11,7 @@ module.exports = {
         // // For disabling the command
         // return;
 
-        let moneyGiven = 50;
+        let moneyGiven = 70;
 
         const response = await message.channel.send("loading claim...");
 
