@@ -29,7 +29,7 @@
     },
     "deck": {
         "Command": "`g!deck`, `g!d`",
-        "Description": "View all cards in your possession."
+        "Description": "View all cards in your possession.\n```-- Filtering --\ng!d Series:EVE1\ng!d Name:Squirtle\ng!d Type:Psychic\ng!d Special:HOLO (only HOLO, FRAME, or HOLOFRAME)\ng!d Level:4\ng!d Tag:Burn (case sensitive, default tag: 'None')```"
     },
     "inventory": {
         "Command": "`g!inventory`, `g!i`, `g!inv`",
