@@ -99,28 +99,28 @@ module.exports = {
             const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
             collector.on("collect", async i => {
-
                 await i.deferUpdate();
-                if (i.user == message.author) {
-                    if (i.customId == "left") {
-                        start = Math.max(start - 10, 1);
-                        end = Math.max(end - 10, 10);
-                        checkButtons(buttons, start, end, userItems);
 
-                        invArray = getArray(userItems, start, end);
-                        await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
-
-                    }
-                    else if (i.customId == "right") {
-                        start = Math.min(start + 10, userItems.length - 9);
-                        end = Math.min(end + 10, userItems.length);
-                        checkButtons(buttons, start, end, userItems);
-
-                        invArray = getArray(userItems, start, end);
-                        await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
-                    }
-                }
+                if (i.user != message.author) { return; }
+                collector.resetTimer();
                 
+                if (i.customId == "left") {
+                    start = Math.max(start - 10, 1);
+                    end = Math.max(end - 10, 10);
+                    checkButtons(buttons, start, end, userItems);
+
+                    invArray = getArray(userItems, start, end);
+                    await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
+
+                }
+                else if (i.customId == "right") {
+                    start = Math.min(start + 10, userItems.length - 9);
+                    end = Math.min(end + 10, userItems.length);
+                    checkButtons(buttons, start, end, userItems);
+
+                    invArray = getArray(userItems, start, end);
+                    await response.edit({ embeds: [makeInvEmbed(invArray, message.author, start, end, userItems.length)], components: [buttons] });
+                }
             });
         }
         else {

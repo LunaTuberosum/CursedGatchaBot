@@ -108,8 +108,10 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
+            await i.deferUpdate();
             if (i.user == message.author) {
-                await i.deferUpdate();
+                collector.resetTimer()
+                
                 if (i.customId == "stat") {
                     response.edit({ content: "", embeds: [statEmbed], components: [makeButtonStat()], files: [attachment] });
                 }

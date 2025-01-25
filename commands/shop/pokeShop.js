@@ -87,26 +87,26 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
             collector.on("collect", async i => {
+                await i.deferUpdate();
+                if (i.user != message.author) { return; }
+                collector.resetTimer();
 
-                if (i.user == message.author) {
-                    await i.deferUpdate();
-                    if (i.customId == "left") {
-                        start = Math.max(start - 5, 1);
-                        end = Math.max(end - 5, 5);
-                        checkButtons(buttons, start, end, length);
+                if (i.customId == "left") {
+                    start = Math.max(start - 5, 1);
+                    end = Math.max(end - 5, 5);
+                    checkButtons(buttons, start, end, length);
 
-                        shopArray = await getArray(shopData, start, end);
-                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
+                    shopArray = await getArray(shopData, start, end);
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
 
-                    }
-                    else if (i.customId == "right") {
-                        start = Math.min(start + 5, length - 5);
-                        end = Math.min(end + 5, length - 1);
-                        checkButtons(buttons, start, end, length);
+                }
+                else if (i.customId == "right") {
+                    start = Math.min(start + 5, length - 5);
+                    end = Math.min(end + 5, length - 1);
+                    checkButtons(buttons, start, end, length);
 
-                        shopArray = await getArray(shopData, start, end);
-                        await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
-                    }
+                    shopArray = await getArray(shopData, start, end);
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
                 }
         });
     }

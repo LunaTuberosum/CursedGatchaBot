@@ -90,8 +90,9 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
-            if (i.user.id != message.author.id) { i.deferUpdate(); return; }
             await i.deferUpdate();
+            if (i.user.id != message.author.id) { return; }
+            collector.resetTimer();
 
             if (i.customId == "stats") {
                 buttons.components[0].setDisabled(true);

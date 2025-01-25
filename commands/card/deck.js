@@ -111,9 +111,11 @@ module.exports = {
                 const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
                 collector.on("collect", async i => {
+                    i.deferUpdate();
 
                     if (i.user == message.author) {
-                        i.deferUpdate();
+                        collector.resetTimer();
+
                         if (i.customId == "left") {
                             if (start - 10 < 1) {
                                 start = 1;

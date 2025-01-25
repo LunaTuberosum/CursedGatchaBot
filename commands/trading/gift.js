@@ -116,10 +116,10 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120_000 });
 
         collector.on("collect", async i => {
+            await i.deferUpdate();
             if (i.user.id == user.user_id) { null }
             else if (i.user.id == otherUser.user_id) { null }
-            else { i.deferUpdate(); return; }
-            await i.deferUpdate();
+            else { return; }
 
             if(i.customId == "cancel") {
                 collector.stop();

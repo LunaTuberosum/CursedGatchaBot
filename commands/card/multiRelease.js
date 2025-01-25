@@ -156,8 +156,8 @@ module.exports = {
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
-            if (i.user != message.author) { return; }
             await i.deferUpdate();
+            if (i.user != message.author) { return; }
 
             if (i.customId == "cancel") {
                 releaseEmbed = makeReleaseEmbedCancel(relaeseText, itemText, message.author)

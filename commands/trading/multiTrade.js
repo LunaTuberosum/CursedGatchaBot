@@ -278,6 +278,7 @@ module.exports = {
 
             otherConfirmUser = null;
             let checkUser = -1;
+            messageCollector.resetTimer();
             m.delete();
 
             const splitM = m.content.split(",");
@@ -346,10 +347,12 @@ module.exports = {
         // BUTTON HANDLER
 
         collector.on("collect", async i => {
+            i.deferUpdate();
             if (i.user.id == user.user_id) { null }
             else if (i.user.id == otherUser.user_id) { null }
-            else { i.deferUpdate(); return; }
-            i.deferUpdate();
+            else { return; }
+            
+            collector.resetTimer();
 
             if (i.customId == "confirm") {
                 if (i.user.id == user.user_id) { otherConfirmUser = otherUser; checkUser = 0; }

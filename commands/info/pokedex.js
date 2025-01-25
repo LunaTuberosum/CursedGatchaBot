@@ -134,6 +134,7 @@ module.exports = {
         collector.on("collect", async i => {
             await i.deferUpdate();
             if (i.user.id != message.author.id) return;
+            collector.resetTimer()
 
             if (i.customId == "right") {
                 pokeIndex++;
