@@ -170,8 +170,6 @@ function _specialSort(userCards, special) {
         else otherList.push(card);
     }
 
-    specialList.sort((a, b) => a.item.card_id.localeCompare(b.item.card_id));
-
     userCards = specialList.concat(otherList);
 
     return userCards;
@@ -206,8 +204,6 @@ function _tagSort(userCards, tag) {
         else otherList.push(card);
     }
 
-    tagList.sort((a, b) => a.item.card_id.localeCompare(b.item.card_id));
-
     userCards = tagList.concat(otherList);
 
     return userCards;
@@ -215,8 +211,8 @@ function _tagSort(userCards, tag) {
 
 function _handleSort(userCards, sortKeys) {
     for (const key of sortKeys) {
-        const data = (key.toLowerCase()).split(":");
-        switch (data[0]) {
+        const data = key.split(":");
+        switch (data[0].toLowerCase()) {
             case "series":
                 if (data.length == 2) userCards = _seriesSort(userCards, data[1].toUpperCase());
                 else userCards = _seriesSort(userCards, "default");
