@@ -62,7 +62,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
         user.grab_cooldown = now + 600_000;
         user.save();
 
-        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"] } });
+        const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"], card_type: pokemonData["CardType"] } });
         pokeItem.in_circulation++;
         pokeItem.save();
 
@@ -91,7 +91,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
             userItemData.amount -= 1;
             userItemData.save();
 
-            const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"] } });
+            const pokeItem = await CardDatabase.findOne({ where: { card_id: pokemonData["CardID"] || "001", series: pokemonData["Series"], card_type: pokemonData["CardType"] } });
             pokeItem.in_circulation++;
             pokeItem.save();
 
@@ -200,12 +200,12 @@ module.exports = {
                 user.save();
 
                 pokemonData1 = getWhichStar("random");
-                const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", series: pokemonData1["Series"] } });
+                const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", series: pokemonData1["Series"], card_type: pokemonData1["CardType"] } });
                 pokeItem1.times_pulled++;
                 pokeItem1.save();
 
                 pokemonData2 = getWhichStar("random");
-                const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", series: pokemonData2["Series"] } });
+                const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", series: pokemonData2["Series"], card_type: pokemonData2["CardType"] } });
                 pokeItem2.times_pulled++;
                 pokeItem2.save();
 
