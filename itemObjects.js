@@ -282,7 +282,7 @@ async function _useDraw(message, drawItemName, drawCommand) {
 }
 
 async function _getPokeItem(pokeData) {
-    const pokeItem = await CardDatabase.findOne({ where: { card_id: pokeData["CardID"] || "001", series: pokeData["Series"] } });
+    const pokeItem = await CardDatabase.findOne({ where: { card_id: pokeData["CardID"] || "001", series: pokeData["Series"], card_type: pokeData["CardType"] } });
     pokeItem.times_pulled++;
     pokeItem.save();
 

@@ -9,7 +9,7 @@ module.exports = {
 
     async execute(message) {
         // // For disabling the command
-        // return;
+        return;
 
         let moneyGiven = 70;
 
