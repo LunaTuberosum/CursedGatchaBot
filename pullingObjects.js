@@ -501,34 +501,16 @@ async function _fullHasHandle(series, userMention, message) {
 async function createCardID(user){
     const lastID = user.last_code;
 
-    let newCode = ""
-    
-    for (num of lastID.slice(2)) {
-        let lookNum = num.charCodeAt(0);
+    let newCode = Number(lastID.substring(2));
 
-        if (lookNum == 57) {
-            if (newCode.length > 0) {
-                let _ln = newCode[newCode.length - 1].charCodeAt(0);
-                _ln++;
-            
-                if(lastID[newCode.length + 1] == "9"){
-                    newCode = newCode.slice(0, newCode.length - 1) + "00";
-                } else {
-                    newCode = newCode.slice(0, newCode.length - 1) + String.fromCharCode(_ln) + "0";
-                }
-            }
-        }
-        else {
-            if(newCode.length == 3) {
-                lookNum++;
-                newCode +=  String.fromCharCode(lookNum);
-            }
-            else {
-                newCode += num;
-            }
-        }
+    newCode++;
+
+    newCode = newCode.toString();
+
+    while (newCode.length < 4) {
+        newCode = "0" + newCode;
     }
-
+    
     newCode = lastID.slice(0, 2) + newCode;
     user.last_code = newCode;
     user.save();
