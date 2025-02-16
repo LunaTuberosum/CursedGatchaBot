@@ -1,11 +1,11 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop } = require('../../dbObjects.js');
+const { Users, EventShop } = require('../../dbObjects.js');
 
-function makeShopEmbed(shopArray, start, end, total) {
+function makeShopEmbed(shopArray, start, end, total, curEvent) {
 
     const invEmbed = new EmbedBuilder()
         .setColor("#616161")
-        .setTitle(`POKESHOP`)
+        .setTitle(`EVENT SHOP [GET PAINTBRUSHES FROM GRABING CARDS]`)
         .setDescription(`Use \`g!buy "item name" #\` to buy\n\n${shopArray.join("\n")}`)
         .setFooter({ text: `Showing items ${start}-${end} of ${total}`})
 
@@ -53,7 +53,7 @@ async function getArray(shopItems, start, end) {
             return shopArray;
         }
         else if(i >= start) {
-            shopArray.push(`${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
+            shopArray.push(`${item.emoji} **${item.name}** [${item.event}]\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
         }
         i++;
     }
@@ -69,11 +69,12 @@ function getLength(shopData) {
 }
 
 module.exports = {
-    name: "pokeShop",
-    shortName: ["ps", "s", "shop"],
+    name: "eventShop",
+    shortName: ["es", "eshop"],
         
     async execute(message) {
-        const shopData = await ItemShop.findAll();
+        const shopData = await EventShop.findAll();
+        const curEvent = "CRAP"
 
         let start = 1;
         let end = 5;
@@ -82,7 +83,7 @@ module.exports = {
         let length = getLength(shopData);
         
         const buttons = makeButton()
-        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
+        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -97,7 +98,7 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
@@ -106,7 +107,7 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
                 }
         });
     }

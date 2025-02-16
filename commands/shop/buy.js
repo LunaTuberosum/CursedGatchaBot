@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
+const { Users, ItemShop, EventShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
 const { splitContent } = require("../../commandObjects.js");
 
 function makeBuyEmbed(itemData, quantity, userAt) {
@@ -81,6 +81,8 @@ module.exports = {
             return;
         }
 
+        let eventItem = false;
+
         let itemName = "";
         let quantity = "";
         for (const sub of splitMessage) {
@@ -95,11 +97,16 @@ module.exports = {
         itemName = (itemName.trim()).toUpperCase();
         if (quantity == "") quantity = "1";
 
-        const itemData = await ItemShop.findOne({ where: { name: itemName } });
+        let itemData = await ItemShop.findOne({ where: { name: itemName } });
 
         if (!itemData || itemData.cost == 0) {
-            await message.channel.send(`${message.author} the item ${itemName} is misspelt or is not an item you can buy.`);
-            return;
+            itemData = await EventShop.findOne({ where: { name: itemName}});
+            eventItem = true;
+
+            if (!itemData || itemData.cost == 0) {
+                await message.channel.send(`${message.author} the item ${itemName} is misspelt or is not an item you can buy.`);
+                return;
+            }
         }
 
         const user = await Users.findOne({ where: { user_id: message.author.id } });
@@ -133,7 +140,7 @@ module.exports = {
                         return;
                     }
 
-                    user.addItem(itemData, quantity);
+                    user.addItem(itemData, quantity, eventItem);
                     userItemData.amount -= (quantity * itemData.cost);
                     userItemData.save();
 

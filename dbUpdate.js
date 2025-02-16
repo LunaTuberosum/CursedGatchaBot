@@ -18,7 +18,9 @@ const UserCards = require('./models/UserCards.js')(sequelize, Sequelize.DataType
 const UserDailys = require('./models/UserDailys.js')(sequelize, Sequelize.DataTypes);
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
+const UserEventItems = require('./models/UserEventItems.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
+const EventShop = require('./models/EventShop.js')(sequelize, Sequelize.DataTypes);
 const ServerInfo = require('./models/ServerInfo.js')(sequelize, Sequelize.DataTypes);
 const Wishlists = require('./models/Wishlists.js')(sequelize, Sequelize.DataTypes);
 const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
@@ -179,6 +181,22 @@ async function print() {
             }));
         }
 
+        // RECREATE USER EVENT ITEMS
+        const userEventItems = [];
+
+        for (const userItemIndex in databaseDict["userEventItems"]) {
+            const userItem = databaseDict["userEventItems"][userItemIndex];
+
+            userEventItems.push(UserEventItems.upsert({
+                id: userItem["id"],
+                user_id: userItem["user_id"],
+                item_id: userItem["item_id"],
+                amount: userItem["amount"],
+                createdAt: userItem["createdAt"],
+                updatedAt: userItem["updatedAt"]
+            }));
+        }
+
         // RECREATE ITEM SHOP
         const itemShop = [];
 
@@ -189,6 +207,23 @@ async function print() {
                 id: item["id"],
                 name: item["name"],
                 emoji: item["emoji"],
+                itemCost: item["itemCost"],
+                cost: item["cost"],
+                description: item["description"]
+            }));
+        }
+
+        // RECREATE EVENT SHOP
+        const eventShop = [];
+
+        for (const itemIndex in databaseDict["eventShop"]) {
+            const item = databaseDict["eventShop"][itemIndex];
+
+            eventShop.push(EventShop.upsert({
+                id: item["id"],
+                name: item["name"],
+                emoji: item["emoji"],
+                event: item["event"],
                 itemCost: item["itemCost"],
                 cost: item["cost"],
                 description: item["description"]
@@ -241,12 +276,12 @@ async function print() {
             }));
         }
 
-        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, itemShop, serverInfo, wishlists);
-        console.log('Database updated');
+        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, userEventItems, itemShop, eventShop, serverInfo, wishlists);
     
         sequelize.close();
     }).catch(console.error);
     
+    console.log('Database updated');
 }
 
 print()

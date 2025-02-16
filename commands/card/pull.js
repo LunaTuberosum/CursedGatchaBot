@@ -51,6 +51,18 @@ async function checkGrabTitles(message, userStat) {
     }
 }
 
+async function eventGrabCheck(message, user, i, chance) {
+    const random = Math.floor(Math.random() * ((chance + 1) - 1) + 1);
+
+    if (random == chance) {
+        const pbItemData = await ItemShop.findOne({ where: { name: "BROKEN PAINTBRUSH" } });
+
+        user.addItem(pbItemData, 1);
+
+        await message.channel.send(`${i.user} also got a \`BROKEN PAINTBRUSH\`!`);
+    }
+}
+
 async function checkGrabCard(message, response, pokemonData, i) {
 
     const user = await Users.findOne({ where: { user_id: i.user.id } });
@@ -75,11 +87,13 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
         cardCode = await createCardID(user);
         addCard(cardCode, user, pokeItem);
+
         
         checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
         await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });
 
+        await eventGrabCheck(message, user, i, 4);
         return true;
 
     } else {
@@ -104,12 +118,14 @@ async function checkGrabCard(message, response, pokemonData, i) {
 
             cardCode = await createCardID(user);
             addCard(cardCode, user, pokeItem);
+
             
             checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
             await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });
 
             await message.channel.send({ content: `You used 1 \`GREAT BALL\` to grab an extra card.`})
+            await eventGrabCheck(message, user, i, 6);
             return true;
         }
 

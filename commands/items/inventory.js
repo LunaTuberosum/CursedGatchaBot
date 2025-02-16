@@ -53,7 +53,7 @@ function getArray(userItems, start, end) {
             break;
         }
         else if(i >= start) {
-            invArray.push(`\n${item.item.emoji} **${item.amount}** - \`${item.item.name}\``);
+            invArray.push(`\n${item.item.emoji} **${item.amount}** - \`${item.item.name}\` ${item.item.event ? `[${item.item.event}]` : ""}`);
         }
         i++;2
     }
