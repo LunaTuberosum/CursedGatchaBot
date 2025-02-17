@@ -375,6 +375,7 @@ function raritySymbol(pokeRarity) {
     if(pokeRarity == "Common" ) rarity = "●";
     else if(pokeRarity == "Uncommon" ) rarity = "◆";
     else if(pokeRarity == "Rare" ) rarity = "★";
+    else if(pokeRarity == "Secret Rare" ) rarity = "✶";
 
     return rarity
 }

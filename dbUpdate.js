@@ -163,7 +163,26 @@ async function print() {
                 times_pulled: card["times_pulled"],
                 in_circulation: card["in_circulation"]
             }));
-        }       
+        }   
+        
+        // TEMP ADD NEW CARDS
+        for (const series in allCards) {
+            if (series != "CRAP") continue;
+
+            for (const card in allCards[series])
+                cardDatabase.push(CardDatabase.upsert({ 
+                    name: allCards[series][card]["Name"],
+                    type: allCards[series][card]["Type"],
+                    card_id: allCards[series][card]["CardID"],
+                    drawn_date: allCards[series][card]["DrawDate"],
+                    poke_number: allCards[series][card]["Poke#"],
+                    rarity: allCards[series][card]["Rarity"],
+                    card_type: allCards[series][card]["CardType"],
+                    poke_type: allCards[series][card]["PokeType"],
+                    series: allCards[series][card]["Series"],
+                    obtain: allCards[series][card]["Obtain"]
+                }));
+        }
 
         // RECREATE USER ITEMS
         const userItems = [];

@@ -1,0 +1,60 @@
+{
+    "common" : {
+        "EVE1": [
+            "Squirtle", 
+            "Oddish",
+            "Growlithe",
+            "Cubone",
+            "Chansey"
+        ]
+    },
+
+    "uncommon" : {
+        "EVE1": [
+            "Wartortle", 
+            "Gloom",
+            "Marowack",
+
+            "*Squirtle*", 
+            "*Oddish*",
+            "*Growlithe*",
+            "*Cubone*",
+            "*Chansey*"
+        ]
+    },
+
+    "rare" : {
+        "EVE1": [
+            "Blastoise" , 
+
+            "*Wartortle*", 
+            "*Gloom*",
+            "*Marowack*"
+        ]
+    },
+    "srare": {
+        "EVE1": [
+            "*Blastoise*", 
+            
+            "[Oddish]", 
+            "[Cubone]"
+        ]
+    },
+
+    "urare": {
+        "EVE1": [
+            "{Oddish}", 
+            "{Cubone}",
+            "{Oddish}", 
+            "{Cubone}",
+            "{Oddish}", 
+            "{Cubone}",
+            "{Oddish}", 
+            "{Cubone}",
+            "{Oddish}", 
+            "{Cubone}",
+            "{Ho-Oh}"
+        ]
+    }
+
+}
