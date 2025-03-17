@@ -10,11 +10,12 @@ function makeEmbed(user, userAt, userStat, titleList) {
     return embed
 }
 
-function makeTitleEmbed(userAt, titleDesc) {
+function makeTitleEmbed(userAt, titleDesc, start, end, total) {
     const embed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle("User Stats - Titles")
         .setDescription(`**User:** ${userAt}\n\n${titleDesc.join("\n")}`)
+        .setFooter({ text: `Showing titles ${start + 1}-${end} of ${total}`})
     return embed
 }
 
@@ -36,6 +37,25 @@ function makeButton() {
     return row;
 }
 
+function makeArrowButton() {
+
+    const leftButton = new ButtonBuilder()
+        .setCustomId("left")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("◀️")
+        .setDisabled(true);
+
+    const rightButton = new ButtonBuilder()
+        .setCustomId("right")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("▶️");
+
+    const row = new ActionRowBuilder()
+        .addComponents(leftButton, rightButton);
+
+    return row;
+}
+
 module.exports = {
     name: "userInfo",
     shortName: ["ui", "user"],
@@ -48,6 +68,8 @@ module.exports = {
 
         const buttons = makeButton();
         buttons.components[0].setDisabled(true);
+
+        const arrowButtons = makeArrowButton();
 
         let response = await message.channel.send('...');
 
@@ -68,6 +90,9 @@ module.exports = {
 
         const userTitles = await UserTitles.findAll({ where: { user_id: user.user_id } });
 
+        let start = 0;
+        let end = Math.min(5, userTitles.length);
+
         let index = 0;
         for (title of userTitles) {
             const titleData = await TitleDatabase.findOne({ where: { id: title.title_id } });
@@ -76,7 +101,7 @@ module.exports = {
             if (index >= 5) null;
             else titleList.push(`\`${titleData.name}\``);
 
-            titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
+            if (index < end) titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
             index++;
         }
 
@@ -98,13 +123,76 @@ module.exports = {
                 buttons.components[0].setDisabled(true);
                 buttons.components[1].setDisabled(false);
 
+                if (start = 0) arrowButtons.components[0].setDisabled(true);
+                else arrowButtons.components[0].setDisabled(false);
+                if (end = titleList.length) arrowButtons.components[1].setDisabled(true);
+                else arrowButtons.components[1].setDisabled(false);
+
                 await response.edit({ content: "", embeds: [makeEmbed(user, userAt, userStat, titleList)], components: [buttons] });
             }
             else if (i.customId == "titles") {
                 buttons.components[0].setDisabled(false);
                 buttons.components[1].setDisabled(true);
 
-                await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc)], components: [buttons] });
+                start = 0;
+                end = Math.min(5, userTitles.length);
+                titleDesc = [];
+
+                index = 0;
+                for (title of userTitles) {
+                    const titleData = await TitleDatabase.findOne({ where: { id: title.title_id } });
+
+                    if (index >= start && index < end) titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
+                    else if (index >= end) break;
+                    index++;
+                }
+
+                arrowButtons.components[0].setDisabled(true);
+                arrowButtons.components[1].setDisabled(false);
+                
+                await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc, start, end, userTitles.length)], components: [buttons, arrowButtons] });
+            }
+            else if (i.customId == "right") {
+                start += 5;
+                end = Math.min(end + 5, userTitles.length);
+                titleDesc = [];                
+
+                index = 0;
+                for (title of userTitles) {
+                    const titleData = await TitleDatabase.findOne({ where: { id: title.title_id } });
+
+                    if (index >= start && index < end) titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
+                    else if (index >= end) break;
+                    index++;
+                }
+                if (start == 0) arrowButtons.components[0].setDisabled(true);
+                else arrowButtons.components[0].setDisabled(false);
+
+                if (end == userTitles.length) arrowButtons.components[1].setDisabled(true);
+                else arrowButtons.components[1].setDisabled(false);
+
+                await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc, start, end, userTitles.length)], components: [buttons, arrowButtons] });
+            }
+            else if (i.customId == "left") {
+                start = Math.max(0, start - 5);
+                end = Math.max(end - 5, 5);
+                titleDesc = [];                
+
+                index = 0;
+                for (title of userTitles) {
+                    const titleData = await TitleDatabase.findOne({ where: { id: title.title_id } });
+
+                    if (index >= start && index < end) titleDesc.push(`**${titleData.name}:**\n\`\`\`${titleData.description}\`\`\``);
+                    else if (index >= end) break;
+                    index++;
+                }
+                if (start == 0) arrowButtons.components[0].setDisabled(true);
+                else arrowButtons.components[0].setDisabled(false);
+
+                if (end == userTitles.length) arrowButtons.components[1].setDisabled(true);
+                else arrowButtons.components[1].setDisabled(false);
+
+                await response.edit({ content: "", embeds: [makeTitleEmbed(userAt, titleDesc, start, end, userTitles.length)], components: [buttons, arrowButtons] });
             }
         })
     }
