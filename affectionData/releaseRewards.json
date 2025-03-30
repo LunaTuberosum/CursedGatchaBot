@@ -118,5 +118,65 @@
                 "Range": [3, 5]
             }
         ]
+    },
+    "CRAP": {
+        "BASIC": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [10, 10]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [1, 3]
+            }
+        ],
+        "HOLO": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [30, 30]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [2, 5]
+            }
+        ],
+        "FRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [40, 40]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [4, 6]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [1, 3]
+            }
+        ],
+        "HOLOFRAME": [
+            {
+                "Name": "POKEDOLLAR",
+                "Chance": 100,
+                "Range": [70, 70]
+            },
+            {
+                "Name": "SHARD",
+                "Chance": 100,
+                "Range": [6, 8]
+            },
+            {
+                "Name": "GEM",
+                "Chance": 100,
+                "Range": [2, 4]
+            }
+        ]
     }
 }

@@ -7,6 +7,7 @@ const { checkOwnTitle } = require("../../imageObjects.js");
 const { splitContent } = require("../../commandObjects.js");
 
 function makeReleaseEmbed(cardInfo, itemText, user, leveled) {
+    
     const releaseEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setThumbnail(`attachment://poke-image.png`)
@@ -58,7 +59,7 @@ function findCardInCollection(card) {
     
     for ( const series of Object.keys(allCards)) {
         for (const pName of Object.keys(allCards[series])) {
-            if(pName == card) {
+            if(allCards[series][pName]["Name"] == card) {
                 return allCards[series][pName];
             }
         }
@@ -116,6 +117,8 @@ module.exports = {
             cardData = userCards[userCards.length - 1];
         }
 
+        console.log(cardData);
+        
         pokemonData = findCardInCollection(cardData.item.name);            
         releaseData = getReleaseReward(cardData)
 

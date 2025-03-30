@@ -51,7 +51,7 @@ async function _makeSeriesInfo(message, series, response) {
         const cardData = allCards[series][card];
 
         
-        const pokemonData = await CardDatabase.findOne({ where: { name: cardData["Name"] } });
+        const pokemonData = await CardDatabase.findOne({ where: { name: cardData["Name"], series: cardData["Series"] } });
 
         seriesDict[card] = `${formatName(pokemonData)} - \`${raritySymbol(pokemonData.rarity)}\``;
         
@@ -67,6 +67,11 @@ async function _makeSeriesInfo(message, series, response) {
 
     for (uCard of userCards) {
         if (uCard.item.series == series) {
+            if (!seriesDict[uCard.item] && uCard.item.card_id == "000") {
+                const pokemonData = await CardDatabase.findOne({ where: { name: uCard.item.name, series: uCard.item.series } });
+                seriesDict[uCard.item.name] = `${formatName(pokemonData)} - \`${raritySymbol(pokemonData.rarity)}\` - ✅`;
+                continue;
+            }
             if (seriesDict[uCard.item.name][seriesDict[uCard.item.name].length - 1] == "✅") { continue; }
             seriesDict[uCard.item.name] = seriesDict[uCard.item.name] + " - ✅";
         }
@@ -90,6 +95,8 @@ module.exports = {
         if (splitMessage[1].length == 4) {
             if (splitMessage[1].toUpperCase() == "EVE1")
                 _makeSeriesInfo(message, "EVE1", response);
+            if (splitMessage[1].toUpperCase() == "CRAP")
+                _makeSeriesInfo(message, "CRAP", response);
 
             else { await response.edit(`${message.author}, that pokemon either dosen't exist or its name is misspelt.`); return; }
             return;
