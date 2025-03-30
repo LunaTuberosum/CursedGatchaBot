@@ -118,5 +118,26 @@
         "Name": "`GREAT BALL`",
         "Get": "`Trading 100 POKEDOLLARS at the PokeShop`",
         "Description": "Lets you try again to get a raid card or grab another card on a pull when your cool down is active."
+    },
+
+    "CARD GRAB": {
+        "Name": "`CARD GRAB`",
+        "Get": "`Trading 2 BROKEN PAINTBRUSHES at the Event Shop`",
+        "Description" : "Draws 1 card from the event series."
+    },
+    "EVENT PULL": {
+        "Name": "`EVENT PULL`",
+        "Get": "`Trading 3 BROKEN PAINTBRUSHES at the Event Shop`",
+        "Description" : "Draws 2 cards from the event series and you get to pick one. This does not use your Grab Cooldown. You will have priority on the pick."
+    },
+    "SMALL PACK EV": {
+        "Name": "`SMALL PACK EV`",
+        "Get": "`Trading 4 BROKEN PAINTBRUSHES at the Event Shop`",
+        "Description" : "Draws 3 cards from the event series with at least one being a Uncommon. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
+    },
+    "BIG PACK EV": {
+        "Name": "`BIG PACK EV`",
+        "Get": "`Trading 6 BROKEN PAINTBRUSHES at the Event Shop`",
+        "Description" : "Draws 5 cards from the event series with at least one being a Uncommon or greater and one being a Rare or greater. (Holographic Commons are considered Uncommon, Holographic Uncommons are considered Rare, Full Arts are considered Rare, Holographic Full Arts are considered greater than Rare)"
     }
 }

@@ -76,14 +76,20 @@ module.exports = {
         const shopData = await EventShop.findAll();
         const curEvent = "CRAP"
 
+        
+
         let start = 1;
         let end = 5;
 
         let shopArray = await getArray(shopData, start, end);
         let length = getLength(shopData);
-        
+
+        end = Math.min(length, 5)
+
         const buttons = makeButton()
-        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
+        if (end == length) { buttons.components[1].setDisabled(true); }
+
+        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -98,7 +104,7 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
@@ -107,7 +113,7 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length - 1, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
                 }
         });
     }

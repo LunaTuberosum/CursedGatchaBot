@@ -1,4 +1,4 @@
-const { UserItems, ItemShop } = require("../../dbObjects");
+const { UserItems, ItemShop, EventShop } = require("../../dbObjects");
 const itemData = require("../../data/itemData.json");
 const { EmbedBuilder } = require("discord.js");
 const { splitContent } = require("../../commandObjects");
@@ -24,9 +24,13 @@ module.exports = {
 
         const itemName = splitMessage.join(" ").toUpperCase();
 
-        const itemInfo = await ItemShop.findOne({ where: { name: itemName } });
+        let itemInfo = await ItemShop.findOne({ where: { name: itemName } });
 
-        if (!itemInfo) { awaitmessage.channel.send(`${message.author}, the item name you gave is either misspelled or does not exist.`); return; }
+        if (!itemInfo) { 
+            itemInfo = await EventShop.findOne({ where: { name: itemName } });
+
+            if (!itemInfo) { await message.channel.send(`${message.author}, the item name you gave is either misspelled or does not exist.`); return; }
+        }
 
         let amount = 0;
         
@@ -36,7 +40,7 @@ module.exports = {
 
         const itemDict = itemData[itemName];
 
-        if (!itemDict) { await message.channel.send(`${message.author}, the item you gave is either not yet implimented or had no use.`); }
+        if (!itemDict) { await message.channel.send(`${message.author}, the item you gave is either not yet implimented or had no use.`); return; }
 
         await message.channel.send({ embeds: [makeEmbed(itemDict, amount)] });
         
