@@ -117,8 +117,6 @@ module.exports = {
             cardData = userCards[userCards.length - 1];
         }
 
-        console.log(cardData);
-        
         pokemonData = findCardInCollection(cardData.item.name);            
         releaseData = getReleaseReward(cardData)
 

@@ -1,4 +1,4 @@
-const { UserItems, ItemShop, EventShop } = require("../../dbObjects");
+const { UserItems, ItemShop, EventShop, Users } = require("../../dbObjects");
 const itemData = require("../../data/itemData.json");
 const { EmbedBuilder } = require("discord.js");
 const { splitContent } = require("../../commandObjects");
@@ -34,9 +34,16 @@ module.exports = {
 
         let amount = 0;
         
-        const userItem = await UserItems.findOne({ where: { user_id: message.author.id, item_id: itemInfo.id } });
+        const user = await Users.findOne({ where: { user_id: message.author.id }});
 
-        if (userItem) { amount = userItem.amount; }
+        const userItems = await user.getItems();
+
+        for (const item of userItems) {
+            if (item.item.name == itemName) {
+                amount = item.amount;
+                break;
+            }
+        }
 
         const itemDict = itemData[itemName];
 

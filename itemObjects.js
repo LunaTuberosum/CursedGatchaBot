@@ -1,7 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType, AttachmentBuilder, NewsChannel } = require("discord.js");
-const { ServerInfo, Users, UserStats, CardDatabase, UserItems, ItemShop } = require('./dbObjects.js');
+const { ServerInfo, Users, UserStats, CardDatabase, UserItems, ItemShop, EventShop, UserEventItems } = require('./dbObjects.js');
 const raidJoin = require('./raid/raidJoin.js');
-const { getWhichStar, makePokeImageDraw3, createCardID, checkSeriesCollect, formatName, makePokeImageDraw5 } = require("./pullingObjects.js");
+const { getWhichStar, makePokeImageDraw3, createCardID, checkSeriesCollect, formatName, makePokeImageDraw5, getWhichStarEvent, makePokeImageGrab } = require("./pullingObjects.js");
 
 
 let itemList = new Map();
@@ -12,6 +12,9 @@ function createItemList() {
     itemList.set("GREAT BALL", useExtraGrab);
     itemList.set("RAIDING PASS", useRaidingPass);
     itemList.set("RAID LURE", useRaidLure);
+
+    itemList.set("CARD GRAB", useCardGrab);
+
 }
 
 function findItem(collection, itemName) {
@@ -366,6 +369,107 @@ async function useRaidLure(message) {
 
 }
 
+function makeCardGrabEmbed(message) {
+
+    const cardGrabEmbed = new EmbedBuilder()
+        .setColor("#616161")
+        .setTitle(`Use CARD GRAB`)
+        .setDescription(`${message.author}, do you want to use a CARD GRAB? \n\`\`\`Note: \n- Once used there is no way to cancel and the item will be used. \n- If you do not choose to reveal your cardsyou will not get them and you will have wasted your event items.\`\`\``)
+
+    return cardGrabEmbed;
+}
+
+function makeCardGrabCanceledEmbed(message) {
+
+    const cardGrabEmbed = new EmbedBuilder()
+        .setColor("#bd0f0f")
+        .setTitle(`Use CARD GRAB`)
+        .setDescription(`${message.author}, canceled. \n\`\`\`Canceled use of CARD GRAB.\`\`\``)
+
+    return cardGrabEmbed;
+}
+
+async function useCardGrab(message) {
+    const user = await Users.findOne({ where: { user_id: message.author.id } });
+    if (!user) { await message.channel.send(`${message.author}, please register before tying to use an item. You can register using \`g!register\`.`); return; }
+
+    const response = await message.channel.send({ embeds: [makeCardGrabEmbed(message)], components: [makeButton()] });
+
+    const drawItem = await EventShop.findOne({ where: { name: "CARD GRAB" }});
+    const hasItem = await UserEventItems.findOne({ where: { user_id: user.user_id, item_id: drawItem.id } });
+
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
+
+    collector.on("collect", async i => {
+        if (i.user != message.author) { return; }
+
+        i.deferUpdate();
+        if (i.customId == "confirm") {
+            hasItem.amount--;
+            hasItem.save();
+            
+            response.delete();
+            useCardGrabAfter(message, user, drawItem);
+
+        } else if (i.customId == "cancel") {
+            await response.edit({ embeds: [makeCardGrabCanceledEmbed(message)], components: [] });
+            
+        }
+    });
+}
+
+function makeCardGrabShowEmbed(message, item, desc) {
+    const embed = new EmbedBuilder()
+        .setColor("#616161")
+        .setTitle(`Card Grab [${item.event}] Drawing`)
+        .setDescription(desc)
+        .setImage(`attachment://poke-image.png`)
+
+    return embed
+}
+
+async function useCardGrabAfter(message, user, item) {
+    const response = await message.channel.send('Loading you pack...');
+    const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
+
+    const pokeData = getWhichStarEvent(item.event);
+    const pokeItem = await _getPokeItem(pokeData);
+
+    const canvasList = await makePokeImageGrab(pokeData);
+    
+    const attachmentHide = new AttachmentBuilder( await canvasList[0], { name: 'poke-image.png' });
+    const attachmentRevel = new AttachmentBuilder( await canvasList[1], { name: 'poke-image.png' });
+
+    await response.edit({ content: " ", embeds: [makeCardGrabShowEmbed(message, item, 'Click \`Reveal\` to revel the card.')], components: [makeSmallButton()], files: [attachmentHide] });
+
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
+
+    collector.on("collect", async i => {
+        if (i.user != message.author) { return }
+
+        i.deferUpdate();
+        if (i.customId == "next") {
+            await response.edit({ embeds: [makeCardGrabShowEmbed(message, item, " ")], components: [], files: [attachmentRevel] });
+
+            setTimeout(async () => {
+                cardCode = await createCardID(user);
+                await user.addCard(cardCode, pokeItem);
+
+                pokeItem.in_circulation++;
+                pokeItem.save();
+
+                userStat.card_grabbed++;
+                userStat.save();
+
+                checkSeriesCollect(await user.getCards(), pokeData["Series"], message);
+
+                await response.edit({ embeds: [makeCardGrabShowEmbed(message, item, `**${formatName(pokeItem)}** \`${cardCode}\``)], components: [], files: [attachmentRevel] });
+
+            }, 300)
+        }
+    });
+    
+}
 
 async function getItemUse(itemName, message) {
     

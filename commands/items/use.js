@@ -1,9 +1,10 @@
 const { getItemUse } = require("../../itemObjects.js")
-const { Users, ItemShop } = require('../../dbObjects.js');
+const { Users, ItemShop, EventShop } = require('../../dbObjects.js');
 const { splitContent } = require("../../commandObjects.js");
 
 function findItem(collection, itemName) {
     for (const item of collection) {
+        
         if (item.item.name == itemName) {
             return item;
         }
@@ -34,19 +35,25 @@ module.exports = {
         const user = await Users.findOne({ where: { user_id: message.author.id } });
         if (!user) { await message.channel.send(`${message.author}, you are not registered. Please register using \`g!register\`.`); return; }
         const userItems = await user.getItems();
-        const itemData = await ItemShop.findOne({ where: { name: itemName } });
+
+        let itemData = await ItemShop.findOne({ where: { name: itemName } });
 
         if (!itemData) {
-            await message.channel.send({ content: `${message.author}, the ${itemName} item is misspelt or does not exits.` });
-            return;
-        };
+            itemData = await EventShop.findOne({ where: { name: itemName } });
 
+            if (!itemData) {
+                await message.channel.send({ content: `${message.author}, the ${itemName} item is misspelt or does not exits.` });
+                return;
+            }
+            
+        };
+        
         const userItemData = findItem(userItems, itemData.name);
 
-        if (!userItemData) {
-            await message.channel.send({ content: `${message.author}, you do not own a ${itemName}.` });
-            return;
-        };
+        if (!userItemData || userItemData.amount < 1) {
+            message.channel.send(`${message.author}, you do not own that item. Please buy that item using \`g!buy ${itemData.name}\``);
+            return; 
+        }
 
         await getItemUse(itemName, message);
     }

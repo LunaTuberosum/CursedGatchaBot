@@ -1,5 +1,6 @@
 const standedPack = require("./packs/standeredPack.json");
 const allCards = require("./packs/allCards.json");
+const eventCRAP = require("./packs/eventCRAP.json");
 const shinyPacks = require("./packs/shinyPacks.json");
 const seriesTitleData = require("./data/seriesTitleData.json");
 const fullSeriesTitleData = require("./data/fullSeriesTitleData.json");
@@ -37,6 +38,37 @@ function checkForShiny(seriesPack) {
     }
 
     return seriesPack;
+}
+
+function getWhichStarEvent(series, boost=0) {
+    // Make random number between 1 and 4
+    const random = Math.min(Math.floor(Math.random() * (101 - 1) + 1) + boost, 100);
+
+    eventPacks = {
+        "CRAP": eventCRAP
+    }
+
+    // check what star that is
+    if (random <= 60) { // 60 % chance
+        const pokemon = pullRandomCard(eventPacks[series]["common"]);
+        return allCards[series][pokemon];
+    }
+    else if (random > 60 && random <= 85) { // 25% chance
+        const pokemon = pullRandomCard(eventPacks[series]["uncommon"]);
+        return allCards[series][pokemon];
+    }
+    else if (random > 85 && random <= 95) { // 10% chance 
+        const pokemon = pullRandomCard(eventPacks[series]["rare"]);
+        return allCards[series][pokemon];
+    }
+    else if (random > 95 && random <= 99) { // 5% chance
+        const pokemon = pullRandomCard(eventPacks[series]["srare"]);
+        return allCards[series][pokemon];
+    }
+    else if (random > 99 && random <= 100) { // 1% chance
+        const pokemon = pullRandomCard(eventPacks[series]["urare"]);
+        return allCards[series][pokemon];
+    }
 }
 
 function getWhichStar(series, boost=0) {
@@ -271,6 +303,27 @@ async function makePokeImagePull(pokemonData1, pokemonData2) {
     context = await makePokeImageDict(pokemonData2, context, 845, 100);
 
     return canvas.encode('png');
+}
+
+async function makePokeImageGrab(pokemonData) {
+    const cardBack = await Canvas.loadImage(`./pokeImages/CardBack.png`);
+    
+    let canvasList = []
+
+    for (let i = 0; i < 2; i++) {
+        const canvas = Canvas.createCanvas(745, 1040);
+        let context = canvas.getContext('2d');
+
+        context = await makePokeImageDict(pokemonData, context, 0, 0);
+        if (i == 0) {
+            context.drawImage(cardBack, 0, 0);
+        }
+
+        canvasList.push(canvas.encode('png'));
+
+    }
+
+    return canvasList;
 }
 
 async function makePokeImageTrade(pokemonData1, cardData1, pokemonData2, cardData2) {
@@ -519,4 +572,4 @@ async function createCardID(user){
 
 }
 
-module.exports = { getWhichStar, makePokeImage, makePokeImagePull, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab};
+module.exports = { getWhichStarEvent, getWhichStar, makePokeImage, makePokeImagePull, makePokeImageGrab, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab};
