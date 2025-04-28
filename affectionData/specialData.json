@@ -6,7 +6,7 @@
                 "Type": "Colorless",
                 "Levels": {
                     "5": "You will do a quick attack that is 60 power attack.",
-                    "10": "You will do a quick attack that is 80 power attack. After using this ability your speed will double for 5 auto attacks."
+                    "10": "You will do a quick attack that is 80 power attack. After using this attack your speed will double for 5 auto attacks."
                 }
             },
             "Water": {
@@ -53,7 +53,7 @@
 
         "STAGE 1" : {
             "Water": {
-                "Name": "Water Gun+",
+                "Name": "Water Gun +",
                 "Type": "Water",
                 "Levels": {
                     "5": "Shoot a stream of water that is a 60 power attack.",
@@ -61,7 +61,7 @@
                 }
             },
             "Grass": {
-                "Name": "Solar Beam+",
+                "Name": "Solar Beam +",
                 "Type": "Grass",
                 "Levels": {
                     "5": "Shoot down a beam of sunlight that is a 100 power attack.",
@@ -69,7 +69,7 @@
                 }
             },
             "Fighting": {
-                "Name": "Focus Punch+",
+                "Name": "Focus Punch +",
                 "Type": "Fighting",
                 "Levels": {
                     "5": "Focus your energy into a strong punch that is a 100 power attack.",
