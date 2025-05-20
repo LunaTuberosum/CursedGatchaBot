@@ -119,7 +119,6 @@ async function checkGrabCard(message, response, pokemonData, i) {
             cardCode = await createCardID(user);
             addCard(cardCode, user, pokeItem);
 
-            
             checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
             await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });

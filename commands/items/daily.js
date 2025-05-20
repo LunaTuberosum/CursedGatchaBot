@@ -23,6 +23,7 @@ module.exports = {
 
         const date = new Date()
 
+        // Check Daily
         if (!userDaily) userDaily = await UserDailys.create({ user_id: message.author.id, month: date.getMonth(), day: date.getDate(), amount: 1 });
         else {
             if (userDaily.month == date.getMonth() && userDaily.day == date.getDate()) { await message.channel.send(`${message.author}, you have already claimed your daily.`); return; }
@@ -35,6 +36,7 @@ module.exports = {
         }
         let dailyText = ``;
 
+        // Check For Shiny Daily
         const shinyChance = Math.floor(Math.random() * (101 - 1) + 1); // The maximum is exclusive and the minimum is inclusive
         let shinyMult = 1;
         let shinyMin = 0;
@@ -44,15 +46,19 @@ module.exports = {
             dailyText += `You pulled a **Shiny** daily! x2 rewards and increased chances!\n`
         }
 
+        // Get Pokedollar Data
         const pokeDollars = (Math.floor(Math.random() * (5 - 2) + 2)) * 10; // The maximum is exclusive and the minimum is inclusive
         const pokeDollarData = await ItemShop.findOne({ where: { id: 1 } });
 
+        // Get Shard Data
         const shardID = Math.floor(Math.random() * (12 - 2) + 2); // The maximum is exclusive and the minimum is inclusive
         const shardData = await ItemShop.findOne({ where: { id: shardID } });
         const shardAmount = Math.floor(Math.random() * (3 - 1) + 1); // The maximum is exclusive and the minimum is inclusive
 
+        // Update Daily Text
         dailyText += `\`\`\`- ${pokeDollars * shinyMult} POKEDOLLARS\n- ${shardAmount * shinyMult} ${shardData.name}`;
 
+        // Check For Gem
         const gemChance = Math.max((Math.floor(Math.random() * (101 - 1) + 1)) - shinyMin, 1); // The maximum is exclusive and the minimum is inclusive
         let gemID = null;
         let gemData = null
@@ -62,6 +68,7 @@ module.exports = {
             dailyText += `\n- ${1 * shinyMult} ${gemData.name}`;
         }
 
+        // Check for Great Ball
         const grabChance = Math.max((Math.floor(Math.random() * (101 - 1) + 1)) - shinyMin, 1); // The maximum is exclusive and the minimum is inclusive
         let grabData;
         if (grabChance == 1) {
@@ -69,19 +76,31 @@ module.exports = {
             dailyText += `\n- ${1 * shinyMult} ${grabData.name}`;
         }
 
+        // Get Event Data
+        const eventData = await ItemShop.findOne({ where: { name: "BROKEN PAINTBRUSH" } });
+        dailyText += `\n- ${1 * shinyMult} BROKEN PAINTBRUSH`
+
+        // Send Message
         await message.channel.send({ embeds: [makeEmbed(message, dailyText)] });
 
+        // Give Money and Shards/Gems to User
         user.addItem(pokeDollarData, pokeDollars * shinyMult);
         user.addItem(shardData, shardAmount * shinyMult);
         if (gemData) user.addItem(gemData, 1 * shinyMult);
         if (grabData) user.addItem(grabData, 1 * shinyMult);
 
+        // Give Event Item to User
+        user.addItem(eventData, 1);
+
+        // Update User Data
         const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
         userStat.money_own += pokeDollars * shinyMult;
         userStat.save()
 
+        // Check for Money Title
         checkOwnTitle(userStat, message);
 
+        // Check for Daily Title
         if (userDaily.amount >= 7) {
             const titleData = await TitleDatabase.findOne({ where: { name: "Addicted" } });
     
