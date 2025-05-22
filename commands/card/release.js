@@ -148,7 +148,7 @@ module.exports = {
                 else itemDict[`${(cardData.item.type).toUpperCase()} ${name}`] = amount;
             }
 
-            // Update Poke Dollar Amount 
+            // Update Pokedollar Amount 
             else itemDict["POKEDOLLAR"] += amount;
         }
 
@@ -233,6 +233,8 @@ module.exports = {
                         user.addItem(item, amount);
                         userStat.money_own = userStat.money_own + amount;
                     }
+
+                    // Event Item Add
                     else if (name.includes("BROKEN PAINTBRUSH")) {
                         item = await ItemShop.findOne({ where: { name: name } });
                         user.addItem(item, amount);
