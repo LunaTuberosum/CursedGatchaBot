@@ -191,8 +191,8 @@ module.exports = {
 
         // Add to previewText Based on the Item
         for ([name, amount] of Object.entries(previewDict)) {
-            if (name.includes("SHARD")) previewText += `\`${amount[0]}%\`: 🔸 ${amount[1]} - ${amount[2]} \`${name}\`\n`;
-            else if (name.includes("GEM")) previewText += `\`${amount[0]}%\`: 🔶 ${amount[1]} - ${amount[2]} \`${name}\`\n`;
+            if (name.includes("SHARD")) previewText += `\`${amount[0]}%\`: 🔸 ${amount[1]} - ${amount[2]} \`${(cardData.item.type).toUpperCase()} ${name}\`\n`;
+            else if (name.includes("GEM")) previewText += `\`${amount[0]}%\`: 🔶 ${amount[1]} - ${amount[2]} \`${(cardData.item.type).toUpperCase()} ${name}\`\n`;
             else if (name.includes("POKEDOLLAR")) previewText += `\`${amount[0]}%\`: 💴 ${amount[1]} - ${amount[2]} \`${name}\`\n`;
 
             // Add Event Item to previewText

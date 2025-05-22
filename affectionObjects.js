@@ -27,6 +27,7 @@ function getReleaseRange(card) {
         const levelUp = getLevelUpCost(card, _level);
 
         if (rewards[levelUp["Resource"]["Type"]]) {
+            rewards[levelUp["Resource"]["Type"]][0] = 100
             rewards[levelUp["Resource"]["Type"]][2] += levelUp["Resource"]["Amount"];
             rewards[levelUp["Resource"]["Type"]][1] += levelUp["Resource"]["Amount"];
         }
