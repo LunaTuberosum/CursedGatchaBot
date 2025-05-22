@@ -10,6 +10,35 @@ function getLevelUpCost(card, level=0) {
     return levelUpCost[card.item.card_type][level];
 }
 
+function getReleaseRange(card) {
+    const baseRewards = releaseRewards[card.item.series][card.item.card_type];
+
+    if (!baseRewards) return -1;
+
+    const rewards = {};
+
+    for (const _reward of baseRewards) {
+        rewards[_reward["Name"]] = [_reward["Chance"], _reward["Range"][0], _reward["Range"][1]];
+    }
+
+    if (card.level <= 1) return rewards;
+
+    for (let _level = 1; _level < card.level; _level++) {
+        const levelUp = getLevelUpCost(card, _level);
+
+        if (rewards[levelUp["Resource"]["Type"]]) {
+            rewards[levelUp["Resource"]["Type"]][2] += levelUp["Resource"]["Amount"];
+            rewards[levelUp["Resource"]["Type"]][1] += levelUp["Resource"]["Amount"];
+        }
+        else rewards[levelUp["Resource"]["Type"]] = [100, levelUp["Resource"]["Amount"], levelUp["Resource"]["Amount"]];
+
+        rewards["POKEDOLLAR"][1] += Number(levelUp["Money"]);
+        rewards["POKEDOLLAR"][2] += Number(levelUp["Money"]);
+    }
+
+    return rewards;
+}
+
 function getReleaseReward(card) {
     const baseRewards = releaseRewards[card.item.series][card.item.card_type];
 
@@ -65,7 +94,7 @@ function getSpecial(card) {
     return specialData[card.item.series][card.item.poke_type][card.item.type]
 }
 
-module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial, getReleaseReward };
+module.exports = { getLevelUpCost, getCurrentStats, getCurrentStatsSeperate, getNewStats, getPassive, getSpecial, getReleaseRange, getReleaseReward };
 
 // const { Collection } = require('discord.js');
 // const fs = require('node:fs');

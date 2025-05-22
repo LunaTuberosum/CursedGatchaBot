@@ -112,8 +112,9 @@ module.exports = {
             
         }
 
-        let relaeseText = "";
+        let releaseText = "";
         let warningText = "";
+
         const itemDict = {
             "POKEDOLLAR": 0
         };
@@ -130,9 +131,9 @@ module.exports = {
 
             if (card.level > 0) warningText = "### One or more of cards are leveled. Are you sure you want to release these?";
 
-            if (index == 6) relaeseText += "...";
+            if (index == 6) releaseText += "...";
             else if (index > 6) continue;
-            else relaeseText += `${card.item_id} - ${formatName(card.item)}\n`;
+            else releaseText += `${card.item_id} - ${formatName(card.item)}\n`;
 
             index++;
         }
@@ -150,7 +151,7 @@ module.exports = {
         }
 
         
-        releaseEmbed = makeReleaseEmbed(relaeseText, itemText, message.author, warningText);
+        releaseEmbed = makeReleaseEmbed(releaseText, itemText, message.author, warningText);
         await response.edit({ content: "", embeds: [releaseEmbed], components: [makeButton()] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
@@ -160,7 +161,7 @@ module.exports = {
             if (i.user != message.author) { return; }
 
             if (i.customId == "cancel") {
-                releaseEmbed = makeReleaseEmbedCancel(relaeseText, itemText, message.author)
+                releaseEmbed = makeReleaseEmbedCancel(releaseText, itemText, message.author)
                 response.edit({ content: " ", embeds: [releaseEmbed], components: [] });
             }
             else if (i.customId == "release") {
@@ -194,7 +195,7 @@ module.exports = {
 
                 checkOwnTitle(userStat, message);
 
-                releaseEmbed = makeReleaseEmbedConfirm(relaeseText, itemText, message.author)
+                releaseEmbed = makeReleaseEmbedConfirm(releaseText, itemText, message.author)
                 response.edit({ content: " ", embeds: [releaseEmbed], components: [] });
 
                 if (userStat.card_released == 100) {
