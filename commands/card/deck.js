@@ -3,13 +3,14 @@ const { Users, Tags} = require('../../dbObjects.js');
 const { raritySymbol, formatName } = require("../../pullingObjects.js");
 const { splitContent } = require("../../commandObjects.js");
 
+let sortError = "```diff\n";
+
 function makeDeckEmbed(deckArray, user, start, end, total) {
 
     const deckEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle(`Deck`)
-        .setDescription(`Cards held by ${user}\n \
-        ${deckArray.join("")}`)
+        .setDescription(`Cards held by ${user}\n${deckArray.join("")}\n\n${sortError != "```diff\n" ? sortError : ""}`)
         .setFooter({ text: `Showing cards ${start}-${end} of ${total}`})
 
     return deckEmbed;
@@ -96,6 +97,8 @@ function _seriesSort(userCards, series) {
 
     seriesList.sort((a, b) => a.item.card_id.localeCompare(b.item.card_id));
 
+    if (seriesList.length == 0) sortError += `- Failed to sort by key word Series: ${series}\n`;
+
     userCards = seriesList.concat(otherList);
 
     return userCards;
@@ -123,6 +126,8 @@ function _nameSort(userCards, name) {
         }
     }
 
+    if (nameList.length == 0) sortError += `- Failed to sort by key word Name: ${name}\n`;
+
     userCards = nameList.concat(otherList);
 
     return userCards;
@@ -141,6 +146,8 @@ function _typeSort(userCards, type) {
     }
 
     typeList.sort((a, b) => a.item.card_id.localeCompare(b.item.card_id));
+
+    if (typeList.length == 0) sortError += `- Failed to sort by key word Type: ${type}\n`;
 
     userCards = typeList.concat(otherList);
 
@@ -180,6 +187,8 @@ function _specialSort(userCards, special) {
         else otherList.push(card);
     }
 
+    if (specialList.length == 0) sortError += `- Failed to sort by key word Special: ${special}\n`;
+
     userCards = specialList.concat(otherList);
 
     return userCards;
@@ -197,6 +206,8 @@ function _levelSort(userCards, level) {
         else otherList.push(card);
     }
 
+    if (levelList.length == 0) sortError += `- Failed to sort by key word Level: ${level}\n`;
+
     userCards = levelList.concat(otherList);
 
     return userCards;
@@ -213,6 +224,8 @@ function _tagSort(userCards, tag) {
         if (card.tag == tag) tagList.push(card);
         else otherList.push(card);
     }
+
+    if (tagList.length == 0) sortError += `- Failed to sort by key word Tag: ${tag}\n`;
 
     userCards = tagList.concat(otherList);
 
@@ -254,6 +267,7 @@ function _handleSort(userCards, sortKeys) {
                 break;
         
             default:
+                sortError += `- Invalid sort key word (${data[0]})\n`
                 break;
         }
     }
@@ -266,6 +280,7 @@ module.exports = {
     shortName: ["d"],
         
     async execute(message) {
+        sortError = "```diff\n";
         const response = await message.channel.send("Loading your deck...");
         const splitMessage = splitContent(message);
 
@@ -289,6 +304,7 @@ module.exports = {
             let start = 1;
             let end = 10;
 
+            if (sortError != "```diff\n") sortError += "```"
             const buttons = makeButton();
             await response.edit({  content: " ",embeds: [makeDeckEmbed(cardArray, message.author, start, end, userCards.length)], components: [buttons] });
 
@@ -353,6 +369,7 @@ module.exports = {
                 deckArray.push(`\n${emojiTag} \`${card.item_id}\` - \`${raritySymbol(pokemonData.rarity)}\` - \`${pokemonData.series}\` - **${formatName(pokemonData)}** ${card.level == 10 ? "❤️" : card.level >= 5 ? "🩷" : ""}`);
             }
             
+            if (sortError != "```diff\n") sortError += "```"
             message.channel.send({ content: " ", embeds: [makeDeckEmbed(deckArray, message.author, 1, userCards.length, userCards.length)] });
         }
 
