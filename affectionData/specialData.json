@@ -178,5 +178,87 @@
                 }
             }
         }
+    },
+    "CRAP": {
+        "BASIC": {
+            "Water": {
+                "Name": "Poorly Drawn Water",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is a 40 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a stream of water that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Fire": {
+                "Name": "Poorly Drawn Fire",
+                "Type": "Fire",
+                "Levels": {
+                    "5": "Shoot a spit of fire that is a 40 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a spit of fire that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Grass": {
+                "Name": "Poorly Drawn Grass",
+                "Type": "Grass",
+                "Levels": {
+                    "5": "Shoot a blade of grass that is a 40 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a blade of grass that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Fighting": {
+                "Name": "Poorly Drawn Impact",
+                "Type": "Fighting",
+                "Levels": {
+                    "5": "Throw a punch that is a 40 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Throw a punch that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Psychic": {
+                "Name": "Poorly Drawn Blast",
+                "Type": "Psychic",
+                "Levels": {
+                    "5": "Shoot a psychic beam that is a 40 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a psychic beam that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            }
+        },
+
+        "STAGE 1" : {
+            "Water": {
+                "Name": "Poorly Drawn Water +",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is a 50 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a stream of water that is a 70 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Grass": {
+                "Name": "Poorly Drawn Grass +",
+                "Type": "Grass",
+                "Levels": {
+                    "5": "Shoot a blade of grass that is a 50 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Shoot a blade of grass that is a 70 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            },
+            "Fighting": {
+                "Name": "Poorly Drawn Impact +",
+                "Type": "Fighting",
+                "Levels": {
+                    "5": "Throw a punch that is a 50 power attack. This attack confuses the enemy pokemon for 5 attacks.",
+                    "10": "Throw a punch that is a 70 power attack. This attack confuses the enemy pokemon for 10 attacks."
+                }
+            }
+        },
+
+        "STAGE 2" : {
+            "Water": {
+                "Name": "Terribly Drawn Stream",
+                "Type": "Water",
+                "Levels": {
+                    "5": "Shoot a stream of water that is a 60 power attack. This attack confuses the enemy pokemon for 10 attacks.",
+                    "10": "Shoot a stream of water that is a 80 power attack. This attack confuses the enemy pokemon for 15 attacks."
+                }
+            }
+        }
     }
 }

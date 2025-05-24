@@ -113,6 +113,16 @@ function _nameSort(userCards, name) {
         else otherList.push(card);
     }
 
+    if (nameList.length == 0) {
+        name = `${name[0].toUpperCase()}${name.substr(1).toLowerCase()}`
+
+        for (card of userCards) {
+        
+            if (card.item.name == name) nameList.push(card);
+            else otherList.push(card);
+        }
+    }
+
     userCards = nameList.concat(otherList);
 
     return userCards;
@@ -229,7 +239,7 @@ function _handleSort(userCards, sortKeys) {
                 break;
 
             case "name":
-                if (data.length == 2) userCards = _nameSort(userCards, `${data[1][0].toUpperCase()}${data[1].substr(1).toLowerCase()}`);
+                if (data.length == 2) userCards = _nameSort(userCards, data[1]);
                 else userCards = _nameSort(userCards, "default");
                 break;
 

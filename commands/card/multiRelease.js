@@ -168,7 +168,7 @@ module.exports = {
             if (card.level > 0) warningText = "### One or more of cards are leveled. Are you sure you want to release these?";
 
             // Add Card Code to Release Text, If more than 6 add ...
-            if (index == 6) releaseText += "...";
+            if (index == 6) releaseText += `... +${cardData.length - index} more cards`;
             else if (index > 6) {
                 index++;
                 continue;

@@ -102,9 +102,13 @@ module.exports = {
             return;
         }
 
-        const pokeName = `${splitMessage[1][0].toUpperCase()}${splitMessage[1].substr(1).toLowerCase()}`;
+        let pokeList = await CardDatabase.findAll({ where: { name: splitMessage[1] } });
+
+        if (pokeList.length == 0) {
+            const pokeName = `${splitMessage[1][0].toUpperCase()}${splitMessage[1].substr(1).toLowerCase()}`;
+            pokeList = await CardDatabase.findAll({ where: { name: pokeName } });
+        }
         
-        const pokeList = await CardDatabase.findAll({ where: { name: pokeName } });
         if (pokeList.length == 0 || !pokeList) { await response.edit(`${message.author}, that pokemon either dosen't exist or its name is misspelt.`); return; }
 
         let pokeIndex = 0;

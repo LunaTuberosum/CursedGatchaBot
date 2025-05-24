@@ -198,5 +198,96 @@
                 }
             }
         }
+    },
+    "CRAP": {    
+        "BASIC":{
+            "Water": {
+                "Name": "Drawn From Memory",
+                "Type": "Water",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 5 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks."
+                }
+            },
+            "Fighting": {
+                "Name": "Drawn From Memory",
+                "Type": "Fighting",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 5 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks."
+                }
+            },
+            "Fire": {
+                "Name": "Drawn From Memory",
+                "Type": "Fire",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 5 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks."
+                }
+            },
+            "Grass": {
+                "Name": "Drawn From Memory",
+                "Type": "Grass",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 5 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks."
+                }
+            },
+            "Psychic": {
+                "Name": "Drawn From Memory",
+                "Type": "Psychic",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 5 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks."
+                }
+            }
+        },
+
+        "STAGE 1" : {
+            "Water": {
+                "Name": "Drawn From Memory +",
+                "Type": "Water",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 20 attacks."
+                }
+            },
+            "Grass": {
+                "Name": "Drawn From Memory +",
+                "Type": "Grass",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 20 attacks."
+                }
+            },
+            "Fighting": {
+                "Name": "Drawn From Memory +",
+                "Type": "Fighting",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 20 attacks."
+                }
+            }
+        },
+
+        "STAGE 2" : {
+            "Water": {
+                "Name": "Drawn From Failing Memory",
+                "Type": "Water",
+                "Levels": {
+                    "1": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 10 attacks. When a pokemon is infliced with posion, it takes 20 extra damage from this pokemon.",
+                    "5": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 15 attacks. When a pokemon is infliced with posion, it takes 40 extra damage from this pokemon.",
+                    "10": "Force enemy pokemon to remember this art was drawn live by medibotEVE on Twitch. Inflict poison on enemy pokemon for 20 attacks. When a pokemon is infliced with posion, it takes 60 extra damage from this pokemon."
+                }
+            }
+        }
     }
 }
