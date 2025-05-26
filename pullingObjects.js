@@ -522,6 +522,38 @@ async function checkSeriesCollect(userCards, series, message, userMention=null) 
     }
 }
 
+async function checkPullTitles(message, userStat) {
+    if (userStat.card_drawn >= 100) {
+        const titleData = await TitleDatabase.findOne({ where: { name: "Litterer" } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have pulled 100 cards! You have gained the title: \`${titleData.name}\``)
+    }
+}
+
+async function checkGrabTitles(message, userStat) {
+    if (userStat.card_grabbed >= 100) {
+        const titleData = await TitleDatabase.findOne({ where: { name: "One Man\'s Trash" } });
+
+        if (!titleData) { return; }
+
+        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
+        
+        if (userTitle) { return; }
+
+        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
+
+        await message.channel.send(`${message.author}, you have grabbed 100 cards! You have gained the title: \`${titleData.name}\``)
+    }
+}
+
 async function _hasHandle(series, userMention, message) {
     const titleSeriesName = seriesTitleData[series];
 
@@ -578,4 +610,4 @@ async function createCardID(user){
 
 }
 
-module.exports = { getWhichStarEvent, getWhichStar, makePokeImage, makePokeImagePull, makePokeImageGrab, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab};
+module.exports = { getWhichStarEvent, getWhichStar, makePokeImage, makePokeImagePull, makePokeImageGrab, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab, checkPullTitles, checkGrabTitles };

@@ -1,6 +1,6 @@
 const { AttachmentBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType} = require("discord.js");
 const { CardDatabase, Users, ServerInfo, Wishlists, ItemShop, UserStats, TitleDatabase, UserTitles } = require('../../dbObjects.js');
-const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID, checkShinyGrab } = require("../../pullingObjects.js");
+const { getWhichStar, formatName, makePokeImagePull, checkSeriesCollect, createCardID, checkShinyGrab, checkPullTitles, checkGrabTitles } = require("../../pullingObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const UserItems = require("../../models/UserItems.js");
 
@@ -31,26 +31,6 @@ function findItem(collection, itemName) {
     return null;
 }
 
-async function addCard(code, user, pokeItem) {
-    await user.addCard(code, pokeItem);
-}
-
-async function checkGrabTitles(message, userStat) {
-    if (userStat.card_grabbed >= 100) {
-        const titleData = await TitleDatabase.findOne({ where: { name: "One Man\'s Trash" } });
-
-        if (!titleData) { return; }
-
-        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
-        
-        if (userTitle) { return; }
-
-        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
-
-        await message.channel.send(`${message.author}, you have grabbed 100 cards! You have gained the title: \`${titleData.name}\``)
-    }
-}
-
 async function eventGrabCheck(message, user, i, chance) {
     const random = Math.floor(Math.random() * ((chance + 1) - 1) + 1);
 
@@ -63,7 +43,7 @@ async function eventGrabCheck(message, user, i, chance) {
     }
 }
 
-async function checkGrabCard(message, response, pokemonData, i) {
+async function checkGrabCard(message, pokemonData, i) {
 
     const user = await Users.findOne({ where: { user_id: i.user.id } });
     if (!user) { return; }
@@ -86,9 +66,8 @@ async function checkGrabCard(message, response, pokemonData, i) {
         await checkGrabTitles(message, userStat);
 
         cardCode = await createCardID(user);
-        addCard(cardCode, user, pokeItem);
+        await user.addCard(cardCode, pokeItem);
 
-        
         checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
         await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.${pokemonData["Series"].substring(0, 3) == "SHY" ? " It's **SHINY**!!!" : ""}` });
@@ -117,7 +96,7 @@ async function checkGrabCard(message, response, pokemonData, i) {
             await checkGrabTitles(message, userStat);
 
             cardCode = await createCardID(user);
-            addCard(cardCode, user, pokeItem);
+            await user.addCard(cardCode, pokeItem);
 
             checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
 
@@ -154,11 +133,11 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
     collector.on('collect', async i => {
         i.deferUpdate();
         if (i.customId == 'card1' && card1Grabed == false) {
-            card1Grabed = await checkGrabCard(message, response, pokemonData1, i);
+            card1Grabed = await checkGrabCard(message, pokemonData1, i);
             await checkGrabs(response, message);
         }
         else if (i.customId == 'card2' && card2Grabed == false) {
-            card2Grabed = await checkGrabCard(message, response, pokemonData2, i);
+            card2Grabed = await checkGrabCard(message, pokemonData2, i);
             await checkGrabs(response, message);
         }
         else {
@@ -168,22 +147,6 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
     collector.on('end', async i => {
         await response.edit({ components: [], content: `${message.author} pulled these cards.\nThese cards have expired` });
     });
-}
-
-async function checkPullTitles(message, userStat) {
-    if (userStat.card_drawn >= 100) {
-        const titleData = await TitleDatabase.findOne({ where: { name: "Litterer" } });
-
-        if (!titleData) { return; }
-
-        const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
-        
-        if (userTitle) { return; }
-
-        await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
-
-        await message.channel.send(`${message.author}, you have pulled 100 cards! You have gained the title: \`${titleData.name}\``)
-    }
 }
 
 module.exports = {
