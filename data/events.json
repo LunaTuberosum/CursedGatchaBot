@@ -16,15 +16,39 @@
     },
 
     "raceII": {
-        "active": true,
+        "active": false,
         "name": "Title Race: -Sparkly Garbage-",
         "description": "A race to see who gets the -Sparkly Garbage- title!",
         "time": "na",
         "rewards": "500 POKEDOLLARS"
     },
 
+    "raceIII": {
+        "active": false,
+        "name": "Title Challange: -Kid's First Art-",
+        "description": "A challange to see who gets the -Kid's First Art- title!",
+        "time": "na",
+        "rewards": "200 POKEDOLLARS"
+    },
+
+    "raceIV": {
+        "active": false,
+        "name": "Title Challange: -A Full Fridge-",
+        "description": "A challange to see who gets the -A Full Fridge- title!",
+        "time": "na",
+        "rewards": "500 POKEDOLLARS"
+    },
+
+    "raceV": {
+        "active": false,
+        "name": "Title Challange: -A Hidden Card-",
+        "description": "A challange to see who gets the -A Hidden Card- title!",
+        "time": "na",
+        "rewards": "1000 POKEDOLLARS"
+    },
+
     "affectionI": {
-        "active": true,
+        "active": false,
         "name": "Affection Contest: -006-Jigglypuff-",
         "description": "Raise your affection with a basic Jigglypuff and who ever has the highest at the end of the event wins!",
         "time": "Ends <t:1737918000:R>",
