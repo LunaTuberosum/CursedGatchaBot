@@ -27,6 +27,14 @@ const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 
 async function changeData(databaseDict) {
 
+    for (item in databaseDict["itemShop"]) {
+        if (databaseDict["itemShop"][item]["name"] == "BIG PACK"){
+            databaseDict["itemShop"][item]["cost"] = 290;
+        }
+        if (databaseDict["itemShop"][item]["name"] == "SMALL PACK"){
+            databaseDict["itemShop"][item]["cost"] = 210;
+        }
+    }
     return databaseDict
 }
 
