@@ -107,6 +107,30 @@ async function print() {
             }));
         }
 
+        titleDatabase.push(TitleDatabase.upsert({
+            id: 14,
+            name: "Kid’s First Art",
+            description: "Collect 1 card from the CRAP series."
+        }));
+
+        titleDatabase.push(TitleDatabase.upsert({
+            id: 15,
+            name: "A Full Fridge",
+            description: "Collect all cards from the CRAP series. (Chase card not included)"
+        }));
+
+        titleDatabase.push(TitleDatabase.upsert({
+            id: 16,
+            name: "A Cluttered Fridge",
+            description: "Collect all cards from the CRAP series each card variant. (Chase card not included)"
+        }));
+
+        titleDatabase.push(TitleDatabase.upsert({
+            id: 17,
+            name: "A Hidden Card",
+            description: "Collect the hidden card from the CRAP series."
+        }));
+
         // RECREATE USER CARDS
         const userCards = [];
 

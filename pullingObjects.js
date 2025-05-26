@@ -4,6 +4,7 @@ const eventCRAP = require("./packs/eventCRAP.json");
 const shinyPacks = require("./packs/shinyPacks.json");
 const seriesTitleData = require("./data/seriesTitleData.json");
 const fullSeriesTitleData = require("./data/fullSeriesTitleData.json");
+const chaseSeriesTitleData = require("./data/chaseSeriesTitleData.json");
 const { currency, UserTitles, TitleDatabase } = require("./dbObjects.js");
 const Canvas = require('@napi-rs/canvas');
 const { getImage } = require("./imageObjects.js");
@@ -468,58 +469,19 @@ async function checkShinyGrab(message) {
     await message.channel.send(`${message.author}, you have grabbed your first **SHINY**. You have gained the title: \`${titleData.name}\``);
 }
 
-async function checkSeriesCollect(userCards, series, message, userMention=null) {
-    if (!userMention) { userMention = message.author; }
-    let seriesDict = {};
-    let fullSeriesDict = {
-        "BASIC": {},
-        "HOLO": {},
-        "FRAME": {},
-        "HOLOFRAME": {}
-    };
+async function checkCrapGrab(message) {
 
-    for (card of Object.keys(allCards[series])) {
-        fullSeriesDict[allCards[series][card]["CardType"]][allCards[series][card]["Name"]] = false;
-        if (card[0] == '*' || card[0] == '[' || card[0] == '{') continue;
+    const titleData = await TitleDatabase.findOne({ where: { name: "Kid’s First Art" } });
 
-        seriesDict[card] = false;
-        
-    }
+    if (!titleData) { return; }
+
+    const userTitle = await UserTitles.findOne({ where: { user_id: message.author.id, title_id: titleData.id } });
     
-    for (uCard of userCards) {
-        if (uCard.item.series == series) {
-            seriesDict[uCard.item.name] = true;
-            fullSeriesDict[uCard.item.card_type][uCard.item.name] = true;
-        }
-        
-    }
+    if (userTitle) { return; }
 
-    let has = 0;
+    await UserTitles.create({ user_id: message.author.id, title_id: titleData.id });
 
-    for ([card, have] of Object.entries(seriesDict)) {
-        if (have) {
-            has++;
-        }
-    }
-
-    let fullHas = 0;
-    for (cardType of Object.keys(fullSeriesDict)) {
-        for ([card, have] of Object.entries(fullSeriesDict[cardType])) {
-            if (have) {
-                fullHas++;
-            }
-        }
-    }
-
-    if (fullHas == 50) {
-        
-        await _fullHasHandle(series, userMention, message);
-    }
-
-    if (has == Object.keys(seriesDict).length) {
-        
-        await _hasHandle(series, userMention, message);
-    }
+    await message.channel.send(`${message.author}, you have grabbed your first \`CRAP\` card. You have gained the title: \`${titleData.name}\``);
 }
 
 async function checkPullTitles(message, userStat) {
@@ -554,6 +516,68 @@ async function checkGrabTitles(message, userStat) {
     }
 }
 
+async function checkSeriesCollect(userCards, series, message, userMention=null) {
+    if (!userMention) { userMention = message.author; }
+    let seriesDict = {};
+    let fullSeriesDict = {
+        "BASIC": {},
+        "HOLO": {},
+        "FRAME": {},
+        "HOLOFRAME": {}
+    };
+    let chaseCard = {}
+
+    let cardCount = 0;
+
+    for (card of Object.keys(allCards[series])) {
+        if (allCards[series][card]["CardID"] == "000") chaseCard = allCards[series][card]["Name"];
+
+        fullSeriesDict[allCards[series][card]["CardType"]][allCards[series][card]["Name"]] = false;
+        cardCount++;
+        if (card[0] == '*' || card[0] == '[' || card[0] == '{') continue;
+
+        seriesDict[card] = false;
+        
+    }
+    
+    for (uCard of userCards) {
+        if (uCard.item.series == series) {
+            if (uCard.item.name == chaseCard) { await _chaseHasHandle(series, userMention, message); continue; }
+            
+            seriesDict[uCard.item.name] = true;
+            fullSeriesDict[uCard.item.card_type][uCard.item.name] = true;
+        }
+        
+    }
+
+    let has = 0;
+
+    for ([card, have] of Object.entries(seriesDict)) {
+        if (have) {
+            has++;
+        }
+    }
+
+    let fullHas = 0;
+    for (cardType of Object.keys(fullSeriesDict)) {
+        for ([card, have] of Object.entries(fullSeriesDict[cardType])) {
+            if (have) {
+                fullHas++;
+            }
+        }
+    }
+
+    if (fullHas == cardCount) {
+        
+        await _fullHasHandle(series, userMention, message);
+    }
+
+    if (has == Object.keys(seriesDict).length) {
+        
+        await _hasHandle(series, userMention, message);
+    }
+}
+
 async function _hasHandle(series, userMention, message) {
     const titleSeriesName = seriesTitleData[series];
 
@@ -570,6 +594,24 @@ async function _hasHandle(series, userMention, message) {
     await UserTitles.create({ user_id: userMention.id, title_id: titleData.id });
 
     await message.channel.send(`${userMention}, you have collected all cards in the \`${series} Pack\`. You have gained the title: \`${titleData.name}\``);
+}
+
+async function _chaseHasHandle(series, userMention, message) {
+    const titleSeriesName = chaseSeriesTitleData[series];
+
+    if (!titleSeriesName) { return; }
+
+    const titleData = await TitleDatabase.findOne({ where: { name: titleSeriesName } });
+
+    if (!titleData) { return; }
+
+    const userTitle = await UserTitles.findOne({ where: { user_id: userMention.id, title_id: titleData.id } });
+    
+    if (userTitle) { return; }
+
+    await UserTitles.create({ user_id: userMention.id, title_id: titleData.id });
+
+    await message.channel.send(`${userMention}, you have collected the chase card for the \`${series} Pack\`. You have gained the title: \`${titleData.name}\``);
 }
 
 async function _fullHasHandle(series, userMention, message) {
@@ -610,4 +652,4 @@ async function createCardID(user){
 
 }
 
-module.exports = { getWhichStarEvent, getWhichStar, makePokeImage, makePokeImagePull, makePokeImageGrab, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab, checkPullTitles, checkGrabTitles };
+module.exports = { getWhichStarEvent, getWhichStar, makePokeImage, makePokeImagePull, makePokeImageGrab, makePokeImageDraw3, makePokeImageDraw5, makePokeImageTrade, addBalance, raritySymbol, formatName, formatNameSmall, checkSeriesCollect, createCardID, checkShinyGrab, checkPullTitles, checkGrabTitles, checkCrapGrab };

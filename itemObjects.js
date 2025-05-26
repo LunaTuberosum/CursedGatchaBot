@@ -1,7 +1,7 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType, AttachmentBuilder, NewsChannel } = require("discord.js");
 const { ServerInfo, Users, UserStats, CardDatabase, UserItems, ItemShop, EventShop, UserEventItems, TitleDatabase, UserTitles, Wishlists } = require('./dbObjects.js');
 const raidJoin = require('./raid/raidJoin.js');
-const { getWhichStar, makePokeImageDraw3, createCardID, makePokeImagePull, checkSeriesCollect, formatName, makePokeImageDraw5, getWhichStarEvent, makePokeImageGrab, checkPullTitles, checkGrabTitles } = require("./pullingObjects.js");
+const { getWhichStar, makePokeImageDraw3, createCardID, makePokeImagePull, checkSeriesCollect, formatName, makePokeImageDraw5, getWhichStarEvent, makePokeImageGrab, checkPullTitles, checkGrabTitles, checkCrapGrab } = require("./pullingObjects.js");
 
 // Make Item List
 
@@ -235,6 +235,7 @@ async function useDraw3EventAfter(message) {
                     await user.addCard(cardCode, pokeItem);
                     
                     checkSeriesCollect(await user.getCards(), pokeDataList[0]["Series"], message);
+                    checkCrapGrab(message);
                 }
 
                 await response.edit({ embeds: [makeDraw3Emebed(message, `1. **${formatName(pokeItemList[0])}** \`${newCards[0]}\`\n2. **${formatName(pokeItemList[1])}** \`${newCards[1]}\`\n3. **${formatName(pokeItemList[2])}** \`${newCards[2]}\``)], components: [], files: [attachmentList[3]] });
@@ -423,6 +424,7 @@ async function useDraw5EventAfter(message) {
                     await user.addCard(cardCode, pokeItem);
                     
                     checkSeriesCollect(await user.getCards(), pokeDataList[0]["Series"], message);
+                    checkCrapGrab(message);
                 }
 
                 await response.edit({ embeds: [makeDraw5Emebed(message, `1. **${formatName(pokeItemList[0])}** \`${newCards[0]}\`\n2. **${formatName(pokeItemList[1])}** \`${newCards[1]}\`\n3. **${formatName(pokeItemList[2])}** \`${newCards[2]}\`\n4. **${formatName(pokeItemList[3])}** \`${newCards[3]}\`\n5. **${formatName(pokeItemList[4])}** \`${newCards[4]}\``)], components: [], files: [attachmentList[5]] });
@@ -701,6 +703,7 @@ async function useCardGrabAfter(message, user, item) {
                 userStat.save();
 
                 checkSeriesCollect(await user.getCards(), pokeData["Series"], message);
+                checkCrapGrab(message);
 
                 await response.edit({ embeds: [makeCardGrabShowEmbed(message, item, `**${formatName(pokeItem)}** \`${cardCode}\``)], components: [], files: [attachmentRevel] });
 
@@ -851,6 +854,7 @@ async function checkGrabCard(message, pokemonData, i) {
     await user.addCard(cardCode, pokeItem);
 
     checkSeriesCollect(await user.getCards(), pokemonData["Series"], message);
+    checkCrapGrab(message);
 
     await message.channel.send({ content: `${i.user} took the **${formatName(pokeItem)}** card \`${cardCode}\`.` });
 
