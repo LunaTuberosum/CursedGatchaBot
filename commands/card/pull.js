@@ -39,7 +39,7 @@ async function eventGrabCheck(message, user, i, chance) {
 
         user.addItem(pbItemData, 1);
 
-        await message.channel.send(`${i.user} also got a <:broken_paintbrush:1340694905130844262>\`BROKEN PAINTBRUSH\`!`);
+        await message.channel.send(`${i.user} also got a <:brokenBrush:1376696067982098544>\`BROKEN PAINTBRUSH\`!`);
     }
 }
 

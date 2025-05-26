@@ -183,7 +183,7 @@ module.exports = {
             else if (name.includes("POKEDOLLAR")) itemText += `💴 ${amount} - \`${name}\`\n`;
 
             // Add Event Item to itemText
-            else if (name.includes("BROKEN PAINTBRUSH")) itemText += `<:broken_paintbrush:1340694905130844262> 1 - \`BROKEN PAINTBRUSH\``;
+            else if (name.includes("BROKEN PAINTBRUSH")) itemText += `<:brokenBrush:1376696067982098544> 1 - \`BROKEN PAINTBRUSH\``;
         }
 
         // Setup previewText
@@ -196,7 +196,7 @@ module.exports = {
             else if (name.includes("POKEDOLLAR")) previewText += `\`${amount[0]}%\`: 💴 ${amount[1]} - ${amount[2]} \`${name}\`\n`;
 
             // Add Event Item to previewText
-            else if (name.includes("BROKEN PAINTBRUSH")) previewText += `\`${amount[0]}%\`: <:broken_paintbrush:1340694905130844262> ${amount[1]} - ${amount[2]} \`BROKEN PAINTBRUSH\``;
+            else if (name.includes("BROKEN PAINTBRUSH")) previewText += `\`${amount[0]}%\`: <:brokenBrush:1376696067982098544> ${amount[1]} - ${amount[2]} \`BROKEN PAINTBRUSH\``;
         }
         
         // Prepare Attachemnt and Embed
