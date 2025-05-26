@@ -2,7 +2,6 @@ module.exports = (sequelize, DataTypes) => {
 	return sequelize.define('event_shop', {
 		name: {
 			type: DataTypes.STRING,
-			unique: true,
 		},
         emoji: {
 			type: DataTypes.STRING,
