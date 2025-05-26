@@ -128,7 +128,7 @@ async function pullMechanics(message, response, pokemonData1, pokemonData2) {
 
     await response.edit({ content: `${message.author} pulled these cards.`, files: [attachment], components: [makeButton()] });
 
-    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 40_000 });
+    const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 25_000 });
 
     collector.on('collect', async i => {
         i.deferUpdate();
