@@ -29,7 +29,7 @@ async function changeData(databaseDict) {
 
     for (item in databaseDict["itemShop"]) {
         if (databaseDict["itemShop"][item]["name"] == "BIG PACK"){
-            databaseDict["itemShop"][item]["cost"] = 290;
+            databaseDict["itemShop"][item]["cost"] = 300;
         }
         if (databaseDict["itemShop"][item]["name"] == "SMALL PACK"){
             databaseDict["itemShop"][item]["cost"] = 210;

@@ -9,9 +9,8 @@ module.exports = {
 
     async execute(message) {
         // // For disabling the command
-        return;
 
-        let moneyGiven = 70;
+        let moneyGiven = 200;
 
         const response = await message.channel.send("loading claim...");
 
