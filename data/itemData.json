@@ -120,6 +120,11 @@
         "Description": "Lets you try again to get a raid card or grab another card on a pull when your cool down is active."
     },
 
+    "BROKEN PAINTBRUSH": {
+        "Name": "`BROKEN PAINTBRUSH`",
+        "Get": "`1 in 4 chance when grabing cards`, `1 in 6 chance when grabing cards with a GREAT BALL`, `1 in 10 when releasing cards (Event Only)`, `1 in 8 when releasing CRAP cards`, `A reward from g!daily`",
+        "Description": "Lets you purchase items in the event shop."
+    },
     "CARD GRAB": {
         "Name": "`CARD GRAB`",
         "Get": "`Trading 2 BROKEN PAINTBRUSHES at the Event Shop`",
