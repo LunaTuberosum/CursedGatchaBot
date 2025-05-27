@@ -282,7 +282,7 @@ module.exports = {
 
             if (i.customId == "cancel") {
                 // Create Cancel Embed
-                releaseEmbed = makeReleaseEmbedCancel(releaseText, itemText, message.author)
+                releaseEmbed = makeReleaseEmbedCancel(releaseText, previewText, message.author)
                 response.edit({ content: " ", embeds: [releaseEmbed], components: [] });
             }
             else if (i.customId == "release") {
