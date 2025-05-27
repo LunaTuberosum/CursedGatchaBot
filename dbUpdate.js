@@ -35,6 +35,59 @@ async function changeData(databaseDict) {
             databaseDict["itemShop"][item]["cost"] = 210;
         }
     }
+
+    databaseDict["itemShop"].push(
+        {
+			"id": 26,
+			"name": "BROKEN PAINTBRUSH",
+			"emoji": "<:brokenBrush:1376696067982098544>",
+			"itemCost": "POKEDOLLAR",
+			"cost": 0,
+			"description": "Used to buy items in the event shop."
+        }
+    )
+
+    databaseDict["userEventItems"] = []
+
+    databaseDict["eventShop"] = [
+        {
+            "id": 1,
+            "name": "CARD GRAB",
+            "emoji": ":black_joker:",
+            "event": "CRAP",
+            "itemCost": "BROKEN PAINTBRUSH",
+            "cost": 2,
+            "description": "An item that gives you one random card from the CRAP series."
+        },
+        {
+            "id": 2,
+            "name": "EVENT PULL",
+            "emoji": ":small_red_triangle:",
+            "event": "CRAP",
+            "itemCost": "BROKEN PAINTBRUSH",
+            "cost": 3,
+            "description": "An item that lets you do a special PULL for cards in the CRAP series."
+        },
+        {
+            "id": 3,
+            "name": "SMALL PACK EV",
+            "emoji": ":white_small_square:",
+            "event": "CRAP",
+            "itemCost": "BROKEN PAINTBRUSH",
+            "cost": 4,
+            "description": "An item that draws 3 cards for you from the CRAP series. With at least one Uncommon or greater."
+        },
+        {
+            "id": 4,
+            "name": "BIG PACK EV",
+            "emoji": ":white_medium_small_square:",
+            "event": "CRAP",
+            "itemCost": "BROKEN PAINTBRUSH",
+            "cost": 6,
+            "description": "An item that draws 5 cards for you from the CRAP series. With at least one Rare or greater."
+        }
+    ]
+
     return databaseDict
 }
 

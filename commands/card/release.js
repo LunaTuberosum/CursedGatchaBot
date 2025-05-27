@@ -58,8 +58,9 @@ function makeButton() {
 function findCardInCollection(card) {
     
     for ( const series of Object.keys(allCards)) {
+        if (series != card.series) continue;
         for (const pName of Object.keys(allCards[series])) {
-            if(allCards[series][pName]["Name"] == card) {
+            if(allCards[series][pName]["Name"] == card.name) {
                 return allCards[series][pName];
             }
         }
@@ -127,7 +128,7 @@ module.exports = {
         }
 
         // Get Pokemon Data and Release Data
-        pokemonData = findCardInCollection(cardData.item.name);            
+        pokemonData = findCardInCollection(cardData.item);            
         releaseData = getReleaseReward(cardData);
 
         // Item Dict [Name: Amount]
@@ -157,6 +158,7 @@ module.exports = {
 
         // Check For Event Item
         let eventChance;
+        
         if (pokemonData["Series"] == "CRAP") {
             // If a Crap Card 1 in 8
             eventChance = Math.max((Math.floor(Math.random() * (9 - 1) + 1)), 1); // The maximum is exclusive and the minimum is inclusive
