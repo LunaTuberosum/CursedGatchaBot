@@ -115,7 +115,7 @@ async function useDraw3After(message) {
     pokeItemList.push( await _getPokeItem(pokeDataList[1]));
 
     // Last Card
-    pokeDataList.push(getWhichStar("EVE1", 61));
+    pokeDataList.push(getWhichStar("EVE1", 45));
     pokeItemList.push( await _getPokeItem(pokeDataList[2]));
 
     let attachmentList = [];
@@ -192,7 +192,7 @@ async function useDraw3EventAfter(message) {
     pokeItemList.push( await _getPokeItem(pokeDataList[1]));
 
     // Last Card
-    pokeDataList.push(getWhichStarEvent(eventItem.event, 61));
+    pokeDataList.push(getWhichStarEvent(eventItem.event, 45));
     pokeItemList.push( await _getPokeItem(pokeDataList[2]));
 
     let attachmentList = [];
@@ -281,11 +281,11 @@ async function useDraw5After(message) {
     pokeItemList.push( await _getPokeItem(pokeDataList[2]));
 
     // Unccomon Card
-    pokeDataList.push(getWhichStar("EVE1", 61));
+    pokeDataList.push(getWhichStar("EVE1", 45));
     pokeItemList.push( await _getPokeItem(pokeDataList[3]));
 
     // Rare Card
-    pokeDataList.push(getWhichStar("EVE1", 86));
+    pokeDataList.push(getWhichStar("EVE1", 70));
     pokeItemList.push( await _getPokeItem(pokeDataList[4]));
 
     let attachmentList = [];
@@ -371,11 +371,11 @@ async function useDraw5EventAfter(message) {
     pokeItemList.push( await _getPokeItem(pokeDataList[2]));
 
     // Unccomon Card
-    pokeDataList.push(getWhichStarEvent(eventItem.event, 61));
+    pokeDataList.push(getWhichStarEvent(eventItem.event, 45));
     pokeItemList.push( await _getPokeItem(pokeDataList[3]));
 
     // Rare Card
-    pokeDataList.push(getWhichStarEvent(eventItem.event, 86));
+    pokeDataList.push(getWhichStarEvent(eventItem.event, 70));
     pokeItemList.push( await _getPokeItem(pokeDataList[4]));
 
     let attachmentList = [];
@@ -490,7 +490,7 @@ async function _useDrawEvent(message, drawItemName, drawCommand) {
     if (!user) { await message.channel.send(`${message.author}, please register before tying to use an item. You can register using \`g!register\`.`); return; }
 
     const eventItem = await EventShop.findOne({ where: { name: drawItemName }});
-    const hasItem = await UserItems.findOne({ where: { user_id: user.user_id, item_id: eventItem.id } });
+    const hasItem = await UserEventItems.findOne({ where: { user_id: user.user_id, item_id: eventItem.id } });
     if (!hasItem || hasItem.amount < 1) { message.channel.send(`${message.author}, you do not own that item. Please buy that item using \`g!buy ${drawItemName}\``); return; }
 
     const response = await message.channel.send({ embeds: [makeDrawUseEmbed(message, `${drawItemName} [${eventItem.event}]`)], components: [makeButton()] });
@@ -867,58 +867,49 @@ async function useSpecialPullAfter(message, user, pullItem) {
 
     const userStat = await UserStats.findOne({ where: { user_id: user.user_id } });
 
-    pullChannel = await ServerInfo.findOne({ where: { server_id: message.guild.id, pull_channel: message.channel.id }});
-    
-    if (pullChannel) {
+    userStat.card_drawn += 2;
+    userStat.save();
 
-        userStat.card_drawn += 2;
-        userStat.save();
+    await checkPullTitles(message, userStat);
 
-        await checkPullTitles(message, userStat);
+    pokemonData1 = getWhichStarEvent(pullItem.event);
+    const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", series: pokemonData1["Series"], card_type: pokemonData1["CardType"] } });
+    pokeItem1.times_pulled++;
+    pokeItem1.save();
 
-        pokemonData1 = getWhichStarEvent(pullItem.event);
-        const pokeItem1 = await CardDatabase.findOne({ where: { card_id: pokemonData1["CardID"] || "001", series: pokemonData1["Series"], card_type: pokemonData1["CardType"] } });
-        pokeItem1.times_pulled++;
-        pokeItem1.save();
+    pokemonData2 = getWhichStarEvent(pullItem.event);
+    const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", series: pokemonData2["Series"], card_type: pokemonData2["CardType"] } });
+    pokeItem2.times_pulled++;
+    pokeItem2.save();
 
-        pokemonData2 = getWhichStarEvent(pullItem.event);
-        const pokeItem2 = await CardDatabase.findOne({ where: { card_id: pokemonData2["CardID"] || "001", series: pokemonData2["Series"], card_type: pokemonData2["CardType"] } });
-        pokeItem2.times_pulled++;
-        pokeItem2.save();
+    usersWishArray = [];
 
-        usersWishArray = [];
+    usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData1["CardID"], card_type : pokemonData1["CardType"] } })));
+    usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData2["CardID"], card_type : pokemonData2["CardType"] } })));
 
-        usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData1["CardID"], card_type : pokemonData1["CardType"] } })));
-        usersWishArray.push((await Wishlists.findAll({ where: { card_id: pokemonData2["CardID"], card_type : pokemonData2["CardType"] } })));
+    if (usersWishArray[0].length > 0 || usersWishArray[1].length > 0) {
+        userAtArray = []
 
-        if (usersWishArray[0].length > 0 || usersWishArray[1].length > 0) {
-            userAtArray = []
-
-            for (const userCollection of usersWishArray) {
-                for (const userData of userCollection) {
-                    if(!userAtArray.find(prevUser => {return prevUser == message.client.users.cache.get((userData.user_id))})) {
-                        userAtArray.push(message.client.users.cache.get((userData.user_id)));
-                    }
+        for (const userCollection of usersWishArray) {
+            for (const userData of userCollection) {
+                if(!userAtArray.find(prevUser => {return prevUser == message.client.users.cache.get((userData.user_id))})) {
+                    userAtArray.push(message.client.users.cache.get((userData.user_id)));
                 }
             }
-
-            await message.channel.send(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
-            const response = await message.channel.send("Loading your pull...");
-
-            setTimeout(() => {
-                pullMechanics(message, response, pokemonData1, pokemonData2);
-            }, "1000");
         }
-        else {
-            const response = await message.channel.send("Loading your pull...");
+
+        await message.channel.send(`${userAtArray.join(" ")} a card from your wishlist is dropping.`)
+        const response = await message.channel.send("Loading your pull...");
+
+        setTimeout(() => {
             pullMechanics(message, response, pokemonData1, pokemonData2);
-        }
-
+        }, "1000");
     }
     else {
-        await message.channel.send(`${message.author}, you can't pull in this channel.`);
-        return;
+        const response = await message.channel.send("Loading your pull...");
+        pullMechanics(message, response, pokemonData1, pokemonData2);
     }
+
 }
 
 // GET ITEM USE
