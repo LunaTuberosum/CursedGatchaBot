@@ -20,6 +20,7 @@ const UserDailys = require('./models/UserDailys.js')(sequelize, Sequelize.DataTy
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
 const UserEventItems = require('./models/UserEventItems.js')(sequelize, Sequelize.DataTypes);
+const UserCharms = require('./models/UserCharms.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
 const EventShop = require('./models/EventShop.js')(sequelize, Sequelize.DataTypes);
 const CharmShop = require('./models/CharmShop.js')(sequelize, Sequelize.DataTypes);
@@ -82,6 +83,8 @@ async function changeData(databaseDict) {
             "description": "A large charm depicting the symbol of water types."
         }
     ]
+
+    databaseDict["UserCharms"] = []
 
     return databaseDict
 
@@ -255,6 +258,22 @@ async function print() {
             }));
         }
 
+        // RECREATE USER CHARMS
+        const userCharms = [];
+
+        for (const userItemIndex in databaseDict["userCharms"]) {
+            const userItem = databaseDict["userCharms"][userItemIndex];
+
+            userCharms.push(UserCharms.upsert({
+                id: userItem["id"],
+                user_id: userItem["user_id"],
+                item_id: userItem["item_id"],
+                amount: userItem["amount"],
+                createdAt: userItem["createdAt"],
+                updatedAt: userItem["updatedAt"]
+            }));
+        }
+
         // RECREATE ITEM SHOP
         const itemShop = [];
 
@@ -359,7 +378,7 @@ async function print() {
             }));
         }
         
-        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, userEventItems, itemShop, eventShop, charmShop, serverInfo, wishlists);
+        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, userEventItems, userCharms, itemShop, eventShop, charmShop, serverInfo, wishlists);
         
         sequelize.close();
     }).catch(console.error);

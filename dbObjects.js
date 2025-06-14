@@ -18,6 +18,7 @@ const UserDailys = require('./models/UserDailys.js')(sequelize, Sequelize.DataTy
 const CardDatabase = require('./models/CardDatabase.js')(sequelize, Sequelize.DataTypes);
 const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataTypes);
 const UserEventItems = require('./models/UserEventItems.js')(sequelize, Sequelize.DataTypes);
+const UserCharms = require('./models/UserCharms.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
 const EventShop = require('./models/EventShop.js')(sequelize, Sequelize.DataTypes);
 const CharmShop = require('./models/CharmShop.js')(sequelize, Sequelize.DataTypes);
@@ -28,6 +29,7 @@ const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 UserCards.belongsTo(CardDatabase, { foreignKey: 'item_info', as: 'item' });
 UserItems.belongsTo(ItemShop, { foreignKey: 'item_id', as: 'item' });
 UserEventItems.belongsTo(EventShop, { foreignKey: 'item_id', as: 'item' });
+UserCharms.belongsTo(CharmShop, { foreignKey: 'item_id', as: 'item' });
 
 Reflect.defineProperty(Users.prototype, 'addCard', {
 	/* eslint-disable-next-line func-name-matching */
@@ -49,9 +51,9 @@ Reflect.defineProperty(Users.prototype, 'getCards', {
 
 Reflect.defineProperty(Users.prototype, 'addItem', {
 	/* eslint-disable-next-line func-name-matching */
-	value: async function addItem(item, amount, eventItem=false) {
+	value: async function addItem(item, amount, itemType=0) {
 
-		if (eventItem) {
+		if (itemType == 1) {
 			try {
 				const userItem = await UserEventItems.findOne({
 					where: { user_id: this.user_id, item_id: item.id },
@@ -62,6 +64,20 @@ Reflect.defineProperty(Users.prototype, 'addItem', {
 	
 			} catch (error) {
 				return UserEventItems.create({ user_id: this.user_id, item_id: item.id, amount: Number(amount) });
+				
+			}
+		}
+		else if (itemType == 2) {
+			try {
+				const userItem = await UserCharms.findOne({
+					where: { user_id: this.user_id, item_id: item.id },
+				});
+	
+				userItem.amount += Number(amount);
+				return userItem.save();
+	
+			} catch (error) {
+				return UserCharms.create({ user_id: this.user_id, item_id: item.id, amount: Number(amount) });
 				
 			}
 		}
@@ -108,6 +124,24 @@ Reflect.defineProperty(Users.prototype, 'getItems', {
 		}
 
 		return itemList
+	},
+});
+
+Reflect.defineProperty(Users.prototype, 'getCharms', {
+	/* eslint-disable-next-line func-name-matching */
+	value: async function getCharms() {
+		const charmList = [];
+		const userItems = await UserCharms.findAll({
+			where: { user_id: this.user_id },
+			include: ['item'],
+		})
+
+		for (item of userItems) {
+			charmList.push(item)
+			
+		}
+
+		return charmList
 	},
 });
 
