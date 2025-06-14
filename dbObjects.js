@@ -20,6 +20,7 @@ const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataType
 const UserEventItems = require('./models/UserEventItems.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
 const EventShop = require('./models/EventShop.js')(sequelize, Sequelize.DataTypes);
+const CharmShop = require('./models/CharmShop.js')(sequelize, Sequelize.DataTypes);
 const ServerInfo = require('./models/ServerInfo.js')(sequelize, Sequelize.DataTypes);
 const Wishlists = require('./models/Wishlists.js')(sequelize, Sequelize.DataTypes);
 const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
@@ -110,4 +111,4 @@ Reflect.defineProperty(Users.prototype, 'getItems', {
 	},
 });
 
-module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, UserDailys, CardDatabase, UserItems, UserEventItems, ItemShop, EventShop, Wishlists, Tags, ServerInfo };
+module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, UserDailys, CardDatabase, UserItems, UserEventItems, ItemShop, EventShop, CharmShop, Wishlists, Tags, ServerInfo };

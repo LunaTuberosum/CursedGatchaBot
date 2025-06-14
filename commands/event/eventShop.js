@@ -37,7 +37,7 @@ function checkButtons(buttons, start, end, length) {
     if (start == 1) {
         buttons.components[0].setDisabled(true);
     }
-    else if (end == length) {
+    else if (end >= length - 1) {
         buttons.components[1].setDisabled(true);
     }
 }
@@ -61,7 +61,7 @@ async function getArray(shopItems, start, end) {
 }
 
 function getLength(shopData) {
-    let length = 1;
+    let length = 0;
     for (const item of shopData) {
         if (item.cost != 0) length += 1
     }
@@ -76,8 +76,6 @@ module.exports = {
         const shopData = await EventShop.findAll();
         const curEvent = "CRAP"
 
-        
-
         let start = 1;
         let end = 5;
 
@@ -89,7 +87,7 @@ module.exports = {
         const buttons = makeButton()
         if (end == length) { buttons.components[1].setDisabled(true); }
 
-        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
+        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
@@ -104,16 +102,16 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
                     start = Math.min(start + 5, length - 5);
-                    end = Math.min(end + 5, length - 1);
+                    end = Math.min(end + 5, length);
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end - 1, length - 1, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
                 }
         });
     }

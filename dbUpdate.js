@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 var fs = require('fs');
+const { log } = require('console');
 
 allCards = require("./packs/allCards.json");
 
@@ -21,75 +22,71 @@ const UserItems = require('./models/UserItems.js')(sequelize, Sequelize.DataType
 const UserEventItems = require('./models/UserEventItems.js')(sequelize, Sequelize.DataTypes);
 const ItemShop = require('./models/ItemShop.js')(sequelize, Sequelize.DataTypes);
 const EventShop = require('./models/EventShop.js')(sequelize, Sequelize.DataTypes);
+const CharmShop = require('./models/CharmShop.js')(sequelize, Sequelize.DataTypes);
 const ServerInfo = require('./models/ServerInfo.js')(sequelize, Sequelize.DataTypes);
 const Wishlists = require('./models/Wishlists.js')(sequelize, Sequelize.DataTypes);
 const Tags = require('./models/Tags.js')(sequelize, Sequelize.DataTypes);
 
 async function changeData(databaseDict) {
 
-    for (item in databaseDict["itemShop"]) {
-        if (databaseDict["itemShop"][item]["name"] == "BIG PACK"){
-            databaseDict["itemShop"][item]["cost"] = 300;
-        }
-        if (databaseDict["itemShop"][item]["name"] == "SMALL PACK"){
-            databaseDict["itemShop"][item]["cost"] = 210;
-        }
-    }
-
-    databaseDict["itemShop"].push(
-        {
-			"id": 26,
-			"name": "BROKEN PAINTBRUSH",
-			"emoji": "<:brokenBrush:1376696067982098544>",
-			"itemCost": "POKEDOLLAR",
-			"cost": 0,
-			"description": "Used to buy items in the event shop."
-        }
-    )
-
-    databaseDict["userEventItems"] = []
-
-    databaseDict["eventShop"] = [
+    databaseDict["charmShop"] = [
         {
             "id": 1,
-            "name": "CARD GRAB",
-            "emoji": ":black_joker:",
-            "event": "CRAP",
-            "itemCost": "BROKEN PAINTBRUSH",
-            "cost": 2,
-            "description": "An item that gives you one random card from the CRAP series."
+            "name": "WATER CHARM",
+            "emoji": ":droplet:",
+            "event": "None",
+            
+            "gemName": "WATER",
+            "gemCost": 0,
+
+            "shardName": "WATER",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of water types."
         },
         {
             "id": 2,
-            "name": "EVENT PULL",
-            "emoji": ":small_red_triangle:",
-            "event": "CRAP",
-            "itemCost": "BROKEN PAINTBRUSH",
-            "cost": 3,
-            "description": "An item that lets you do a special PULL for cards in the CRAP series."
+            "name": "WATER CHARM +",
+            "emoji": ":droplet:",
+            "event": "None",
+            
+            "gemName": "WATER",
+            "gemCost": 4,
+
+            "shardName": "WATER",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of water types."
         },
         {
             "id": 3,
-            "name": "SMALL PACK EV",
-            "emoji": ":white_small_square:",
-            "event": "CRAP",
-            "itemCost": "BROKEN PAINTBRUSH",
-            "cost": 4,
-            "description": "An item that draws 3 cards for you from the CRAP series. With at least one Uncommon or greater."
-        },
-        {
-            "id": 4,
-            "name": "BIG PACK EV",
-            "emoji": ":white_medium_small_square:",
-            "event": "CRAP",
-            "itemCost": "BROKEN PAINTBRUSH",
-            "cost": 6,
-            "description": "An item that draws 5 cards for you from the CRAP series. With at least one Rare or greater."
+            "name": "WATER CHARM EX",
+            "emoji": ":droplet:",
+            "event": "None",
+            
+            "gemName": "WATER",
+            "gemCost": 10,
+
+            "shardName": "WATER",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of water types."
         }
     ]
 
     return databaseDict
+
 }
+print()
 
 async function print() {
 
@@ -168,30 +165,6 @@ async function print() {
             }));
         }
 
-        titleDatabase.push(TitleDatabase.upsert({
-            id: 14,
-            name: "Kid’s First Art",
-            description: "Collect 1 card from the CRAP series."
-        }));
-
-        titleDatabase.push(TitleDatabase.upsert({
-            id: 15,
-            name: "A Full Fridge",
-            description: "Collect all cards from the CRAP series. (Chase card not included)"
-        }));
-
-        titleDatabase.push(TitleDatabase.upsert({
-            id: 16,
-            name: "A Cluttered Fridge",
-            description: "Collect all cards from the CRAP series each card variant. (Chase card not included)"
-        }));
-
-        titleDatabase.push(TitleDatabase.upsert({
-            id: 17,
-            name: "A Hidden Card",
-            description: "Collect the hidden card from the CRAP series."
-        }));
-
         // RECREATE USER CARDS
         const userCards = [];
 
@@ -249,25 +222,6 @@ async function print() {
                 in_circulation: card["in_circulation"]
             }));
         }   
-        
-        // TEMP ADD NEW CARDS
-        for (const series in allCards) {
-            if (series != "CRAP") continue;
-
-            for (const card in allCards[series])
-                cardDatabase.push(CardDatabase.upsert({ 
-                    name: allCards[series][card]["Name"],
-                    type: allCards[series][card]["Type"],
-                    card_id: allCards[series][card]["CardID"],
-                    drawn_date: allCards[series][card]["DrawDate"],
-                    poke_number: allCards[series][card]["Poke#"],
-                    rarity: allCards[series][card]["Rarity"],
-                    card_type: allCards[series][card]["CardType"],
-                    poke_type: allCards[series][card]["PokeType"],
-                    series: allCards[series][card]["Series"],
-                    obtain: allCards[series][card]["Obtain"]
-                }));
-        }
 
         // RECREATE USER ITEMS
         const userItems = [];
@@ -334,6 +288,31 @@ async function print() {
             }));
         }
 
+        // RECREATE EVENT SHOP
+        const charmShop = [];
+
+        for (const itemIndex in databaseDict["charmShop"]) {
+            const item = databaseDict["charmShop"][itemIndex];
+
+            charmShop.push(CharmShop.upsert({
+                id: item["id"],
+                name: item["name"],
+                emoji: item["emoji"],
+                event: item["event"],
+
+                gemName: item["gemName"],
+                gemCost: item["gemCost"],
+
+                shardName: item["shardName"],
+                shardCost: item["shardCost"],
+
+                itemName: item["itemName"],
+                itemCost: item["itemCost"],
+
+                description: item["description"]
+            }));
+        }
+
         // RECREATE SERVER INFO
         const serverInfo = [];
 
@@ -379,13 +358,12 @@ async function print() {
                 updatedAt: tag["updatedAt"]
             }));
         }
-
-        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, userEventItems, itemShop, eventShop, serverInfo, wishlists);
-    
+        
+        await Promise.all(users, userStats, userTitles, titleDatabase, userCards, userDailys, cardDatabase, userItems, userEventItems, itemShop, eventShop, charmShop, serverInfo, wishlists);
+        
         sequelize.close();
     }).catch(console.error);
     
-    console.log('Database updated');
 }
 
-print()
+console.log('Database updated');

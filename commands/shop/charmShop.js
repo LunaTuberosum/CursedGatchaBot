@@ -1,11 +1,11 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop } = require('../../dbObjects.js');
+const { Users, CharmShop } = require('../../dbObjects.js');
 
 function makeShopEmbed(shopArray, start, end, total) {
 
     const invEmbed = new EmbedBuilder()
         .setColor("#616161")
-        .setTitle(`POKESHOP`)
+        .setTitle(`CHARM SHOP`)
         .setDescription(`Use \`g!buy "item name" x#\` to buy\n\n${shopArray.join("\n")}`)
         .setFooter({ text: `Showing items ${start}-${end} of ${total}`})
 
@@ -48,12 +48,17 @@ async function getArray(shopItems, start, end) {
     shopArray = []
     for (const item of shopItems) {
         
-        if (item.cost == 0) continue;
+        if (item.event != "None") continue;
         if (i > end) {
             return shopArray;
         }
         else if(i >= start) {
-            shopArray.push(`${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
+            let text = `${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\``
+            if (item.gemCost > 0) text += `\n- ${item.gemCost} ${item.gemName} GEM`
+            if (item.shardCost > 0) text += `\n- ${item.shardCost} ${item.shardName} SHARD`
+            if (item.itemCost > 0) text += `\n- ${item.itemCost} ${item.itemName}`
+            text += '```'
+            shopArray.push(text);
         }
         i++;
     }
@@ -69,23 +74,27 @@ function getLength(shopData) {
 }
 
 module.exports = {
-    name: "pokeShop",
-    shortName: ["ps", "s", "shop"],
+    name: "charmShop",
+    shortName: ["cs", "charm"],
         
     async execute(message) {
-        const shopData = await ItemShop.findAll();
+        const shopData = await CharmShop.findAll();
+        let length = getLength(shopData)
 
         let start = 1;
-        let end = 5;
+        let end = Math.min(5, length);
 
-        let shopArray = await getArray(shopData, start, end);
-        let length = getLength(shopData);
-        
-        const buttons = makeButton()
-        const response = await message.channel.send({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+        let shopArray = await getArray(shopData, start, end)
+
+        let embed = makeShopEmbed(shopArray, start, end, length)
+
+        let buttons = makeButton()
+        if (end == length) buttons.components[1].setDisabled(true);
+
+        const response = await message.channel.send({ embeds: [embed], components: [buttons] });
 
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
-
+        
             collector.on("collect", async i => {
                 await i.deferUpdate();
                 if (i.user != message.author) { return; }
@@ -97,7 +106,7 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
@@ -106,9 +115,8 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
                 }
         });
     }
-
-};
+}
