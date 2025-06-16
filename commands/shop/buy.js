@@ -300,7 +300,7 @@ async function buyCharm(message, itemData, quantity, user) {
                     gemData = await ItemShop.findOne({ where: { name: `${itemData.gemName} GEM` } });
                     gemUser = findItem(userItems, gemData.name);
 
-                    if (!gemUser || gemUser.amount < (quantity * itemData.cost)) {
+                    if (!gemUser || gemUser.amount < (quantity * itemData.gemCost)) {
                         await response.edit({ embeds: [makeBuyCharmEmbedFail(itemData, quantity, message.author)], components: [] });
                         return;
                     }
@@ -310,7 +310,7 @@ async function buyCharm(message, itemData, quantity, user) {
                     shardData = await ItemShop.findOne({ where: { name: `${itemData.shardName} SHARD` } });
                     shardUser = findItem(userItems, shardData.name);
 
-                    if (!shardUser || shardUser.amount < (quantity * itemData.cost)) {
+                    if (!shardUser || shardUser.amount < (quantity * itemData.shardCost)) {
                         await response.edit({ embeds: [makeBuyCharmEmbedFail(itemData, quantity, message.author)], components: [] });
                         return;
                     }
@@ -320,29 +320,28 @@ async function buyCharm(message, itemData, quantity, user) {
                     itemData_ = await ItemShop.findOne({ where: { name: itemData.itemName } });
                     itemUser = findItem(userItems, itemData_.name);
 
-                    if (!itemUser || itemUser.amount < (quantity * itemData.cost)) {
+                    if (!itemUser || itemUser.amount < (quantity * itemData.itemCost)) {
                         await response.edit({ embeds: [makeBuyCharmEmbedFail(itemData, quantity, message.author)], components: [] });
                         return;
                     }
                 }
-
+                
+                if (gemUser) {
+                    gemUser.amount -= (quantity * itemData.gemCost);
+                    gemUser.save()
+                }
+                
+                if (shardUser) {
+                    shardUser.amount -= (quantity * itemData.shardCost);
+                    shardUser.save()
+                }
+                
+                if (itemUser) {
+                    itemUser.amount -= (quantity * itemData.itemCost);
+                    itemUser.save()
+                }
                 user.addItem(itemData, quantity, 2);
                 
-                if (gemData) {
-                    gemData.amount -= (quantity * itemData.gemCost);
-                    gemData.save()
-                }
-
-                if (shardData) {
-                    shardData.amount -= (quantity * itemData.shardCost);
-                    shardData.save()
-                }
-
-                if (itemData_) {
-                    itemData_.amount -= (quantity * itemData_.itemCost);
-                    itemData_.save()
-                }
-
                 await response.edit({ embeds: [makeBuyCharmEmbedConfirm(itemData, quantity, message.author)], components: [] });
 
                 await checkMoneySpend(message, itemUser, userStat, itemData.itemCost, quantity);
