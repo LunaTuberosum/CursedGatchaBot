@@ -145,4 +145,4 @@ Reflect.defineProperty(Users.prototype, 'getCharms', {
 	},
 });
 
-module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, UserDailys, CardDatabase, UserItems, UserEventItems, ItemShop, EventShop, CharmShop, Wishlists, Tags, ServerInfo };
+module.exports = { Users, UserStats, UserTitles, TitleDatabase, UserCards, UserDailys, CardDatabase, UserItems, UserEventItems, UserCharms, ItemShop, EventShop, CharmShop, Wishlists, Tags, ServerInfo };

@@ -34,7 +34,7 @@ async function changeData(databaseDict) {
         {
             "id": 1,
             "name": "WATER CHARM",
-            "emoji": ":droplet:",
+            "emoji": "💧",
             "event": "None",
             
             "gemName": "WATER",
@@ -51,7 +51,7 @@ async function changeData(databaseDict) {
         {
             "id": 2,
             "name": "WATER CHARM +",
-            "emoji": ":droplet:",
+            "emoji": "💧",
             "event": "None",
             
             "gemName": "WATER",
@@ -68,7 +68,7 @@ async function changeData(databaseDict) {
         {
             "id": 3,
             "name": "WATER CHARM EX",
-            "emoji": ":droplet:",
+            "emoji": "💧",
             "event": "None",
             
             "gemName": "WATER",
@@ -85,6 +85,12 @@ async function changeData(databaseDict) {
     ]
 
     databaseDict["UserCharms"] = []
+
+    for (card of databaseDict["userCards"]) {
+        card["charm_1"] = "None"
+        card["charm_2"] = "None"
+        card["charm_3"] = "None"
+    }
 
     return databaseDict
 
@@ -184,6 +190,10 @@ async function print() {
                 defence: userCard["defence"],
                 speed: userCard["speed"],
                 tag: userCard["tag"],
+                charm_1: userCard["charm_1"],
+                charm_2: userCard["charm_2"],
+                charm_3: userCard["charm_3"],
+
                 createdAt: userCard["createdAt"],
                 updatedAt: userCard["updatedAt"]
             }));

@@ -1,5 +1,5 @@
-const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, ItemShop } = require('../../dbObjects.js');
+const { AttachmentBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js");
+const { Users, ItemShop, CharmShop, UserCharms } = require('../../dbObjects.js');
 const { formatName, makePokeImage } = require("../../pullingObjects.js");
 const { getLevelUpCost, getCurrentStats, getNewStats, getPassive, getSpecial } = require("../../affectionObjects.js")
 const Canvas = require('@napi-rs/canvas');
@@ -16,6 +16,35 @@ function makeAffectionEmbed(cardCode, card, cardHP, costData, statChanges, level
     return affectionEmbed;
 }
 
+function affectionEmbedBuilder(splitMessage, card) {
+    const levelCost = getLevelUpCost(card);
+    let costData
+    
+    const newStats = getNewStats(card);
+    const currStats = getCurrentStats(card);
+    let statChanges;
+    
+    if (card.level == 10) {
+        statChanges = `- NONE`;
+        costData = `- NONE`;
+    }
+    else {
+        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
+        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} \n- ${levelCost["Money"]} POKEDOLLARS`
+    };
+    
+    const passiveData = getPassive(card);
+    const specialData = getSpecial(card);
+    const levelUnlocks = {
+        "1": `[0;${card.level >= 1 ? 37 : 30}m${card.level >= 1 ? " " : "🔒"} Lv. 1: ${passiveData["Name"]} `,
+        "5": `[0;${card.level >= 5 ? 37 : 30}m${card.level >= 5 ? " " : "🔒"} Lv. 5: ${specialData["Name"]} \n${card.level >= 5 ? " " : "🔒"} Lv. 5: ${passiveData["Name"]} ★ `,
+        "10": `[0;${card.level == 10 ? 37 : 30}m${card.level >= 10 ? " " : "🔒"} Lv. 10: ${specialData["Name"]} ★ \n${card.level >= 10 ? " " : "🔒"} Lv. 10: ${passiveData["Name"]} ★★ `
+    };
+    
+    return new makeAffectionEmbed(splitMessage[1], card, currStats["HP"], costData, statChanges, levelUnlocks);
+    
+}
+
 function makeButtonAffection() {
 
     const levelButton = new ButtonBuilder()
@@ -26,50 +55,25 @@ function makeButtonAffection() {
         .setCustomId("info")
         .setStyle(ButtonStyle.Primary)
         .setEmoji("📄");
+    const charmButton = new ButtonBuilder()
+        .setCustomId("charm")
+        .setStyle(ButtonStyle.Primary)
+        .setEmoji("🏵️");
 
     const row = new ActionRowBuilder()
-        .addComponents(levelButton, infoButton)
+        .addComponents(levelButton, infoButton, charmButton)
 
     return row;
 }
 
-function affectionEmbedBuilder(splitMessage, card) {
-    const levelCost = getLevelUpCost(card);
-    let costData
-
-    const newStats = getNewStats(card);
-    const currStats = getCurrentStats(card);
-    let statChanges;
-
-    if (card.level == 10) {
-        statChanges = `- NONE`;
-        costData = `- NONE`;
-    }
-    else {
-        statChanges = `+ ${newStats["HP"] - currStats["HP"]} HP \n+ ${newStats["Attack"] - card.attack} Attack \n+ ${newStats["Defense"] - card.defence} Defense \n+ ${newStats["Speed"] - card.speed} Speed`;
-        costData = `- ${levelCost["Resource"]["Amount"]} ${(card.item.type).toUpperCase()} ${levelCost["Resource"]["Type"]} \n- ${levelCost["Money"]} POKEDOLLARS`
-    };
-
-    const passiveData = getPassive(card);
-    const specialData = getSpecial(card);
-    const levelUnlocks = {
-        "1": `[0;${card.level >= 1 ? 37 : 30}m${card.level >= 1 ? " " : "🔒"} Lv. 1: ${passiveData["Name"]} `,
-        "5": `[0;${card.level >= 5 ? 37 : 30}m${card.level >= 5 ? " " : "🔒"} Lv. 5: ${specialData["Name"]} \n${card.level >= 5 ? " " : "🔒"} Lv. 5: ${passiveData["Name"]} ★ `,
-        "10": `[0;${card.level == 10 ? 37 : 30}m${card.level >= 10 ? " " : "🔒"} Lv. 10: ${specialData["Name"]} ★ \n${card.level >= 10 ? " " : "🔒"} Lv. 10: ${passiveData["Name"]} ★★ `
-    };
-
-    return new makeAffectionEmbed(splitMessage[1], card, currStats["HP"], costData, statChanges, levelUnlocks);
-
-}
-
 function makeInfoEmbed(cardCode, card, passiveInfo, specialInfo) {
-
+    
     const infoEmbed = new EmbedBuilder()
-        .setColor("#616161")
-        .setTitle(`Affection - ${cardCode}`)
-        .setThumbnail(`attachment://poke-image.png`)
-        .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n\`Passive:\` \n\`\`\`ansi\n${passiveInfo["1"]} \n\n${passiveInfo["5"]} \n\n${passiveInfo["10"]}\`\`\` \n\`Special:\` \n\`\`\`ansi\n${specialInfo["5"]} \n\n${specialInfo["10"]}\`\`\``)
-        .setFooter({ text: `Return to level up page with button below`})
+    .setColor("#616161")
+    .setTitle(`Affection - ${cardCode}`)
+    .setThumbnail(`attachment://poke-image.png`)
+    .setDescription(`**Name:** ${formatName(card.item)} \n**Type:** ${card.item.type} \n\n\`Passive:\` \n\`\`\`ansi\n${passiveInfo["1"]} \n\n${passiveInfo["5"]} \n\n${passiveInfo["10"]}\`\`\` \n\`Special:\` \n\`\`\`ansi\n${specialInfo["5"]} \n\n${specialInfo["10"]}\`\`\``)
+    .setFooter({ text: `Return to level up page with button below`})
 
     return infoEmbed;
 }
@@ -78,7 +82,7 @@ function makeButtonInfo() {
 
     const backButton = new ButtonBuilder()
         .setCustomId("back")
-        .setStyle(ButtonStyle.Success)
+        .setStyle(ButtonStyle.Secondary)
         .setEmoji("📊");
 
     const row = new ActionRowBuilder()
@@ -102,6 +106,112 @@ function infoEmbedMaker(splitMessage, card) {
     }
 
     return new makeInfoEmbed(splitMessage[1], card, passiveInfo, specialInfo);
+}
+
+function makeCharmEmbed(cardCode, aCard, errorText) {
+
+    const charmEmbed = new EmbedBuilder()
+        .setColor("#616161")
+        .setTitle(`Affection - ${cardCode}`)
+        .setImage(`attachment://poke-image.png`)
+        .setDescription(`Please select your charms below. To confirm you selection press the \`✔\` button.\n\n**Current Charms:**\n\`Charm 1:\` ${aCard.charm_1}\n\`Charm 2:\` ${aCard.charm_2}\n\`Charm 3:\` ${aCard.charm_3}\n\n${errorText}`)
+        .setFooter({ text: `Return to level up page with button below`})
+
+    return charmEmbed;
+}
+
+function charmEmbedMaker(splitMessage, aCard, errorCode=[]) {
+    errorText = '';
+    for (error of errorCode) {
+        if (errorText == '') errorText += '```diff';
+
+        errorText += `\n- Failed to set Charm ${error}.`;
+    }
+    if (errorText != '') errorText += '```'
+
+    return new makeCharmEmbed(splitMessage[1], aCard, errorText);
+
+}
+
+function makeCharmSelection(aCard, userCharms) {
+    const row1 = createCharmRow(aCard.charm_1, userCharms, "charm1", "first");
+    const row2 = createCharmRow(aCard.charm_2, userCharms, "charm2", "second");
+    const row3 = createCharmRow(aCard.charm_3, userCharms, "charm3", "third");
+
+    return [row1, row2, row3]
+}
+
+function createCharmRow(charmInfo, userCharms, charmName, place) {
+
+    let charmMap = [];
+    
+    if (charmInfo != "None") {
+        charmMap = [{
+            label: "Deselect Charm",
+            description: "Remove charm from slot.",
+            emoji: "🚫",
+
+            value: "None"
+        }];
+    }
+
+
+    for (charm of userCharms) {
+        charmMap.push({
+            label: charm.item.name,
+            description: `(x${charm.amount}) ${charm.item.description}`,
+            emoji: charm.item.emoji,
+
+            value: charm.item.name
+        })
+    }
+
+    if (charmMap.length == 0) {
+        charmMap = [{
+            label: "You have no Charms",
+            description: "To buy a charm check out the `g!charmShop`",
+            emoji: "❌",
+
+            value: "None"
+        }]
+    }
+
+    const select = new StringSelectMenuBuilder()
+        .setCustomId(charmName)
+        .setPlaceholder(`Select your ${place} Charm.`)
+        .addOptions(
+            charmMap.map((charm) =>
+                new StringSelectMenuOptionBuilder()
+                    .setLabel(charm.label)
+                    .setDescription(charm.description)
+                    .setEmoji(charm.emoji)
+
+                    .setValue(charm.value)
+            )
+        );
+
+    const row = new ActionRowBuilder()
+        .addComponents(select);
+
+    return row
+}
+
+function makeCharmButtons() {
+    const confirmButton = new ButtonBuilder()
+        .setCustomId("confirmCharm")
+        .setStyle(ButtonStyle.Success)
+        .setEmoji("✔");
+
+    const backButton = new ButtonBuilder()
+        .setCustomId("back")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("📊");
+
+    const row = new ActionRowBuilder()
+        .addComponents(confirmButton, backButton);
+
+    return row
+
 }
 
 function makeLevelEmbed(cardCode, card, costData, statChanges, newAbilities) {
@@ -160,8 +270,13 @@ function makeButtonLevel() {
         .setStyle(ButtonStyle.Danger)
         .setEmoji("✖");
 
+    const backButton = new ButtonBuilder()
+        .setCustomId("back")
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji("📊");
+
     const row = new ActionRowBuilder()
-        .addComponents(confirmButton, cancelButton);
+        .addComponents(confirmButton, cancelButton, backButton);
 
     return row
 }
@@ -229,6 +344,36 @@ function makeHealthBar(maxHealth, curHealth) {
     return healthBar;
 }
 
+async function checkCharm(charmName, charmData, charmCard, user, userCharms) {
+    if (charmCard != "None") {
+        let charm = await CharmShop.findOne({ where: { name: charmCard } });
+        await user.addItem(charm, 1, 2);
+    }
+    
+    if (charmData[charmName] != "None") {
+        let did = false
+        for (c of userCharms) {
+            if (c.item.name == charmData[charmName]) {
+                did = true
+                if (c.amount == 1) {
+                    await UserCharms.destroy({ where: { user_id: user.user_id, item_id: c.item.id }});
+                    break;
+                }
+                
+                c.amount -= 1;
+                c.save();
+                break;
+            }
+        }
+
+        if (!did) {
+            return charmCard
+        }
+    }
+
+    return charmData[charmName];
+}
+
 module.exports = {
     name: "affection",
     shortName: ["a"],
@@ -238,9 +383,11 @@ module.exports = {
 
         const splitMessage = message.content.split(" ");
         const user = await Users.findOne({ where: { user_id: message.author.id } });
+        let userCharms = await user.getCharms();
 
         let affectionEmbed;
         let infoEmbed;
+        let charmEmbed;
         let levelEmbed;
         let levelConfirmEmbed;
         let levelFailEmbed;
@@ -248,6 +395,7 @@ module.exports = {
 
         let affectionButton;
         let infoButton;
+        let charmSelections;
         let levelButton;
         let levelCost;
         let newStats
@@ -287,6 +435,8 @@ module.exports = {
                     infoEmbed = infoEmbedMaker(splitMessage, card);
                     infoButton = makeButtonInfo();
 
+                    charmEmbed = charmEmbedMaker(splitMessage, aCard);
+
                     levelCost = getLevelUpCost(card);
                     levelEmbed = new levelEmbedBuilder(splitMessage, card);
                     levelConfirmEmbed = new levelConfirmEmbedBuilder(splitMessage, card);
@@ -310,18 +460,66 @@ module.exports = {
             return;
         }
 
+        let charmData = {
+            "Charm1": aCard.charm_1,
+            "Charm2": aCard.charm_2,
+            "Charm3": aCard.charm_3
+        }
+
         const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button, time: 150_000 });
 
         collector.on("collect", async i => {
             i.deferUpdate();
             if (i.user == message.author) {
-                collector.resetTimer()
+                collector.resetTimer();
                 
                 if (i.customId == "level") {
                     response.edit({ content: "", embeds: [levelEmbed], components: [levelButton], files: [attachment] });
                 }
                 else if (i.customId == "info") {
                     await response.edit({ content: "", embeds: [infoEmbed], components: [infoButton], files: [attachment] });
+                }
+                else if (i.customId == "charm") {
+                    charmSelections = makeCharmSelection(aCard, await user.getCharms());
+                    await response.edit({ content: "", embeds: [charmEmbed], components: [charmSelections[0], charmSelections[1], charmSelections[2], makeCharmButtons()], files: [attachment] });
+                }
+                else if (i.customId == "confirmCharm") {
+                    let errorCode = [];
+
+                    if (aCard.charm_1 != charmData["Charm1"]) {
+                        aCard.charm_1 = await checkCharm("Charm1", charmData, aCard.charm_1, user, userCharms);
+                        if (aCard.charm_1 != charmData["Charm1"]) {
+                            errorCode.push(1);
+                        }
+                        
+                        userCharms =  await user.getCharms();
+                    }
+
+                    if (aCard.charm_2 != charmData["Charm2"]) {
+                        aCard.charm_2 = await checkCharm("Charm2", charmData, aCard.charm_2, user, userCharms);
+                        if (aCard.charm_2 != charmData["Charm2"]) {
+                            errorCode.push(2);
+                        }
+                        
+                        userCharms =  await user.getCharms();
+                    }
+
+                    if (aCard.charm_3 != charmData["Charm3"]) {
+                        aCard.charm_3 = await checkCharm("Charm3", charmData, aCard.charm_3, user, userCharms);
+                        if (aCard.charm_3 != charmData["Charm3"]) {
+                            errorCode.push(3);
+                        }
+                        
+                        userCharms =  await user.getCharms();
+                    }
+
+                    aCard.save();
+
+                    attachment = new AttachmentBuilder(await makePokeImage(aCard.item, aCard), { name: 'poke-image.png' });
+                    charmEmbed = charmEmbedMaker(splitMessage, aCard, errorCode);
+                    charmSelections = makeCharmSelection(aCard, await user.getCharms());
+
+                    await response.edit({ content: "", embeds: [charmEmbed], components: [charmSelections[0], charmSelections[1], charmSelections[2], makeCharmButtons()], files: [attachment] });
                 }
 
                 else if (i.customId == "back") {
@@ -368,6 +566,10 @@ module.exports = {
                     aCard.speed = newStats["Speed"]
                     aCard.save()
 
+                    if (aCard.level == 5 || aCard.level == 10) {
+                        attachment = new AttachmentBuilder(await makePokeImage(aCard.item, aCard), { name: 'poke-image.png' });
+                    }
+                    
                     await response.edit({ content: "", embeds: [levelConfirmEmbed], components: [infoButton], files: [attachment] });
 
                     newStats = getNewStats(aCard);
@@ -392,5 +594,20 @@ module.exports = {
                 }
             }
         });
+
+        const collectorSelect = response.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 150_000 });
+
+        collectorSelect.on("collect", async i => {
+            i.deferUpdate();
+            if (i.user == message.author) {
+                collectorSelect.resetTimer();
+                
+                if (i.customId == "charm1") charmData["Charm1"] =  i.values[0];
+                if (i.customId == "charm2") charmData["Charm2"] =  i.values[0];
+                if (i.customId == "charm3") charmData["Charm3"] =  i.values[0];
+            }
+        });
     }
+
+
 }

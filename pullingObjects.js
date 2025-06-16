@@ -173,17 +173,34 @@ async function makePokeImageData(pokemonData, cardData, context, x, y) {
         tier = "T3";
     }
     const holoEffect = await Canvas.loadImage(`./pokeImages/effects/HOLO.png`);
-    // const affection = getImage("affection", cardData, "DATA");
-    // const holoEffect = getImage("effects", "HOLO.png", "DATA");
 
     const moves = await Canvas.loadImage(`./pokeImages/moves/${pokemonData.series}/${pokemonData.type}/${pokemonData.poke_type}/${tier}-${pokemonData.card_type}.png`);
+
+    let charm1 = await Canvas.loadImage(`./pokeImages/charms/blank.png`);
+    if (cardData.charm_1 != "None") {
+        charm1 = await Canvas.loadImage(`./pokeImages/charms/${cardData.charm_1}/Slot1.png`);
+    }
+
+    let charm2 = await Canvas.loadImage(`./pokeImages/charms/blank.png`);
+    if (cardData.charm_2 != "None") {
+        charm2 = await Canvas.loadImage(`./pokeImages/charms/${cardData.charm_2}/Slot2.png`);
+    }
+
+    let charm3 = await Canvas.loadImage(`./pokeImages/charms/blank.png`);
+    if (cardData.charm_3 != "None") {
+        charm3 = await Canvas.loadImage(`./pokeImages/charms/${cardData.charm_3}/Slot3.png`);
+    }
 
     context.drawImage(bottom, x, y, bottom.width, bottom.height);
     context.drawImage(frame, x, y, bottom.width, bottom.height);
     context.drawImage(hp, x, y, bottom.width, bottom.height);
     context.drawImage(top, x, y, bottom.width, bottom.height);
-    context.drawImage(moves, x, y, bottom.width, bottom.height);
     context.drawImage(affection, x, y, bottom.width, bottom.height);
+    context.drawImage(moves, x, y, bottom.width, bottom.height);
+
+    context.drawImage(charm1, x, y, bottom.width, bottom.height);
+    context.drawImage(charm2, x, y, bottom.width, bottom.height);
+    context.drawImage(charm3, x, y, bottom.width, bottom.height);
 
     if (pokemonData.card_type == "HOLO" || pokemonData.card_type == "HOLOFRAME") {
         context.globalCompositeOperation = "multiply";
