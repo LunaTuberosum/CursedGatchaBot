@@ -390,7 +390,7 @@ module.exports = {
 
         itemData = await EventShop.findOne({ where: { name: itemName } });
 
-        if (itemData && itemData.itemCost > 0) {
+        if (itemData && itemData.cost > 0) {
             await buyEvent(message, itemData, quantity, user);
             return;
         }

@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, userMention } = require("discord.js");
-const { Users, UserCards, CardDatabase, ItemShop, UserStats } = require("../../dbObjects");
+const { Users, UserCards, CardDatabase, ItemShop, UserStats, EventShop, CharmShop, UserItems, UserEventItems, UserCharms } = require("../../dbObjects");
 const { formatName, raritySymbol, checkSeriesCollect } = require("../../pullingObjects.js");
 const { checkOwnTitle } = require("../../imageObjects.js");
 const { splitContent } = require("../../commandObjects.js");
@@ -85,6 +85,7 @@ function findCard(collection, cardCode) {
 
 function findItem(collection, itemName) {
     for (const item of collection) {
+        
         if (item.item.name == itemName) {
             return item;
         }
@@ -144,9 +145,25 @@ async function transferTradeItems(otherUser, userTradeData, userMention, message
     }
 
     for (itemData of userTradeData["Items"]) {
+        let delet = false;
         itemData[0].amount -= itemData[1];
         itemData[0].save();
-        otherUser.addItem(itemData[0].item, itemData[1]);
+        if (itemData[0].amount == 0) {
+            delet = true
+        }
+
+        if (await ItemShop.findOne({ where: { name: itemData[0].item.name } })) {
+            await UserItems.destroy({ where: { user_id: itemData[0].user_id, item_id: itemData[0].item_id }});
+            otherUser.addItem(itemData[0].item, itemData[1]);
+        }
+        else if (await EventShop.findOne({ where: { name: itemData[0].item.name } })) {
+            await UserEventItems.destroy({ where: { user_id: itemData[0].user_id, item_id: itemData[0].item_id, }});
+            otherUser.addItem(itemData[0].item, itemData[1], 1);
+        }
+        else if (await CharmShop.findOne({ where: { name: itemData[0].item.name } })) {
+            await UserCharms.destroy({ where: { user_id: itemData[0].user_id, item_id: itemData[0].item_id }});
+            otherUser.addItem(itemData[0].item, itemData[1], 2);
+        }
 
         if (itemData[0].item.name == "POKEDOLLAR") moneyGiven += itemData[1];
     }
@@ -224,10 +241,13 @@ module.exports = {
                 }
                 else {
                     const itemData = getItemData(_splitM);
-                    const itemInfo = findItem(await user.getItems(), itemData[0]);
+                    let itemInfo = findItem(await user.getItems(), itemData[0]);
 
                     if (!itemInfo || itemInfo.amount < itemData[1]) {
-                        continue;
+                        itemInfo = findItem(await user.getCharms(), itemData[0]);
+                        if (!itemInfo || itemInfo.amount < itemData[1]) {
+                            continue;
+                        }
                     }
 
                     const existingItem = isInTradeItem(userTradeData["Items"], itemInfo);
