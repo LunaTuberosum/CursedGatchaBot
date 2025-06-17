@@ -55,7 +55,7 @@ async function changeData(databaseDict) {
             "event": "EVE1",
             
             "gemName": "GRASS",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "GRASS",
             "shardCost": 5,
@@ -107,7 +107,7 @@ async function changeData(databaseDict) {
             "event": "EVE1",
             
             "gemName": "FIRE",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "FIRE",
             "shardCost": 5,
@@ -160,7 +160,7 @@ async function changeData(databaseDict) {
             "event": "EVE1",
             
             "gemName": "WATER",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "WATER",
             "shardCost": 5,
@@ -212,7 +212,7 @@ async function changeData(databaseDict) {
             "event": "EVE1",
             
             "gemName": "PSYCHIC",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "PSYCHIC",
             "shardCost": 5,
@@ -258,13 +258,13 @@ async function changeData(databaseDict) {
             "description": "A small charm depicting the symbol of fighting types."
         },
         {
-            "id": 14,
+            "id": 15,
             "name": "FIGHTING CHARM +",
             "emoji": "✊",
             "event": "EVE1",
             
             "gemName": "FIGHTING",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "FIGHTING",
             "shardCost": 5,
@@ -316,7 +316,7 @@ async function changeData(databaseDict) {
             "event": "EVE1",
             
             "gemName": "COLORLESS",
-            "gemCost": 4,
+            "gemCost": 5,
 
             "shardName": "COLORLESS",
             "shardCost": 5,
@@ -364,7 +364,7 @@ async function changeData(databaseDict) {
         {
             "id": 20,
             "name": "MEDIBOT CHARM",
-            "emoji": "<:BotUwU:859567649394655233> ",
+            "emoji": "<:BotUwU:859567649394655233>",
             "event": "CRAP",
             
             "gemName": "METAL",
