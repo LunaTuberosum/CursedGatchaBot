@@ -22,10 +22,13 @@ module.exports = {
             return;
         }
 
-        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`${moneyGiven} POKEDOLLARS\`!`);
+        await response.edit(`${message.author}, thank you for your patience during this latest maintenance ! Here are a free \`${moneyGiven} POKEDOLLARS\`! And for the ongoing event here are a free \`5 BROKEN PAINTBRUSHES\`!!`);
 
         const itemData = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
         user.addItem(itemData, moneyGiven);
+
+        const itemData2 = await ItemShop.findOne({ where: { name: "BROKEN PAINTBRUSH" } });
+        user.addItem(itemData2, 5);
 
         const userStat = await UserStats.findOne({ where: { user_id: message.author.id } });
         userStat.money_own += moneyGiven;
