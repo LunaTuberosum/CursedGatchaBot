@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
-const { Users, EventShop } = require('../../dbObjects.js');
+const { Users, EventShop, CharmShop } = require('../../dbObjects.js');
 
 function makeShopEmbed(shopArray, start, end, total, curEvent) {
 
@@ -42,7 +42,7 @@ function checkButtons(buttons, start, end, length) {
     }
 }
 
-async function getArray(shopItems, start, end) {
+async function getArray(shopItems, charmData, start, end) {
     
     let i = 1;
     shopArray = []
@@ -53,10 +53,27 @@ async function getArray(shopItems, start, end) {
             return shopArray;
         }
         else if(i >= start) {
-            shopArray.push(`${item.emoji} **${item.name}** [${item.event}]\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
+            shopArray.push(`${item.emoji} **${item.name}** *[${item.event}]*\n*${item.description}*\n\`\`\`- ${item.cost} ${item.itemCost}\`\`\``);
         }
         i++;
     }
+
+    for (const item of charmData) {
+        
+        if (i > end) {
+            return shopArray;
+        }
+        else if(i >= start) {
+            let text = `${item.emoji} **${item.name}** *[${item.event}]*\n*${item.description}*\n\`\`\``
+            if (item.gemCost > 0) text += `\n- ${item.gemCost} ${item.gemName} GEM`
+            if (item.shardCost > 0) text += `\n- ${item.shardCost} ${item.shardName} SHARD`
+            if (item.itemCost > 0) text += `\n- ${item.itemCost} ${item.itemName}`
+            text += '```'
+            shopArray.push(text);
+        }
+        i++;
+    }
+
     return shopArray;
 }
 
@@ -68,21 +85,35 @@ function getLength(shopData) {
     return length;
 }
 
+async function getCharms() {
+    const charmData = await CharmShop.findAll();
+
+    let list = [];
+
+    for (charm of charmData) {
+        if (charm.event == "CRAP") {
+            list.push(charm)
+        }
+    }
+
+    return list
+}
+
 module.exports = {
     name: "eventShop",
     shortName: ["es", "eshop"],
         
     async execute(message) {
         const shopData = await EventShop.findAll();
+        
+        const charmData = await getCharms()
         const curEvent = "CRAP"
 
+        let length = getLength(shopData) + getLength(charmData);
         let start = 1;
-        let end = 5;
+        let end = Math.min(length, 5)
 
-        let shopArray = await getArray(shopData, start, end);
-        let length = getLength(shopData);
-
-        end = Math.min(length, 5)
+        let shopArray = await getArray(shopData, charmData, start, end);
 
         const buttons = makeButton()
         if (end == length) { buttons.components[1].setDisabled(true); }
@@ -101,16 +132,16 @@ module.exports = {
                     end = Math.max(end - 5, 5);
                     checkButtons(buttons, start, end, length);
 
-                    shopArray = await getArray(shopData, start, end);
+                    shopArray = await getArray(shopData, charmData, start, end);
                     await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
-                    start = Math.min(start + 5, length - 5);
+                    start = Math.min(start + 5, length - 4);
                     end = Math.min(end + 5, length);
                     checkButtons(buttons, start, end, length);
 
-                    shopArray = await getArray(shopData, start, end);
+                    shopArray = await getArray(shopData, charmData, start, end);
                     await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
                 }
         });

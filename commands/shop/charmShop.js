@@ -47,13 +47,13 @@ async function getArray(shopItems, start, end) {
     let i = 1;
     shopArray = []
     for (const item of shopItems) {
-        
-        if (item.event != "None") continue;
+        if (item.event == "CRAP") continue;
+
         if (i > end) {
             return shopArray;
         }
         else if(i >= start) {
-            let text = `${item.emoji} **${item.name}**\n*${item.description}*\n\`\`\``
+            let text = `${item.emoji} **${item.name}** *[${item.event}]*\n*${item.description}*\n\`\`\``
             if (item.gemCost > 0) text += `\n- ${item.gemCost} ${item.gemName} GEM`
             if (item.shardCost > 0) text += `\n- ${item.shardCost} ${item.shardName} SHARD`
             if (item.itemCost > 0) text += `\n- ${item.itemCost} ${item.itemName}`
@@ -68,7 +68,7 @@ async function getArray(shopItems, start, end) {
 function getLength(shopData) {
     let length = 0;
     for (const item of shopData) {
-        if (item.cost != 0) length += 1
+        if (item.event != "CRAP") length += 1
     }
     return length;
 }
@@ -79,13 +79,13 @@ module.exports = {
         
     async execute(message) {
         const shopData = await CharmShop.findAll();
+        
         let length = getLength(shopData)
-
         let start = 1;
-        let end = Math.min(5, length);
+        let end = Math.min(5, length);;
 
         let shopArray = await getArray(shopData, start, end)
-
+        
         let embed = makeShopEmbed(shopArray, start, end, length)
 
         let buttons = makeButton()
@@ -106,16 +106,16 @@ module.exports = {
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
 
                 }
                 else if (i.customId == "right") {
-                    start = Math.min(start + 5, length - 5);
+                    start = Math.min(start + 5, length - 4);
                     end = Math.min(end + 5, length);
                     checkButtons(buttons, start, end, length);
 
                     shopArray = await getArray(shopData, start, end);
-                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length, curEvent)], components: [buttons] });
+                    await response.edit({ embeds: [makeShopEmbed(shopArray, start, end, length)], components: [buttons] });
                 }
         });
     }

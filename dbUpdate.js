@@ -33,9 +33,114 @@ async function changeData(databaseDict) {
     databaseDict["charmShop"] = [
         {
             "id": 1,
+            "name": "GRASS CHARM",
+            "emoji": "🍃",
+            "event": "EVE1",
+            
+            "gemName": "GRASS",
+            "gemCost": 0,
+
+            "shardName": "GRASS",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of grass types."
+        },
+        {
+            "id": 2,
+            "name": "GRASS CHARM +",
+            "emoji": "🍃",
+            "event": "EVE1",
+            
+            "gemName": "GRASS",
+            "gemCost": 4,
+
+            "shardName": "GRASS",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of grass types."
+        },
+        {
+            "id": 3,
+            "name": "GRASS CHARM EX",
+            "emoji": "🍃",
+            "event": "EVE1",
+            
+            "gemName": "GRASS",
+            "gemCost": 10,
+
+            "shardName": "GRASS",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of grass types."
+        },
+
+        {
+            "id": 4,
+            "name": "FIRE CHARM",
+            "emoji": "🔥",
+            "event": "EVE1",
+            
+            "gemName": "FIRE",
+            "gemCost": 0,
+
+            "shardName": "FIRE",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of fire types."
+        },
+        {
+            "id": 5,
+            "name": "FIRE CHARM +",
+            "emoji": "🔥",
+            "event": "EVE1",
+            
+            "gemName": "FIRE",
+            "gemCost": 4,
+
+            "shardName": "FIRE",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of fire types."
+        },
+        {
+            "id": 6,
+            "name": "FIRE CHARM EX",
+            "emoji": "🔥",
+            "event": "EVE1",
+            
+            "gemName": "FIRE",
+            "gemCost": 10,
+
+            "shardName": "FIRE",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of fire types."
+        },
+
+
+        {
+            "id": 7,
             "name": "WATER CHARM",
             "emoji": "💧",
-            "event": "None",
+            "event": "EVE1",
             
             "gemName": "WATER",
             "gemCost": 0,
@@ -49,10 +154,10 @@ async function changeData(databaseDict) {
             "description": "A small charm depicting the symbol of water types."
         },
         {
-            "id": 2,
+            "id": 8,
             "name": "WATER CHARM +",
             "emoji": "💧",
-            "event": "None",
+            "event": "EVE1",
             
             "gemName": "WATER",
             "gemCost": 4,
@@ -66,10 +171,10 @@ async function changeData(databaseDict) {
             "description": "A medium charm depicting the symbol of water types."
         },
         {
-            "id": 3,
+            "id": 9,
             "name": "WATER CHARM EX",
             "emoji": "💧",
-            "event": "None",
+            "event": "EVE1",
             
             "gemName": "WATER",
             "gemCost": 10,
@@ -81,6 +186,215 @@ async function changeData(databaseDict) {
             "itemCost": 600,
 
             "description": "A large charm depicting the symbol of water types."
+        },
+
+        {
+            "id": 10,
+            "name": "PSYCHIC CHARM",
+            "emoji": "👁️",
+            "event": "EVE1",
+            
+            "gemName": "PSYCHIC",
+            "gemCost": 0,
+
+            "shardName": "PSYCHIC",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of psychic types."
+        },
+        {
+            "id": 11,
+            "name": "PSYCHIC CHARM +",
+            "emoji": "👁️",
+            "event": "EVE1",
+            
+            "gemName": "PSYCHIC",
+            "gemCost": 4,
+
+            "shardName": "PSYCHIC",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of psychic types."
+        },
+        {
+            "id": 12,
+            "name": "PSYCHIC CHARM EX",
+            "emoji": "👁️",
+            "event": "EVE1",
+            
+            "gemName": "PSYCHIC",
+            "gemCost": 10,
+
+            "shardName": "PSYCHIC",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of psychic types."
+        },
+
+        {
+            "id": 13,
+            "name": "FIGHTING CHARM",
+            "emoji": "✊",
+            "event": "EVE1",
+            
+            "gemName": "FIGHTING",
+            "gemCost": 0,
+
+            "shardName": "FIGHTING",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of fighting types."
+        },
+        {
+            "id": 14,
+            "name": "FIGHTING CHARM +",
+            "emoji": "✊",
+            "event": "EVE1",
+            
+            "gemName": "FIGHTING",
+            "gemCost": 4,
+
+            "shardName": "FIGHTING",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of fighting types."
+        },
+        {
+            "id": 15,
+            "name": "FIGHTING CHARM EX",
+            "emoji": "✊",
+            "event": "EVE1",
+            
+            "gemName": "FIGHTING",
+            "gemCost": 10,
+
+            "shardName": "FIGHTING",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of fighting types."
+        },
+
+        {
+            "id": 16,
+            "name": "COLORLESS CHARM",
+            "emoji": "✴️",
+            "event": "EVE1",
+            
+            "gemName": "COLORLESS",
+            "gemCost": 0,
+
+            "shardName": "COLORLESS",
+            "shardCost": 10,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 200,
+
+            "description": "A small charm depicting the symbol of colorless types."
+        },
+        {
+            "id": 17,
+            "name": "COLORLESS CHARM +",
+            "emoji": "✴️",
+            "event": "EVE1",
+            
+            "gemName": "COLORLESS",
+            "gemCost": 4,
+
+            "shardName": "COLORLESS",
+            "shardCost": 5,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 400,
+
+            "description": "A medium charm depicting the symbol of colorless types."
+        },
+        {
+            "id": 18,
+            "name": "COLORLESS CHARM EX",
+            "emoji": "✴️",
+            "event": "EVE1",
+            
+            "gemName": "COLORLESS",
+            "gemCost": 10,
+
+            "shardName": "COLORLESS",
+            "shardCost": 0,
+
+            "itemName": "POKEDOLLAR",
+            "itemCost": 600,
+
+            "description": "A large charm depicting the symbol of colorless types."
+        },
+
+        {
+            "id": 19,
+            "name": "TRANS CHARM",
+            "emoji": "🏳️‍⚧️",
+            "event": "CRAP",
+            
+            "gemName": "WATER",
+            "gemCost": 0,
+
+            "shardName": "FIRE",
+            "shardCost": 15,
+
+            "itemName": "BROKEN PAINTBRUSH",
+            "itemCost": 10,
+
+            "description": "A charm depicting a lovely flag."
+        },
+        {
+            "id": 20,
+            "name": "MEDIBOT CHARM",
+            "emoji": "<:BotUwU:859567649394655233> ",
+            "event": "CRAP",
+            
+            "gemName": "METAL",
+            "gemCost": 5,
+
+            "shardName": "WATER",
+            "shardCost": 10,
+
+            "itemName": "BROKEN PAINTBRUSH",
+            "itemCost": 10,
+
+            "description": "A charm depicting a kind little robot."
+        }
+        ,
+        {
+            "id": 21,
+            "name": "BROKEN BRUSH CHARM",
+            "emoji": "<:brokenBrush:1376696067982098544>",
+            "event": "CRAP",
+            
+            "gemName": "GRASS",
+            "gemCost": 10,
+
+            "shardName": "COLORLESS",
+            "shardCost": 10,
+
+            "itemName": "BROKEN PAINTBRUSH",
+            "itemCost": 10,
+
+            "description": "A charm depicting a broken paintbrush."
         }
     ]
 

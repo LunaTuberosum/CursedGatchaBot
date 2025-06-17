@@ -101,7 +101,7 @@ module.exports = {
 
                 }
                 else if (i.customId == "right") {
-                    start = Math.min(start + 5, length - 5);
+                    start = Math.min(start + 5, length - 4);
                     end = Math.min(end + 5, length);
                     checkButtons(buttons, start, end, length);
 
