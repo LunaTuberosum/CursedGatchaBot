@@ -28,9 +28,21 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: "None"
 		},
 
-		charm_1: DataTypes.STRING,
-		charm_2: DataTypes.STRING,
-		charm_3: DataTypes.STRING,
+		charm_1: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: "None"
+		},
+		charm_2: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: "None"
+		},
+		charm_3: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: "None"
+		}
 	}, {
 		timestamps: true,
 	});

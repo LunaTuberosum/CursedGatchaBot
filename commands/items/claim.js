@@ -27,6 +27,7 @@ module.exports = {
         const itemData = await ItemShop.findOne({ where: { name: "POKEDOLLAR" } });
         user.addItem(itemData, moneyGiven);
 
+        // EVENT
         const itemData2 = await ItemShop.findOne({ where: { name: "BROKEN PAINTBRUSH" } });
         user.addItem(itemData2, 5);
 

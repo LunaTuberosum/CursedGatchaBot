@@ -21,7 +21,7 @@ function makeEmbed() {
     const infoEmbed = new EmbedBuilder()
         .setColor("#616161")
         .setTitle(`Welcome to Cursed PokeGatcha`)
-        .setDescription(`* Enjoy pulling for \"blessed\" pokemon drawn by \`MediBotEve\`\n* As a way to start here is a free card and \`100 POKEDOLLARS\`\n* Start playing by typing **g!pull** for a free pull every \`20 minutes\`\n* If you need help type **g!help**\n* Support Eve at **\`Twitch.tv/MediBotEve\`**`)
+        .setDescription(`* Enjoy pulling for \"blessed\" pokemon drawn by \`MediBotEve\`\n* As a way to start here is a free card and \`100 POKEDOLLARS\`\n* Start playing by typing **g!pull** for a free pull every \`20 minutes\`\n* If you need help type **g!help**\n* Support Eve at **\`Twitch.tv/MediBotEve\`**\n* To start playing the PAINTBRUSH EVENT, here is a free \`5 BROKEN PAINTBRUSHES\`!`)
         .setFooter({ text: "Bot Made by: Luna Tuberosum"})
 
     return infoEmbed;
@@ -64,7 +64,7 @@ module.exports = {
             }
         }
 
-        const newUser = await Users.create({ user_id: target.id, user_code: newUserCode, balance: 100 });
+        const newUser = await Users.create({ user_id: target.id, user_code: newUserCode });
 
         const date = new Date();
         const regDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
@@ -86,6 +86,8 @@ module.exports = {
         card.in_circulation++;
         card.save();
         user.addItem(await ItemShop.findOne({ where: { name: "POKEDOLLAR" } }), 100);
+        // EVENT
+        user.addItem(await ItemShop.findOne({ where: { name: "BROKEN PAINTBRUSH" } }), 5);
 
         attachment = new AttachmentBuilder(await makePokeImage(card, cardData), { name: 'poke-image.png' });
 
